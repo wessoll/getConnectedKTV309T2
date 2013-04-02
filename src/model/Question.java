@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 /**
@@ -12,24 +13,18 @@ public class Question {
     private ImageIcon map;
     private boolean correct;//goed beantwoorde vraag
     private int tries;//aantal geprobeerde antwoorden
+    private ArrayList<Answer> answers;//lijst met de mogelijke antwoorden
     
     /**
      * Constructor met map
      * @param text          naam van de vraag
      * @param map           map plaatje (bijv. hoogtekaart)
+     * @param answers       lijst met mogelijke antwoorden
      */
-    public Question(String text, ImageIcon map){
+    public Question(String text, ImageIcon map, ArrayList<Answer> answers){
         this.text = text;
         this.map = map;
-        correct = false;
-        tries = 0;
-    }
-    /**
-     * Constructor zonder map
-     * @param text          naam van de vraag
-     */
-    public Question(String text){
-        this.text = text;
+        this.answers = answers;
         correct = false;
         tries = 0;
     }
@@ -65,5 +60,13 @@ public class Question {
     
     public void setTries(int tries){
         this.tries = tries;
+    }
+
+    public ArrayList<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(ArrayList<Answer> answers) {
+        this.answers = answers;
     }
 }

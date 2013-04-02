@@ -14,6 +14,20 @@ import we.getconnected.gui.InterfaceComponent;
  */
 public class ImageUtil {
     
+    /**
+     * Laad een image in het programma via een path
+     * @param path              locatie van de image
+     * @return                  image van de locatie
+     * @throws Exception 
+     */
+    public static ImageIcon getAndLoadImageIcon(String path) throws Exception{
+        ImageIcon imageIcon = new ImageIcon(path);
+        if (imageIcon.getImageLoadStatus() != 8){
+            throw new Exception("Cannot find image for path: \"" + path + "\"");
+        }
+        return imageIcon;
+    }
+    
     public static ImageIcon getImage(InterfaceComponent component){
         switch(Main.FRAME_SIZE){
             case NORMAL:
