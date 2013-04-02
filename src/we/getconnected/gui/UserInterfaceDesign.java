@@ -4,17 +4,44 @@
  */
 package we.getconnected.gui;
 
+import java.awt.BorderLayout;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import javax.swing.JPanel;
+import we.getconnected.Main;
+
 /**
  *
  * @author Lou
  */
 public class UserInterfaceDesign extends javax.swing.JPanel {
-
+    
+    Rectangle rectangle;
     /**
      * Creates new form UserInterfaceDesign
      */
     public UserInterfaceDesign() {
         initComponents();
+    }
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(InterfaceComponent.BACKGROUND.getIcon().getImage(), 0, 0, null);        
+    }
+    
+    public void loadquestion(JPanel panel) {
+       questionPanel.removeAll();
+       questionPanel.add(panel, BorderLayout.CENTER);
+       questionPanel.validate();
+       questionPanel.repaint();
+    }
+    
+    public void loadActionInterface(JPanel panel) {
+       actionPanel.removeAll();
+       actionPanel.add(panel, BorderLayout.CENTER);
+       actionPanel.validate();
+       actionPanel.repaint();
     }
 
     /**
@@ -26,39 +53,81 @@ public class UserInterfaceDesign extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        actionPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        questionPanel = new javax.swing.JPanel();
 
-        jButton1.setText("jButton1");
+        setMaximumSize(Main.FRAME_SIZE.getSize());
+        setMinimumSize(Main.FRAME_SIZE.getSize());
+        setName("Kaart vaardigheid Applet"); // NOI18N
+        setPreferredSize(Main.FRAME_SIZE.getSize());
 
-        jButton2.setText("jButton2");
+        actionPanel.setOpaque(false);
+
+        jLabel1.setText("FAKEPICTURE");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabel1MouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout actionPanelLayout = new javax.swing.GroupLayout(actionPanel);
+        actionPanel.setLayout(actionPanelLayout);
+        actionPanelLayout.setHorizontalGroup(
+            actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actionPanelLayout.createSequentialGroup()
+                .addContainerGap(407, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(377, 377, 377))
+        );
+        actionPanelLayout.setVerticalGroup(
+            actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(actionPanelLayout.createSequentialGroup()
+                .addGap(199, 199, 199)
+                .addComponent(jLabel1)
+                .addContainerGap(368, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout questionPanelLayout = new javax.swing.GroupLayout(questionPanel);
+        questionPanel.setLayout(questionPanelLayout);
+        questionPanelLayout.setHorizontalGroup(
+            questionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 818, Short.MAX_VALUE)
+        );
+        questionPanelLayout.setVerticalGroup(
+            questionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 165, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(0, 172, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(149, 149, 149)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(jButton2)))
-                .addContainerGap(178, Short.MAX_VALUE))
+                    .addComponent(actionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(questionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(80, 80, 80)
-                .addComponent(jButton1)
-                .addGap(27, 27, 27)
-                .addComponent(jButton2)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addComponent(actionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(questionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseReleased
+        if(evt.getSource()==jLabel1){
+            System.out.println("Laad een vraag of doe je ding!");
+        }
+    }//GEN-LAST:event_jLabel1MouseReleased
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JPanel actionPanel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel questionPanel;
     // End of variables declaration//GEN-END:variables
 }

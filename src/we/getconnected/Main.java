@@ -5,9 +5,10 @@
 package we.getconnected;
 
 import java.awt.BorderLayout;
+import java.io.File;
 import javax.swing.JApplet;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
+import we.getconnected.gui.InterfaceSize;
 import we.getconnected.gui.UserInterfaceDesign;
 import we.getconnected.mysql.Dbmanager;
 import we.getconnected.mysql.QueryManager;
@@ -19,9 +20,8 @@ import we.getconnected.mysql.QueryManager;
 public class Main extends JApplet {
 
     public static final String NAME = "GetConnected Team KTV309";
-    public static final String IMAGES_LOCATION = "/images";
-    public static final int FRAME_HEIGHT=1600;
-    public static final int FRAME_WIDTH=900;
+    public static String IMAGES_LOCATION;
+    public static final InterfaceSize FRAME_SIZE = InterfaceSize.NORMAL;
     
     private Dbmanager dbManager;
     private QueryManager queryManager;
@@ -31,8 +31,8 @@ public class Main extends JApplet {
         //dbManager = new Dbmanager();
         //dbManager.openConnection();
         //queryManager = new QueryManager(dbManager);
-        
-        this.setSize(FRAME_WIDTH,FRAME_HEIGHT);
+        IMAGES_LOCATION = getCodeBase().getPath().replace("/build/classes", "/src/media");
+        this.setSize(FRAME_SIZE.getSize());
         this.add(new UserInterfaceDesign());
         this.setJMenuBar(null);
         this.setVisible(true);
