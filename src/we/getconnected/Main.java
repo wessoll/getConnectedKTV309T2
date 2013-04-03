@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 import javax.swing.JApplet;
 import javax.swing.JPanel;
 import we.getconnected.gui.InterfaceSize;
-import we.getconnected.gui.PrototypeInterface;
 import we.getconnected.gui.UserInterfaceDesign;
 import we.getconnected.mysql.Dbmanager;
 import we.getconnected.mysql.QueryManager;
@@ -36,11 +35,7 @@ public class Main extends JApplet {
         //queryManager = new QueryManager(dbManager);
         IMAGES_LOCATION = getCodeBase().getPath().replace("/build/classes", "/src/media");
         this.setSize(FRAME_SIZE.getSize());
-        try {
-            this.add(new PrototypeInterface());
-        } catch (Exception ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.add(new UserInterfaceDesign());
         this.setJMenuBar(null);
         this.setVisible(true);
     }
