@@ -56,12 +56,17 @@ public class UserInterfaceDesign extends javax.swing.JPanel {
         actionPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         questionPanel = new javax.swing.JPanel();
+        jMenuButton = new javax.swing.JLabel();
+        jProfielButton = new javax.swing.JLabel();
+        jOptiesButton = new javax.swing.JLabel();
+        jHighscoreButton = new javax.swing.JLabel();
 
         setMaximumSize(Main.FRAME_SIZE.getSize());
         setMinimumSize(Main.FRAME_SIZE.getSize());
         setName("Kaart vaardigheid Applet"); // NOI18N
         setPreferredSize(Main.FRAME_SIZE.getSize());
 
+        actionPanel.setToolTipText("");
         actionPanel.setOpaque(false);
 
         jLabel1.setText("FAKEPICTURE");
@@ -76,7 +81,7 @@ public class UserInterfaceDesign extends javax.swing.JPanel {
         actionPanelLayout.setHorizontalGroup(
             actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actionPanelLayout.createSequentialGroup()
-                .addContainerGap(407, Short.MAX_VALUE)
+                .addContainerGap(460, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(377, 377, 377))
         );
@@ -96,23 +101,52 @@ public class UserInterfaceDesign extends javax.swing.JPanel {
         );
         questionPanelLayout.setVerticalGroup(
             questionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 165, Short.MAX_VALUE)
+            .addGap(0, 167, Short.MAX_VALUE)
         );
+
+        jMenuButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/Menu1024x768.png"))); // NOI18N
+
+        jProfielButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/Profiel1024x768.png"))); // NOI18N
+
+        jOptiesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/opties1024x768.png"))); // NOI18N
+
+        jHighscoreButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/Highscore1024x768.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 172, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(questionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(actionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(questionPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jOptiesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jHighscoreButton)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jProfielButton)
+                                .addComponent(jMenuButton)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(actionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(actionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(actionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(121, 121, 121)
+                        .addComponent(jMenuButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jProfielButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jHighscoreButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jOptiesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(questionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -127,7 +161,11 @@ public class UserInterfaceDesign extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel actionPanel;
+    private javax.swing.JLabel jHighscoreButton;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jMenuButton;
+    private javax.swing.JLabel jOptiesButton;
+    private javax.swing.JLabel jProfielButton;
     private javax.swing.JPanel questionPanel;
     // End of variables declaration//GEN-END:variables
 }
