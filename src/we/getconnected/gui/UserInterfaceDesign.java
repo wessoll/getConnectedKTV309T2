@@ -106,9 +106,9 @@ public class UserInterfaceDesign extends javax.swing.JPanel {
 
         jMenuButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/Menu1024x768.png"))); // NOI18N
 
-        jProfielButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/Profiel1024x768.png"))); // NOI18N
+        jProfielButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/MijnKaart1024x768.png"))); // NOI18N
 
-        jOptiesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/opties1024x768.png"))); // NOI18N
+        jOptiesButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/Opties1024x768.png"))); // NOI18N
 
         jHighscoreButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/Highscore1024x768.png"))); // NOI18N
 

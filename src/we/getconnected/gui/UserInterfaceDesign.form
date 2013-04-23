@@ -138,14 +138,14 @@
     <Component class="javax.swing.JLabel" name="jProfielButton">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/media/Profiel1024x768.png"/>
+          <Image iconType="3" name="/media/MijnKaart1024x768.png"/>
         </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jOptiesButton">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/media/opties1024x768.png"/>
+          <Image iconType="3" name="/media/Opties1024x768.png"/>
         </Property>
       </Properties>
     </Component>
