@@ -5,9 +5,22 @@
 package we.getconnected.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import model.Land;
+import model.Land.Landen;
+import model.Question;
+import util.TempQuestions;
 import we.getconnected.Main;
 
 /**
@@ -17,31 +30,89 @@ import we.getconnected.Main;
 public class UserInterfaceDesign extends javax.swing.JPanel {
     
     Rectangle rectangle;
+    private List<Land> landen;
+    private List<Component> components;
+    private InterfaceType currentInterface;
+    private Land currentLand;
     /**
      * Creates new form UserInterfaceDesign
      */
     public UserInterfaceDesign() {
+        this.components = new ArrayList<Component>();
+        this.landen = new ArrayList<Land>();
+        this.currentInterface=InterfaceType.START;
+        loadLanden();
         initComponents();
     }
     
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(InterfaceComponent.BACKGROUND.getIcon().getImage(), 0, 0, null);        
+        g.drawImage(InterfaceComponent.BACKGROUND.getIcon().getImage(), 0, 0, null);
+        g.setColor(Color.BLUE);
+        //g.fillPolygon(landen.get(0).getBounds());
+        //g.drawRect(370, 220-50,450,50);
+        //g.drawRect(370, 220,30,50);
+        //g.drawRect(400, 220,30,50);
     }
     
-    public void loadquestion(JPanel panel) {
-       questionPanel.removeAll();
-       questionPanel.add(panel, BorderLayout.CENTER);
-       questionPanel.validate();
-       questionPanel.repaint();
+    private void loadLanden(){
+        List<Question> questionList = new ArrayList<Question>();
+        
+        questionList.add(TempQuestions.getQuestion1());
+        questionList.add(TempQuestions.getQuestion2());
+        landen.add(new Land(Landen.NEDERLAND,questionList));
     }
     
-    public void loadActionInterface(JPanel panel) {
-       actionPanel.removeAll();
-       actionPanel.add(panel, BorderLayout.CENTER);
-       actionPanel.validate();
-       actionPanel.repaint();
+    public void showWorldMap(){
+        removeOldDisplay();
+        JLabel worldmap = new JLabel(InterfaceComponent.WORLDMAP.getIcon());
+        worldmap.setBounds(new Rectangle(210,10,818,552)); 
+        add(worldmap);
+        components.add(worldmap);
+        currentInterface = InterfaceType.WORLDMAP;
+        this.repaint();
+    }
+    
+    public void showQuestion(Question question){
+        removeOldDisplay();
+        int x = 210;
+        int y = 10;
+        JLabel questionPicture = new JLabel(question.getMap());
+        questionPicture.setBounds(x, y, question.getMap().getIconWidth(), question.getMap().getIconHeight());
+        add(questionPicture);
+        components.add(questionPicture);
+        this.repaint();
+    }
+    
+    public void showQuestionSelection(Land land){
+        removeOldDisplay();
+        int x = 280;
+        int y = 70;
+        //Van het header label kunnen we een image maken.
+        JLabel headerLabel = new JLabel(new ImageIcon(Main.IMAGES_LOCATION+"/vraagbuttons/KiesEenVraag.png"));
+        headerLabel.setFont(new Font("Serif", Font.PLAIN, 24));
+        headerLabel.setBounds(x, y-60,450,50);
+        components.add(headerLabel);
+        add(headerLabel);
+        for(int i=0;i<land.getQuestions().size();i++){
+            JLabel questionLabel = new JLabel(new ImageIcon(Main.IMAGES_LOCATION+"/vraagbuttons/"+(i+1)+((land.getQuestions().get(i).isCorrect())?"G":"")+".png"));
+            questionLabel.setFont(new Font("Serif", Font.PLAIN, 24));
+            questionLabel.setAlignmentY(JLabel.LEFT_ALIGNMENT);
+            questionLabel.setBounds(x+(i*60), y,50,50);
+            add(questionLabel);
+            components.add(questionLabel);
+        }
+        this.currentLand=land;
+        currentInterface=InterfaceType.QUESTION_SELECTION;
+        this.repaint();
+    }
+    
+    public void removeOldDisplay(){
+        for(Component component:components){
+            remove(component);
+        }
+        components.clear();
     }
 
     /**
@@ -53,9 +124,6 @@ public class UserInterfaceDesign extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        actionPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        questionPanel = new javax.swing.JPanel();
         jMenuButton = new javax.swing.JLabel();
         jProfielButton = new javax.swing.JLabel();
         jOptiesButton = new javax.swing.JLabel();
@@ -65,46 +133,18 @@ public class UserInterfaceDesign extends javax.swing.JPanel {
         setMinimumSize(Main.FRAME_SIZE.getSize());
         setName("Kaart vaardigheid Applet"); // NOI18N
         setPreferredSize(Main.FRAME_SIZE.getSize());
-
-        actionPanel.setToolTipText("");
-        actionPanel.setOpaque(false);
-
-        jLabel1.setText("FAKEPICTURE");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jLabel1MouseReleased(evt);
+                formMouseReleased(evt);
             }
         });
 
-        javax.swing.GroupLayout actionPanelLayout = new javax.swing.GroupLayout(actionPanel);
-        actionPanel.setLayout(actionPanelLayout);
-        actionPanelLayout.setHorizontalGroup(
-            actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, actionPanelLayout.createSequentialGroup()
-                .addContainerGap(460, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(377, 377, 377))
-        );
-        actionPanelLayout.setVerticalGroup(
-            actionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(actionPanelLayout.createSequentialGroup()
-                .addGap(199, 199, 199)
-                .addComponent(jLabel1)
-                .addContainerGap(368, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout questionPanelLayout = new javax.swing.GroupLayout(questionPanel);
-        questionPanel.setLayout(questionPanelLayout);
-        questionPanelLayout.setHorizontalGroup(
-            questionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 818, Short.MAX_VALUE)
-        );
-        questionPanelLayout.setVerticalGroup(
-            questionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 167, Short.MAX_VALUE)
-        );
-
         jMenuButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/Menu1024x768.png"))); // NOI18N
+        jMenuButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jMenuButtonMouseReleased(evt);
+            }
+        });
 
         jProfielButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/Profiel1024x768.png"))); // NOI18N
 
@@ -117,12 +157,9 @@ public class UserInterfaceDesign extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(questionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jOptiesButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jOptiesButton, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jHighscoreButton)
@@ -130,42 +167,53 @@ public class UserInterfaceDesign extends javax.swing.JPanel {
                                 .addComponent(jProfielButton)
                                 .addComponent(jMenuButton)))
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(actionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(822, 822, 822))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(actionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(121, 121, 121)
-                        .addComponent(jMenuButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jProfielButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jHighscoreButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jOptiesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(questionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(121, 121, 121)
+                .addComponent(jMenuButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jProfielButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jHighscoreButton, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jOptiesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(403, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseReleased
-        if(evt.getSource()==jLabel1){
-            System.out.println("Laad een vraag of doe je ding!");
+    private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
+        switch(currentInterface){
+            case WORLDMAP:
+                for(Land land:landen){
+                    if(land.getBounds().contains(evt.getPoint())){
+                        showQuestionSelection(land);
+                        break;
+                    }
+                }
+                break;
+            case START:
+                System.out.println(evt.getPoint());
+                break;
+            case QUESTION_SELECTION:
+                for(int i =1; i<components.size();i++){
+                    if(components.get(i).getBounds().contains(evt.getPoint())){
+                        showQuestion(currentLand.getQuestions().get(i-1));
+                    }
+                }
         }
-    }//GEN-LAST:event_jLabel1MouseReleased
+    }//GEN-LAST:event_formMouseReleased
+
+    private void jMenuButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuButtonMouseReleased
+        showWorldMap();
+    }//GEN-LAST:event_jMenuButtonMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel actionPanel;
     private javax.swing.JLabel jHighscoreButton;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jMenuButton;
     private javax.swing.JLabel jOptiesButton;
     private javax.swing.JLabel jProfielButton;
-    private javax.swing.JPanel questionPanel;
     // End of variables declaration//GEN-END:variables
 }

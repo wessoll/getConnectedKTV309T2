@@ -21,6 +21,7 @@ import we.getconnected.mysql.QueryManager;
  */
 public class Main extends JApplet {
 
+    public static JApplet jApplet;
     public static final String NAME = "GetConnected Team KTV309";
     public static String IMAGES_LOCATION;
     public static final InterfaceSize FRAME_SIZE = InterfaceSize.NORMAL;
@@ -30,6 +31,7 @@ public class Main extends JApplet {
     
     @Override
     public void init() {
+        Main.jApplet=this;
         //dbManager = new Dbmanager();
         //dbManager.openConnection();
         //queryManager = new QueryManager(dbManager);
@@ -45,6 +47,11 @@ public class Main extends JApplet {
        this.getContentPane().add(panel, BorderLayout.CENTER);
        this.getContentPane().validate();
        this.getContentPane().repaint();
+    }
+    
+    public static void refresh(){
+        jApplet.validate();
+        jApplet.getContentPane().validate();
     }
     
     @Override

@@ -5,6 +5,8 @@
 package util;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Answer;
 import model.Question;
 import we.getconnected.Main;
@@ -15,7 +17,7 @@ import we.getconnected.Main;
  */
 public class TempQuestions {
     
-    public static Question getQuestion1() throws Exception{
+    public static Question getQuestion1(){
         ArrayList<Answer> antwoorden = new ArrayList<Answer>();
     
         antwoorden.add(new Answer(350,290,false,"A"));
@@ -23,12 +25,18 @@ public class TempQuestions {
         antwoorden.add(new Answer(340,500,true,"C"));
         antwoorden.add(new Answer(400,100,false,"D"));
         
-        Question question = new Question("Waar ligt het hoogste punt van Nederland?",
-                ImageUtil.getAndLoadImageIcon(Main.IMAGES_LOCATION + "vraag_nederland_1.jpg"),
-                antwoorden);
-        return question;
+        Question question;
+        try {
+            question = new Question("Waar ligt het hoogste punt van Nederland?",
+           ImageUtil.getAndLoadImageIcon(Main.IMAGES_LOCATION + "vraag_nederland_1.jpg"),
+           antwoorden);
+            return question;
+        } catch (Exception ex) {
+            Logger.getLogger(TempQuestions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
-        public static Question getQuestion2() throws Exception{
+        public static Question getQuestion2(){
         ArrayList<Answer> antwoorden = new ArrayList<Answer>();
     
         antwoorden.add(new Answer(380,480,false,"A"));
@@ -36,10 +44,16 @@ public class TempQuestions {
         antwoorden.add(new Answer(100,450,false,"C"));
         antwoorden.add(new Answer(450,250,false,"D"));
         
-        Question question = new Question("In welke provincie lopen de temperaturen het meest uiteen?",
-                ImageUtil.getAndLoadImageIcon(Main.IMAGES_LOCATION + "vraag_nederland_2.png"),
-                antwoorden);
-        return question;
+        Question question;
+        try {
+           question = new Question("In welke provincie lopen de temperaturen het meest uiteen?",
+           ImageUtil.getAndLoadImageIcon(Main.IMAGES_LOCATION + "vraag_nederland_2.png"),
+           antwoorden);
+           return question;
+        } catch (Exception ex) {
+            Logger.getLogger(TempQuestions.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     
