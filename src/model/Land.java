@@ -1,8 +1,12 @@
 package model;
 
+import java.awt.Polygon;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
+import util.ImageUtil;
 import we.getconnected.Main;
+import we.getconnected.gui.InterfaceSize;
 
 /**
  * Land met bijbehorende vragen
@@ -12,7 +16,7 @@ public class Land {
     
     private Landen land;
     private boolean completed;//uitgespeeld (voltooid) land
-    private ArrayList<Question> questions;//de vragen die het land heeft
+    private List<Question> questions;//de vragen die het land heeft
     
     /**
      * De landen met naam, moeilijkheidsgraad en plaatje
@@ -64,9 +68,14 @@ public class Land {
      * Constructor
      * @param land          het land dat dit object representeert
      */
-    public Land(Landen land){
+    public Land(Landen land,List<Question> questions){
         this.land = land;
-        completed = false;
+        this.completed = false;
+        this.questions=questions;
+    }
+    
+    public Polygon getBounds(){
+        return ImageUtil.getCountryBounds(land);
     }
     
     //Getters and setters
@@ -86,11 +95,11 @@ public class Land {
         this.completed = completed;
     }
 
-    public ArrayList<Question> getQuestions() {
+    public List<Question> getQuestions() {
         return questions;
     }
 
-    public void setQuestions(ArrayList<Question> questions) {
+    public void setQuestions(List<Question> questions) {
         this.questions = questions;
     }
 }

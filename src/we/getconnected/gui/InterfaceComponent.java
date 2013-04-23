@@ -15,7 +15,8 @@ import javax.swing.ImageIcon;
         BACKGROUND,
         MENU,
         HIGHSCORE,
-        PROFIEL
+        PROFIEL,
+        WORLDMAP
         ;
         
         public ImageIcon getIcon(){
