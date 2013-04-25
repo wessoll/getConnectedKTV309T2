@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -61,6 +62,13 @@ public class UserInterfaceDesign extends javax.swing.JPanel {
         
         questionList.add(TempQuestions.getQuestion1());
         questionList.add(TempQuestions.getQuestion2());
+        
+        /**
+         * deze shuffle methode moet voor iedere questionList worden aangeroepen
+         * zodat vragen niet telkens in dezelfde volgorde verschijnen
+         **/
+        Collections.shuffle(questionList);
+        
         landen.add(new Land(Landen.NEDERLAND,questionList));
     }
     
