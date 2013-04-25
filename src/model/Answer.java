@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.awt.Point;
+
 /**
  *
  * @author wesley
@@ -38,5 +40,13 @@ public class Answer extends java.awt.Point{
     }
     public void setText(String text){
         this.text = text;
+    }
+    @Override
+    public Point getLocation(){
+        return super.getLocation();
+    }
+    @Override
+    public void setLocation(int x, int y){
+        super.setLocation(x, y);
     }
 }
