@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import model.Answer;
 import model.Land;
 import model.Land.Landen;
 import model.Question;
@@ -90,6 +91,15 @@ public class UserInterfaceDesign extends javax.swing.JPanel {
         questionPicture.setBounds(x, y, question.getMap().getIconWidth(), question.getMap().getIconHeight());
         add(questionPicture);
         components.add(questionPicture);
+        //Set de punten van de antwoorden op de kaart
+        ArrayList<Answer> answers = question.getAnswers();
+        for (Answer answer : answers){
+            JLabel point = new JLabel(answer.getText());
+            point.setBounds(point.getX(), point.getY(), 20, 20);
+            add(point);
+            components.add(point);
+        }
+
         this.repaint();
     }
     
