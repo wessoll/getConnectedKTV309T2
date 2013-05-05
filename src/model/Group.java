@@ -23,16 +23,6 @@ public class Group {
         this.teachers = teachers;
     }
     
-    /**
-     * Constructor voor opzetten van groep zonder bestaande studenten/ leraren
-     * @param groupName         naam van de groep
-     */
-    public Group(String groupName){
-        this.groupName = groupName;
-        students = new ArrayList<Student>();
-        teachers = new ArrayList<Teacher>();
-    }
-    
     //Getters and setters
     
     public String getGroupName() {
