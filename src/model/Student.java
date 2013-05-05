@@ -19,4 +19,14 @@ public class Student extends User {
         super(firstName, lastName, userName, password);
         europe = new Continent();
     }
+    
+    //Getters and setters
+
+    public Continent getEurope() {
+        return europe;
+    }
+
+    public void setEurope(Continent europe) {
+        this.europe = europe;
+    }
 }
