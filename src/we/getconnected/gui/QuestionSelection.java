@@ -20,12 +20,14 @@ public class QuestionSelection extends JPanel{
     
     private JButton btnQuestionSelect;
     private Question currentQuestion = null;
+    private Land currentLand;
     
     /**
      * Constructor
      * @param land      het land waarvoor de vragen als selectie moeten worden getoond 
      */
     public QuestionSelection(Land land){
+        currentLand = land;
         setBounds(0, 0, MainPanel.MAP_AREA_WIDTH, MainPanel.MAP_AREA_HEIGHT);
         setLayout(null);
         
@@ -47,7 +49,7 @@ public class QuestionSelection extends JPanel{
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    Main.mainPanel.showPanelMapArea(new QuestionPanel(currentQuestion));
+                    Main.mainPanel.showPanelMapArea(new QuestionPanel(currentQuestion, currentLand));
                 }
                 @Override
                 public void mousePressed(MouseEvent e) {

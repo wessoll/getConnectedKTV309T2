@@ -22,35 +22,39 @@ public class Land {
      * De landen met naam, moeilijkheidsgraad en plaatje
      */
     public enum Landen{
-        BELGIE("België", 1, new ImageIcon(Main.IMAGES_LOCATION + "belgie.jpg")),
-        DENEMARKEN("Denemarken", 2, new ImageIcon(Main.IMAGES_LOCATION + "denemarken.jpg")),
-        DUITSLAND("Duitsland", 3, new ImageIcon(Main.IMAGES_LOCATION + "duitsland.jpg")),
-        FRANKRIJK("Frankrijk", 4, new ImageIcon(Main.IMAGES_LOCATION + "frankrijk.jpg")),
-        ITALIE("Italië", 5, new ImageIcon(Main.IMAGES_LOCATION + "italie.jpg")),
-        LUXEMBURG("Luxemburg", 6, new ImageIcon(Main.IMAGES_LOCATION + "luxemburg.jpg")),
-        NEDERLAND("Nederland", 7, new ImageIcon(Main.IMAGES_LOCATION + "nederland.jpg")),
-        NOORWEGEN("Noorwegen", 8, new ImageIcon(Main.IMAGES_LOCATION + "noorwegen.jpg")),
-        OOSTENRIJK("Oostenrijk", 9, new ImageIcon(Main.IMAGES_LOCATION + "oostenrijk.jpg")),
-        PORTUGAL_DKR("Portugal dkr", 10, new ImageIcon(Main.IMAGES_LOCATION + "portugal_dkr.jpg")),
-        PORTUGAL_DR("Portugal dr", 11, new ImageIcon(Main.IMAGES_LOCATION + "portugal_dr.jpg")),
-        SPANJE("Spanje", 12, new ImageIcon(Main.IMAGES_LOCATION + "spanje.jpg")),
-        TSJECHIE("Tsjechiē", 13, new ImageIcon(Main.IMAGES_LOCATION + "tsjechie.jpg")),
-        ZWEDEN("Zweden", 14, new ImageIcon(Main.IMAGES_LOCATION + "zweden.jpg"));
+        BELGIE("België", 1, new ImageIcon(Main.IMAGES_LOCATION + "belgie.jpg"), null),
+        DENEMARKEN("Denemarken", 2, new ImageIcon(Main.IMAGES_LOCATION + "denemarken.jpg"), null),
+        DUITSLAND("Duitsland", 3, new ImageIcon(Main.IMAGES_LOCATION + "duitsland.jpg"), null),
+        FRANKRIJK("Frankrijk", 4, new ImageIcon(Main.IMAGES_LOCATION + "frankrijk.jpg"), null),
+        ITALIE("Italië", 5, new ImageIcon(Main.IMAGES_LOCATION + "IT-Complete.png"), new ImageIcon(Main.IMAGES_LOCATION + "IT-lvl-Complete.png")),
+        LUXEMBURG("Luxemburg", 6, new ImageIcon(Main.IMAGES_LOCATION + "luxemburg.jpg"), null),
+        NEDERLAND("Nederland", 7, new ImageIcon(Main.IMAGES_LOCATION + "NL-Complete.png"), new ImageIcon(Main.IMAGES_LOCATION + "NL-lvl-Complete.png")),
+        NOORWEGEN("Noorwegen", 8, new ImageIcon(Main.IMAGES_LOCATION + "NR-Complete.png"), null),
+        OOSTENRIJK("Oostenrijk", 9, new ImageIcon(Main.IMAGES_LOCATION + "oostenrijk.jpg"), null),
+        PORTUGAL_DKR("Portugal dkr", 10, new ImageIcon(Main.IMAGES_LOCATION + "portugal_dkr.jpg"), null),
+        PORTUGAL_DR("Portugal dr", 11, new ImageIcon(Main.IMAGES_LOCATION + "portugal_dr.jpg"), null),
+        SPANJE("Spanje", 12, new ImageIcon(Main.IMAGES_LOCATION + "SP-Complete.png"), new ImageIcon(Main.IMAGES_LOCATION + "SP-lvl-Complete.png")),
+        TSJECHIE("Tsjechiē", 13, new ImageIcon(Main.IMAGES_LOCATION + "tsjechie.jpg"), null),
+        ZWEDEN("Zweden", 14, new ImageIcon(Main.IMAGES_LOCATION + "zweden.jpg"), null),
+        VERENIGD_KONINKRIJK("Verenigd Koninkrijk", 15, new ImageIcon(Main.IMAGES_LOCATION + "GB-Complete"), new ImageIcon(Main.IMAGES_LOCATION + "GB-lvl-Complete.png"));
         
         private String landNaam;
         private int moeilijkheidsgraad;
-        private ImageIcon image;
+        private ImageIcon landComplete;
+        private ImageIcon landEnded;
         
         /**
          * Constructor
          * @param landNaam              naam van het land
          * @param moeilijkheidsgraad    moeilijkheidsgraad (1=makkelijkst)
-         * @param image                 plaatje van het land
+         * @param landComplete          plaatje van het land op de map wanneer het land uitgespeeld is
+         * @param landEnded             plaatje dat wordt getoond wanneer het land uitgespeeld is
          */
-        Landen(String landNaam, int moeilijkheidsgraad, ImageIcon image){
+        Landen(String landNaam, int moeilijkheidsgraad, ImageIcon landComplete, ImageIcon landEnded){
             this.landNaam = landNaam;
             this.moeilijkheidsgraad = moeilijkheidsgraad;
-            this.image = image;
+            this.landComplete = landComplete;
+            this.landEnded = landEnded;
         }
         //Getters
         public String getLandNaam(){
@@ -59,8 +63,11 @@ public class Land {
         public int getMoeilijkheidsgraad(){
             return moeilijkheidsgraad;
         }
-        public ImageIcon getImage(){
-            return image;
+        public ImageIcon getLandComplete(){
+            return landComplete;
+        }
+        public ImageIcon getLandEnded(){
+            return landEnded;
         }
     }
 
