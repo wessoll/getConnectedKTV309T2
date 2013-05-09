@@ -1,12 +1,11 @@
 
 package we.getconnected.gui;
 
-import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import model.Land;
 import model.Question;
@@ -15,6 +14,7 @@ import we.getconnected.Main;
 /**
  * Panel dat de vragen als selectie toont
  * @author wesley
+ * @todo dimension en point objects for hardcoded int values
  */
 public class QuestionSelection extends JPanel{
     
@@ -26,18 +26,22 @@ public class QuestionSelection extends JPanel{
      * @param land      het land waarvoor de vragen als selectie moeten worden getoond 
      */
     public QuestionSelection(Land land){
-        setBackground(Color.GRAY);
         setBounds(0, 0, MainPanel.MAP_AREA_WIDTH, MainPanel.MAP_AREA_HEIGHT);
-        //Gebruik flow layout zodat alle knoppen naast elkaar komen te staan horizontaal gecentreerd
-        FlowLayout fLayout = new FlowLayout();
-        fLayout.setAlignment(FlowLayout.CENTER);
-        setLayout(fLayout);
+        setLayout(null);
+        
+        //set de selecteer de vraag plaatje op het scherm
+        JLabel lblKiesEenVraag = new JLabel();
+        lblKiesEenVraag.setIcon(new ImageIcon(getClass().getResource("/media/vraagbuttons/kiesEenVraag.png")));
+        lblKiesEenVraag.setBounds((MainPanel.MAP_AREA_WIDTH-400)/2, 10, 400, 39);
+        add(lblKiesEenVraag);
         
         //set every question on screen for selection
         for (int i=0; i<land.getQuestions().size(); i++){
             currentQuestion = land.getQuestions().get(i);
             btnQuestionSelect = new JButton();
+            btnQuestionSelect.setBorderPainted(false);
             btnQuestionSelect.setIcon(new ImageIcon(getClass().getResource("/media/vraagbuttons/" + (1 + i) + ".png")));
+            btnQuestionSelect.setBounds(60+(i*60), 70, 29, 40);
             //add a mouselistener which patches you to the selected question
             btnQuestionSelect.addMouseListener(new MouseListener(){
 
@@ -45,22 +49,18 @@ public class QuestionSelection extends JPanel{
                 public void mouseClicked(MouseEvent e) {
                     Main.mainPanel.showPanelMapArea(new QuestionPanel(currentQuestion));
                 }
-
                 @Override
                 public void mousePressed(MouseEvent e) {
                     //not supported
                 }
-
                 @Override
                 public void mouseReleased(MouseEvent e) {
                     //not supported
                 }
-
                 @Override
                 public void mouseEntered(MouseEvent e) {
                     //not supported
                 }
-
                 @Override
                 public void mouseExited(MouseEvent e) {
                     //not supported
