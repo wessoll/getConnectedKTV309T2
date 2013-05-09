@@ -25,6 +25,7 @@ import we.getconnected.Main;
  *
  * @author wesley
  * @todo dimension en point objects for hardcoded int values
+ * @todo deze class moet eigenlijk worden verdeeld in een methode voor het showen van de mapArea en questionTextPanel
  */
 public class QuestionPanel extends JPanel {
 

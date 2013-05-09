@@ -15,6 +15,9 @@ import we.getconnected.Main;
  * Panel dat de vragen als selectie toont
  * @author wesley
  * @todo dimension en point objects for hardcoded int values
+ * @todo van Main.mainPanel.showPanelMapArea(new QuestionPanel(currentQuestion)); eerder een methode maken
+ * waarin de showPanelMapArea wordt aangeroepen, omdat in deze panel (moet dus methode zijn) ook de questionTextPanel
+ * wordt geplaatst
  */
 public class QuestionSelection extends JPanel{
     
