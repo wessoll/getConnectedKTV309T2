@@ -44,6 +44,10 @@ public class Continent extends JPanel{
         Collections.shuffle(questionList);
         
         landen.add(new Land(Landen.NEDERLAND,questionList));
+        landen.add(new Land(Landen.ITALIE,null));
+        landen.add(new Land(Landen.VERENIGD_KONINKRIJK,null));
+        landen.add(new Land(Landen.SPANJE,null));
+        landen.add(new Land(Landen.NOORWEGEN,null));
         
         //initialize form
         setBackground(Color.pink);
@@ -56,10 +60,10 @@ public class Continent extends JPanel{
         lblWorldMap.addMouseListener(new MouseListener(){
             @Override
             public void mouseClicked(MouseEvent e) {
-                Main.mainPanel.showPanelMapArea(new QuestionSelection(landen.get(0)));
+                //kijk welk land geklikt is a.d.v. landen bounds
                 for(Land land : landen){
-                    if(land.getBounds().contains(e.getPoint())){
-                        //hier moet dus hetgeen van 3 regels hierboven komen te staan
+                    if(land.getLand().getLandBounds().contains(e.getPoint())){
+                        Main.mainPanel.showPanelMapArea(new QuestionSelection(land));
                         break;
                     }
                 }
