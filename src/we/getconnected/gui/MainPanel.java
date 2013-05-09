@@ -49,24 +49,28 @@ public class MainPanel extends JPanel{
         //positioneer de knoppen op de sidebar en geef ze hun functie
         btnMenu = new JButton();
         btnMenu.setIcon(new ImageIcon(getClass().getResource("/media/Menu1024x768.png")));
+        btnMenu.setBorderPainted(false);
         btnMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnMenu.addMouseListener(new ButtonHandler());
         sidebar.add(btnMenu);
         
         btnMijnKaart = new JButton();
         btnMijnKaart.setIcon(new ImageIcon(getClass().getResource("/media/MijnKaart1024x768.png")));
+        btnMijnKaart.setBorderPainted(false);
         btnMijnKaart.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnMijnKaart.addMouseListener(new ButtonHandler());
         sidebar.add(btnMijnKaart);
         
         btnLeaderbord = new JButton();
         btnLeaderbord.setIcon(new ImageIcon(getClass().getResource("/media/Highscore1024x768.png")));
+        btnLeaderbord.setBorderPainted(false);
         btnLeaderbord.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnLeaderbord.addMouseListener(new ButtonHandler());
         sidebar.add(btnLeaderbord);
         
         btnOpties = new JButton();
         btnOpties.setIcon(new ImageIcon(getClass().getResource("/media/Opties1024x768.png")));
+        btnOpties.setBorderPainted(false);
         btnOpties.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnOpties.addMouseListener(new ButtonHandler());
         sidebar.add(btnOpties);
