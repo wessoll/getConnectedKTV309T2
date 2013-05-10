@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -26,10 +27,12 @@ import we.getconnected.Main;
  * @author wesley
  * @todo dimension en point objects for hardcoded int values
  * @todo deze class moet eigenlijk worden verdeeld in een methode voor het showen van de mapArea en questionTextPanel
+ * @todo mouselisteners vervangen voor een kortere methode?
  */
 public class QuestionPanel extends JPanel {
 
     private JLabel lblMap, lblCorrectLarge, lblIncorrectLarge, lblCorrectSmall, lblIncorrectSmall, lblLandComplete;
+    private JButton btnNext, btnPrevious;
     private Question currentQuestion;
     private Timer feedbackTimer;
     private JPanel questionTextPanel;
@@ -54,35 +57,6 @@ public class QuestionPanel extends JPanel {
         lblMap.setBounds((MainPanel.MAP_AREA_WIDTH-currentQuestion.getMap().getIconWidth())/2, (MainPanel.MAP_AREA_HEIGHT-currentQuestion.getMap().getIconHeight())/2, currentQuestion.getMap().getIconWidth(), currentQuestion.getMap().getIconHeight());//HARDCODED
         lblMap.setIcon(currentQuestion.getMap());
         
-        lblMap.addMouseListener(new MouseListener(){
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-              
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                
-            }
-            
-        });
-
         //maak alvast de plaatjes voor de feedback in de mapArea aan
         lblCorrectLarge = new JLabel();
         lblCorrectLarge.setIcon(new ImageIcon(getClass().getResource("/media/correctLarge.png")));
@@ -224,9 +198,100 @@ public class QuestionPanel extends JPanel {
         questionTextPanel.setBackground(Color.pink);
         questionTextPanel.setBounds(0, 0, MainPanel.BOTTOM_BAR_WIDTH, MainPanel.BOTTOM_BAR_HEIGHT);
         JLabel questionText = new JLabel(question.getText(), SwingConstants.CENTER);
+        questionText.setFont(new Font("Verdana", Font.PLAIN, 20));
         questionText.setBounds(0, 0, MainPanel.BOTTOM_BAR_WIDTH, 50);
         questionTextPanel.add(questionText);
+        
+        //maak 3 buttons aan voor het navigeren naar questionselect, vorige en volgedende vraag
+        JButton btnQuestionSelect = new JButton("QuestionSelect");
+        btnQuestionSelect.setBounds(0, 50, 100, 20);
+        btnQuestionSelect.addMouseListener(new MouseListener(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Main.mainPanel.showPanelMapArea(new QuestionSelection(currentLand));
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                //not supported
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //not supported
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //not supported
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //not supported
+            }
+        });
+        btnNext = new JButton("Volgende");
+        btnNext.setBounds(0, 70, 100, 20);
+        btnNext.addMouseListener(new MouseListener(){
 
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                updateButtonsEnabled();
+                for (int i=0;i<currentLand.getQuestions().size();i++){
+                    if (currentLand.getQuestions().get(i) == currentQuestion && i+1<currentLand.getQuestions().size()){
+                        Main.mainPanel.showPanelMapArea(new QuestionPanel(currentLand.getQuestions().get(i+1), currentLand));
+                    }
+                }
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                //not supported
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //not supported
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //not supported
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //not supported
+            }
+        });
+        btnPrevious = new JButton("Vorige");
+        btnPrevious.setBounds(0, 90, 100, 20);
+        btnPrevious.addMouseListener(new MouseListener(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                updateButtonsEnabled();
+                for (int i=0;i<currentLand.getQuestions().size();i++){
+                    if (currentLand.getQuestions().get(i) == currentQuestion && i>0){
+                        Main.mainPanel.showPanelMapArea(new QuestionPanel(currentLand.getQuestions().get(i-1), currentLand));
+                    }
+                }
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                //not supported
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                //not supported
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                //not supported
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                //not supported
+            }
+        });
+        
+        questionTextPanel.add(btnQuestionSelect);
+        questionTextPanel.add(btnNext);
+        questionTextPanel.add(btnPrevious);
+        
         //maak alvast de plaatjes voor de feedback in de questionTextPanel aan
         lblCorrectSmall = new JLabel();
         lblCorrectSmall.setIcon(new ImageIcon(getClass().getResource("/media/correctSmall.png")));
@@ -249,5 +314,22 @@ public class QuestionPanel extends JPanel {
         } else if (currentQuestion.getTries() > 0) {
             lblIncorrectSmall.setVisible(true);
         }
+    }
+    
+    public void updateButtonsEnabled(){
+//        //blokkeer de previous knop als we op de eerste vraag zijn
+//        if (currentQuestion == currentLand.getQuestions().get(0)){
+//            btnPrevious.setEnabled(false);
+//        }
+//        else{
+//            btnPrevious.setEnabled(true);
+//        }
+//        //blokkeer de next knop als we op de laatste vraag zijn
+//        if (currentQuestion == currentLand.getQuestions().get(currentLand.getQuestions().size())){
+//            btnNext.setEnabled(true);
+//        }
+//        else{
+//            btnNext.setEnabled(false);
+//        }
     }
 }
