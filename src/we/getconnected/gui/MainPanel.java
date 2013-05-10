@@ -69,14 +69,14 @@ public class MainPanel extends JPanel{
         sidebar.add(btnMijnKaart);
         
         btnLeaderbord = new JButton();
-        btnLeaderbord.setIcon(new ImageIcon(getClass().getResource("/media/Highscore1024x768.png")));
+        btnLeaderbord.setIcon(new ImageIcon(getClass().getResource("/media/Leaderboard.png")));
         btnLeaderbord.setBorderPainted(false);
         btnLeaderbord.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnLeaderbord.addMouseListener(new ButtonHandler());
         sidebar.add(btnLeaderbord);
         
         btnOpties = new JButton();
-        btnOpties.setIcon(new ImageIcon(getClass().getResource("/media/Opties1024x768.png")));
+        btnOpties.setIcon(new ImageIcon(getClass().getResource("/media/Logout.png")));
         btnOpties.setBorderPainted(false);
         btnOpties.setAlignmentX(Component.CENTER_ALIGNMENT);
         btnOpties.addMouseListener(new ButtonHandler());
