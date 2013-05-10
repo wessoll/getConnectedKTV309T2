@@ -314,22 +314,23 @@ public class QuestionPanel extends JPanel {
         } else if (currentQuestion.getTries() > 0) {
             lblIncorrectSmall.setVisible(true);
         }
+        updateButtonsEnabled();
     }
     
     public void updateButtonsEnabled(){
-//        //blokkeer de previous knop als we op de eerste vraag zijn
-//        if (currentQuestion == currentLand.getQuestions().get(0)){
-//            btnPrevious.setEnabled(false);
-//        }
-//        else{
-//            btnPrevious.setEnabled(true);
-//        }
-//        //blokkeer de next knop als we op de laatste vraag zijn
-//        if (currentQuestion == currentLand.getQuestions().get(currentLand.getQuestions().size())){
-//            btnNext.setEnabled(true);
-//        }
-//        else{
-//            btnNext.setEnabled(false);
-//        }
+        //blokkeer de previous knop als we op de eerste vraag zijn
+        if (currentQuestion == currentLand.getQuestions().get(0)){
+            btnPrevious.setEnabled(false);
+        }
+        else{
+            btnPrevious.setEnabled(true);
+        }
+        //blokkeer de next knop als we op de laatste vraag zijn
+        if (currentQuestion == currentLand.getQuestions().get(currentLand.getQuestions().size()-1)){
+            btnNext.setEnabled(false);
+        }
+        else{
+            btnNext.setEnabled(true);
+        }
     }
 }
