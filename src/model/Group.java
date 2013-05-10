@@ -8,8 +8,7 @@ import java.util.ArrayList;
  */
 public class Group {
     private String groupName;
-    private ArrayList<Student> students;
-    private ArrayList<Teacher> teachers;
+    private ArrayList<User> users;
     
     /**
      * Constructor voor opzetten van groep met bestaande studenten/ leraren
@@ -17,10 +16,9 @@ public class Group {
      * @param students          lijst met studenten
      * @param teachers          lijst met leraren
      */
-    public Group(String groupName, ArrayList<Student> students, ArrayList<Teacher> teachers){
+    public Group(String groupName, ArrayList<User> users){
         this.groupName = groupName;
-        this.students = students;
-        this.teachers = teachers;
+        this.users = users;
     }
     
     //Getters and setters
@@ -33,19 +31,11 @@ public class Group {
         this.groupName = groupName;
     }
 
-    public ArrayList<Student> getStudents() {
-        return students;
+    public ArrayList<User> getUsers() {
+        return users;
     }
 
-    public void setStudents(ArrayList<Student> students) {
-        this.students = students;
-    }
-
-    public ArrayList<Teacher> getTeachers() {
-        return teachers;
-    }
-
-    public void setTeachers(ArrayList<Teacher> teachers) {
-        this.teachers = teachers;
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
     }
 }

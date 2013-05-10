@@ -6,6 +6,7 @@ package we.getconnected.gui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.BoxLayout;
@@ -13,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import model.Continent;
+import we.getconnected.Main;
 
 /**
  * Hoofd panel dat alle subpanels bevat
@@ -40,10 +42,15 @@ public class MainPanel extends JPanel{
         setLayout(null);
         
         //maak de sidebar aan
-        sidebar = new JPanel();
+        sidebar = new JPanel(){
+            @Override
+            public void paintComponent(Graphics g){
+                g.drawImage(new ImageIcon(Main.IMAGES_LOCATION+"/sidebar.png").getImage(), 0, 0, null);
+            }
+        };
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
         sidebar.setBounds(0, 0, SIDEBAR_WIDTH, MAIN_HEIGHT);
-        sidebar.setBackground(Color.blue);
+        //sidebar.setBackground(Color.blue);
         add(sidebar);
         
         //positioneer de knoppen op de sidebar en geef ze hun functie
@@ -82,10 +89,15 @@ public class MainPanel extends JPanel{
         mapArea.setBackground(Color.yellow);
         add(mapArea);
         
-        bottomBar = new JPanel();
+        bottomBar = new JPanel(){
+            @Override
+            public void paintComponent(Graphics g){
+                g.drawImage(new ImageIcon(Main.IMAGES_LOCATION+"/bottombar.png").getImage(), 0, 0, null);
+            }
+        };
         bottomBar.setLayout(null);
         bottomBar.setBounds(SIDEBAR_WIDTH, MAIN_HEIGHT - BOTTOM_BAR_HEIGHT, BOTTOM_BAR_WIDTH, BOTTOM_BAR_HEIGHT);
-        bottomBar.setBackground(Color.green);
+        //bottomBar.setBackground(Color.green);
         add(bottomBar);
     }
     
@@ -121,7 +133,7 @@ public class MainPanel extends JPanel{
                 //do stuff for menu
             }
             else if (e.getSource().equals(btnMijnKaart)){
-                showPanelMapArea(new Continent());
+                showPanelMapArea(Main.user.getEurope());
             }
             else if (e.getSource().equals(btnLeaderbord)){
                 //do stuff for leaderbord

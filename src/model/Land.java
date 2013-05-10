@@ -73,15 +73,24 @@ public class Land {
         public Polygon getLandBounds(){
             return landBounds;
         }
+        
+        public static Landen fromString(String name){
+            for(Landen currentLand:values()){
+                if(currentLand.getLandNaam().equalsIgnoreCase(name)){
+                    return currentLand;
+                }
+            }
+            return null;
+        }
     }
 
     /**
      * Constructor
      * @param land          het land dat dit object representeert
      */
-    public Land(Landen land,List<Question> questions){
+    public Land(Landen land,List<Question> questions, boolean completed){
         this.land = land;
-        this.completed = false;
+        this.completed = completed;
         this.questions=questions;
     }
     

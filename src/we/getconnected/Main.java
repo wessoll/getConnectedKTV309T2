@@ -7,9 +7,9 @@ package we.getconnected;
 import java.awt.BorderLayout;
 import javax.swing.JApplet;
 import javax.swing.JPanel;
+import model.User;
 import we.getconnected.gui.InterfaceSize;
 import we.getconnected.gui.MainPanel;
-import we.getconnected.gui.UserInterfaceDesign;
 import we.getconnected.mysql.Dbmanager;
 import we.getconnected.mysql.QueryManager;
 
@@ -23,15 +23,17 @@ public class Main extends JApplet {
     public static String IMAGES_LOCATION;
     public static final InterfaceSize FRAME_SIZE = InterfaceSize.NORMAL;
     public static MainPanel mainPanel;
+    public static User user;
     private Dbmanager dbManager;
-    private QueryManager queryManager;
+    public static QueryManager queryManager;
     
     @Override
     public void init() {
-        //dbManager = new Dbmanager();
-        //dbManager.openConnection();
-        //queryManager = new QueryManager(dbManager);
         IMAGES_LOCATION = getCodeBase().getPath().replace("/build/classes", "/src/media");
+        dbManager = new Dbmanager();
+        dbManager.openConnection();
+        Main.queryManager = new QueryManager(dbManager);
+        Main.user = queryManager.getUser(1);
         this.setSize(FRAME_SIZE.getSize());
         
         //maak het MainPanel object aan dat de gehele interface bevat
@@ -51,8 +53,6 @@ public class Main extends JApplet {
     
     @Override
     public void stop(){
-        //this.st
-        //this.
-        //dbManager.closeConnection();
+        dbManager.closeConnection();
     }
 }

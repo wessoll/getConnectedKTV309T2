@@ -7,7 +7,12 @@ import java.security.MessageDigest;
  * @author wesley
  */
 public class User {
+    
+    private int id;
     private String firstName, lastName, userName, password;
+    private Continent europe;
+    private boolean isTeacher;
+    
     
     /**
      * Constructor
@@ -16,11 +21,13 @@ public class User {
      * @param userName          username gebruiker
      * @param password          wachtwoord gebruiker
      */
-    public User(String firstName, String lastName, String userName, String password){
+    public User(int id, String firstName, String lastName, String userName, String password, boolean isTeacher, Continent europe){
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
+        this.isTeacher=isTeacher;
+        this.europe=europe;
     }
     
     /**
@@ -81,4 +88,21 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Continent getEurope() {
+        return europe;
+    }
+
+    public void setEurope(Continent europe) {
+        this.europe = europe;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean isIsTeacher() {
+        return isTeacher;
+    }
+    
 }

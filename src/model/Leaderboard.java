@@ -8,18 +8,18 @@ import java.util.ArrayList;
  */
 
 public class Leaderboard {
-    private ArrayList<Student> leaderboard; 
+    private ArrayList<User> leaderboard; 
     
-    public Leaderboard(ArrayList<Student> students){
+    public Leaderboard(ArrayList<User> students){
         leaderboard = students;
     }
     
     // Get en Set methode om de ArrayList leaderboard aan te roepen.
-    public ArrayList<Student> getLeaderboard() {
+    public ArrayList<User> getLeaderboard() {
         return leaderboard;
     }
 
-    public void setLeaderboard(ArrayList<Student> leaderboard) {
+    public void setLeaderboard(ArrayList<User> leaderboard) {
         this.leaderboard = leaderboard;
     }
 }

@@ -42,10 +42,11 @@ public class QuestionSelection extends JPanel{
         
         //set every question on screen for selection
         for (int i=0; i<land.getQuestions().size(); i++){
-            currentQuestion = land.getQuestions().get(i);
+            currentQuestion = land.getQuestions().get(2);
             btnQuestionSelect = new JButton();
             btnQuestionSelect.setBorderPainted(false);
-            btnQuestionSelect.setIcon(new ImageIcon(getClass().getResource("/media/vraagbuttons/" + (1 + i) + ".png")));
+            btnQuestionSelect.setIcon(new ImageIcon(getClass().getResource("/media/vraagbuttons/" + (1 + i)+((currentQuestion.isCorrect())?"G":"")+".png")));
+            btnQuestionSelect.setName(String.valueOf(i));
             btnQuestionSelect.setBounds(60+(i*60), 70, 29, 40);
             //add a mouselistener which patches you to the selected question
             btnQuestionSelect.addMouseListener(new MouseListener(){

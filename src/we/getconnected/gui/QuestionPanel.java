@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import static java.awt.image.ImageObserver.WIDTH;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -51,8 +52,37 @@ public class QuestionPanel extends JPanel {
 
         //plaats de map in de mapArea
         lblMap = new JLabel();
-        lblMap.setBounds(0, WIDTH, 818, 582);//HARDCODED
+        lblMap.setBounds((MainPanel.MAP_AREA_WIDTH-currentQuestion.getMap().getIconWidth())/2, (MainPanel.MAP_AREA_HEIGHT-currentQuestion.getMap().getIconHeight())/2, currentQuestion.getMap().getIconWidth(), currentQuestion.getMap().getIconHeight());//HARDCODED
         lblMap.setIcon(currentQuestion.getMap());
+        
+        lblMap.addMouseListener(new MouseListener(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+              
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                System.out.println(e.getPoint());
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                
+            }
+            
+        });
 
         //maak alvast de plaatjes voor de feedback in de mapArea aan
         lblCorrectLarge = new JLabel();
@@ -100,6 +130,7 @@ public class QuestionPanel extends JPanel {
 
         //Set de punten van de antwoorden op de kaart
         ArrayList<Answer> answers = currentQuestion.getAnswers();
+        System.out.println(answers.size());
         for (final Answer answer : answers) {
             JLabel point = new JLabel(answer.getText());
             point.setFont(new Font("Verdana", Font.BOLD, 20));
@@ -181,7 +212,7 @@ public class QuestionPanel extends JPanel {
             });
 
             point.setBounds((int) answer.getLocation().getX(), (int) answer.getLocation().getY(), 20, 20);
-            add(point);
+            lblMap.add(point);
         }
         add(lblMap);
 

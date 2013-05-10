@@ -17,7 +17,7 @@ import we.getconnected.Main;
  */
 public class TempQuestions {
     
-    public static Question getQuestion1(){
+    /*public static Question getQuestion1(){
         ArrayList<Answer> antwoorden = new ArrayList<Answer>();
     
         antwoorden.add(new Answer(350,290,false,"A"));
@@ -212,7 +212,7 @@ public class TempQuestions {
         return question;
     }
         
-    
+    */
     
     
 }

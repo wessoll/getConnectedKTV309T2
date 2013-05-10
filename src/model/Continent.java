@@ -25,29 +25,32 @@ import we.getconnected.gui.QuestionSelection;
  */
 public class Continent extends JPanel{
     
+    private int id;
+    private String name;
     private JLabel lblWorldMap;
     private ArrayList<Land> landen;
     
     /**
      * Constructor voor het opzetten van het continent
      */
-    public Continent(){
-        //initalize content
-        landen = new ArrayList<Land>();
-        
-        List<Question> questionList = new ArrayList<Question>();
-        questionList.add(TempQuestions.getQuestion1());
-        questionList.add(TempQuestions.getQuestion2());
-        questionList.add(TempQuestions.getQuestion3());
+    public Continent(int id, String name, int userID){
+        this.id=id;
+        this.name=name;
+        //this.landen = landenList;
+         //initalize content
+        //List<Question> questionList = new ArrayList<Question>();
+        //questionList.add(TempQuestions.getQuestion1());
+        //questionList.add(TempQuestions.getQuestion2());
+        //questionList.add(TempQuestions.getQuestion3());
         
         //shuffle de vragen zodat ze niet telkens in dezelfde volgorde komen
-        Collections.shuffle(questionList);
-        
-        landen.add(new Land(Landen.NEDERLAND,questionList));
-        landen.add(new Land(Landen.ITALIE,null));
-        landen.add(new Land(Landen.VERENIGD_KONINKRIJK,null));
-        landen.add(new Land(Landen.SPANJE,null));
-        landen.add(new Land(Landen.NOORWEGEN,null));
+        //Collections.shuffle(questionList);
+        landen = Main.queryManager.getLandenByContinentID(id, userID);
+        //landen.add(new Land(Landen.NEDERLAND,questionList));
+        //landen.add(new Land(Landen.ITALIE,null));
+        //landen.add(new Land(Landen.VERENIGD_KONINKRIJK,null));
+        //landen.add(new Land(Landen.SPANJE,null));
+        //landen.add(new Land(Landen.NOORWEGEN,null));
         
         //initialize form
         setBackground(Color.pink);
@@ -61,7 +64,7 @@ public class Continent extends JPanel{
             @Override
             public void mouseClicked(MouseEvent e) {
                 //kijk welk land geklikt is a.d.v. landen bounds
-                for(Land land : landen){
+                for(Land land:landen){
                     if(land.getLand().getLandBounds().contains(e.getPoint())){
                         Main.mainPanel.showPanelMapArea(new QuestionSelection(land));
                         break;

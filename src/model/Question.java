@@ -21,12 +21,12 @@ public class Question {
      * @param map           map plaatje (bijv. hoogtekaart)
      * @param answers       lijst met mogelijke antwoorden
      */
-    public Question(String text, ImageIcon map, ArrayList<Answer> answers){
+    public Question(String text, ImageIcon map, ArrayList<Answer> answers,boolean correct, int tries){
         this.text = text;
         this.map = map;
         this.answers = answers;
-        correct = false;
-        tries = 0;
+        this.correct = correct;
+        this.tries = tries;
     }
     
     //Getters and setters
