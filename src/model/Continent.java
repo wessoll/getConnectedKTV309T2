@@ -27,10 +27,12 @@ public class Continent extends JPanel{
     
     private int id;
     private String name;
-    private JLabel lblWorldMap;
+    private JLabel lblWorldMap, lblCompleted;
     private ArrayList<Land> landen;
     private static boolean questionsShuffled = false;
     
+    private static final int LVL_COMPLETE_WIDTH = 818;
+    private static final int LVL_COMPLETE_HEIGHT = 582;
     /**
      * Constructor voor het opzetten van het continent
      */
@@ -59,10 +61,13 @@ public class Continent extends JPanel{
         //initialize form
         setBackground(Color.pink);
         setBounds(0, 0, MainPanel.MAP_AREA_WIDTH, MainPanel.MAP_AREA_HEIGHT);
+        setLayout(null);
         
         //plaats de wereldmap op het scherm
         lblWorldMap = new JLabel();
+        lblWorldMap.setBounds(0, 0, LVL_COMPLETE_WIDTH, LVL_COMPLETE_HEIGHT);
         lblWorldMap.setIcon(new ImageIcon(getClass().getResource("/media/Europe1024x768.jpg")));
+        
         //schakel door naar de vragen selectie voor het land dat geklikt is
         lblWorldMap.addMouseListener(new MouseListener(){
             @Override
@@ -98,5 +103,23 @@ public class Continent extends JPanel{
               
         });
         add(lblWorldMap);
+    }
+    
+    public ArrayList<Land> getLanden(){
+        return landen;
+    }
+    /**
+     * Update de wereldmap met de landen die uitgespeeld zijn
+     */
+    public void updateWorldMap(){
+        for (Land land : landen){
+            if (land.isCompleted()){
+                lblCompleted = new JLabel();
+                lblCompleted.setBounds(0, 0, LVL_COMPLETE_WIDTH, LVL_COMPLETE_HEIGHT);
+                lblCompleted.setIcon(land.getLand().getLandComplete());
+                add(lblCompleted);
+                add(lblWorldMap);
+            }
+        }
     }
 }

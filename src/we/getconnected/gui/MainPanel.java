@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import model.Continent;
+import model.Land;
 import we.getconnected.Main;
 
 /**
@@ -134,6 +135,7 @@ public class MainPanel extends JPanel{
             }
             else if (e.getSource().equals(btnMijnKaart)){
                 showPanelMapArea(Main.user.getEurope());
+                Main.user.getEurope().updateWorldMap();
             }
             else if (e.getSource().equals(btnLeaderbord)){
                 //do stuff for leaderbord

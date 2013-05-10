@@ -68,7 +68,7 @@ public class QuestionPanel extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                System.out.println(e.getPoint());
+                
             }
 
             @Override
@@ -129,7 +129,6 @@ public class QuestionPanel extends JPanel {
 
         //Set de punten van de antwoorden op de kaart
         ArrayList<Answer> answers = currentQuestion.getAnswers();
-        System.out.println(answers.size());
         for (final Answer answer : answers) {
             JLabel point = new JLabel(answer.getText());
             point.setFont(new Font("Verdana", Font.BOLD, 20));
@@ -158,7 +157,6 @@ public class QuestionPanel extends JPanel {
                             for (Question x : currentLand.getQuestions()) {
                                 questionCount++;
                             }
-                            System.out.println("Aantal vragen: " + questionCount);
 
                             // Voor elke vraag die goed is beantwoord word er 1 opgeteld bij questionComplete
                             // Is er een foute vraag dan word de teller weer op 0 gezet.
@@ -172,6 +170,11 @@ public class QuestionPanel extends JPanel {
 
                             //Hier word gekeken of de goed beantwoorde vragen gelijk zijn aan het aantal vragen. Want dat betekend dat alle vragen goed zijn beantwoord
                             if (questionCount == questionComplete) {
+                                for (int i=0;i<Main.user.getEurope().getLanden().size();i++){
+                                    if (Main.user.getEurope().getLanden().get(i) == currentLand){
+                                        Main.user.getEurope().getLanden().get(i).setCompleted(true);
+                                    }
+                                }
                                 lblLandComplete.setVisible(true);
                                 //toon feedback op scherm
                                 lblCorrectSmall.setVisible(true);
