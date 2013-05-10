@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import static java.awt.image.ImageObserver.WIDTH;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
@@ -150,9 +149,6 @@ public class QuestionPanel extends JPanel {
                             feedbackTimer.start();
                         } else {
                             currentQuestion.setCorrect(true);
-                            //toon feedback op scherm
-                            lblCorrectLarge.setVisible(true);
-                            feedbackTimer.start();
 
                             //for loop controleren of alle vragen juist zijn
                             int questionCount = 0;
@@ -177,10 +173,13 @@ public class QuestionPanel extends JPanel {
                             //Hier word gekeken of de goed beantwoorde vragen gelijk zijn aan het aantal vragen. Want dat betekend dat alle vragen goed zijn beantwoord
                             if (questionCount == questionComplete) {
                                 lblLandComplete.setVisible(true);
+                                //toon feedback op scherm
+                                lblCorrectSmall.setVisible(true);
 
                             } else {
-                                System.out.println("Het land is nog NIET vrijgespeeld");
-                                System.out.println("Goede vragen: " + questionComplete);
+                                //toon feedback op scherm
+                                lblCorrectLarge.setVisible(true);
+                                feedbackTimer.start();
                             }
                         }
 
