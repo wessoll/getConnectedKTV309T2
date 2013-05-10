@@ -22,7 +22,6 @@ import we.getconnected.Main;
 public class QuestionSelection extends JPanel{
     
     private JButton btnQuestionSelect;
-    private Question currentQuestion = null;
     private Land currentLand;
     
     /**
@@ -41,11 +40,10 @@ public class QuestionSelection extends JPanel{
         add(lblKiesEenVraag);
         
         //set every question on screen for selection
-        for (int i=0; i<land.getQuestions().size(); i++){
-            currentQuestion = land.getQuestions().get(2);
+        for (int i=0; i<currentLand.getQuestions().size(); i++){
             btnQuestionSelect = new JButton();
             btnQuestionSelect.setBorderPainted(false);
-            btnQuestionSelect.setIcon(new ImageIcon(getClass().getResource("/media/vraagbuttons/" + (1 + i)+((currentQuestion.isCorrect())?"G":"")+".png")));
+            btnQuestionSelect.setIcon(new ImageIcon(getClass().getResource("/media/vraagbuttons/" + (1 + i)+((currentLand.getQuestions().get(i).isCorrect())?"G":"")+".png")));
             btnQuestionSelect.setName(String.valueOf(i));
             btnQuestionSelect.setBounds(60+(i*60), 70, 29, 40);
             //add a mouselistener which patches you to the selected question
@@ -53,7 +51,9 @@ public class QuestionSelection extends JPanel{
 
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    Main.mainPanel.showPanelMapArea(new QuestionPanel(currentQuestion, currentLand));
+                    //strip de naam van de button om het id te krijgen
+                    int selectedQuestion = Integer.parseInt(e.getSource().toString().substring(20, 21));
+                    Main.mainPanel.showPanelMapArea(new QuestionPanel(currentLand.getQuestions().get(selectedQuestion), currentLand));
                 }
                 @Override
                 public void mousePressed(MouseEvent e) {

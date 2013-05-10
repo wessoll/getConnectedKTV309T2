@@ -29,6 +29,7 @@ public class Continent extends JPanel{
     private String name;
     private JLabel lblWorldMap;
     private ArrayList<Land> landen;
+    private static boolean questionsShuffled = false;
     
     /**
      * Constructor voor het opzetten van het continent
@@ -43,9 +44,12 @@ public class Continent extends JPanel{
         //questionList.add(TempQuestions.getQuestion2());
         //questionList.add(TempQuestions.getQuestion3());
         
-        //shuffle de vragen zodat ze niet telkens in dezelfde volgorde komen
-        //Collections.shuffle(questionList);
         landen = Main.queryManager.getLandenByContinentID(id, userID);
+        //shuffle de vragen eenmalig zodat ze niet telkens in dezelfde volgorde komen
+        if (!questionsShuffled){
+            Collections.shuffle(landen);
+            questionsShuffled = true;
+        }
         //landen.add(new Land(Landen.NEDERLAND,questionList));
         //landen.add(new Land(Landen.ITALIE,null));
         //landen.add(new Land(Landen.VERENIGD_KONINKRIJK,null));
