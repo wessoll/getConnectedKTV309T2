@@ -13,8 +13,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import model.Continent;
-import model.Land;
 import we.getconnected.Main;
 
 /**
@@ -34,12 +32,13 @@ public class MainPanel extends JPanel{
    
     private JPanel sidebar, bottomBar, mapArea;
     private JButton btnMenu, btnMijnKaart, btnLeaderbord, btnOpties;
+    public static final Color BACKGROUND_COLOR = new Color(178, 181, 138);
     
     /**
      * Constructor voor het opzetten van de hoofdonderdelen
      */
     public MainPanel(){
-        setBackground(Color.red);
+        setBackground(BACKGROUND_COLOR);
         setLayout(null);
         
         //maak de sidebar aan
@@ -87,7 +86,7 @@ public class MainPanel extends JPanel{
         mapArea = new JPanel();
         mapArea.setLayout(null);
         mapArea.setBounds(SIDEBAR_WIDTH, 0, MAP_AREA_WIDTH, MAP_AREA_HEIGHT);
-        mapArea.setBackground(Color.yellow);
+        mapArea.setBackground(BACKGROUND_COLOR);
         add(mapArea);
         
         bottomBar = new JPanel(){

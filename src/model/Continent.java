@@ -4,17 +4,13 @@
  */
 package model;
 
-import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import model.Land.Landen;
-import util.TempQuestions;
 import we.getconnected.Main;
 import we.getconnected.gui.MainPanel;
 import we.getconnected.gui.QuestionSelection;
@@ -59,7 +55,7 @@ public class Continent extends JPanel{
         //landen.add(new Land(Landen.NOORWEGEN,null));
         
         //initialize form
-        setBackground(Color.pink);
+        setBackground(MainPanel.BACKGROUND_COLOR);
         setBounds(0, 0, MainPanel.MAP_AREA_WIDTH, MainPanel.MAP_AREA_HEIGHT);
         setLayout(null);
         

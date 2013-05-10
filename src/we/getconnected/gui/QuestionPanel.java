@@ -49,7 +49,7 @@ public class QuestionPanel extends JPanel {
         this.currentLand = land;
         //initialize form
         setLayout(null);
-        setBackground(Color.ORANGE);
+        setBackground(MainPanel.BACKGROUND_COLOR);
         setBounds(0, 0, MainPanel.MAP_AREA_WIDTH, MainPanel.MAP_AREA_HEIGHT);
 
         //plaats de map in de mapArea
@@ -195,7 +195,7 @@ public class QuestionPanel extends JPanel {
         //maak de questionTextPanel met de vraag en plaats deze in de bottombar
         questionTextPanel = new JPanel();
         questionTextPanel.setLayout(null);
-        questionTextPanel.setBackground(Color.pink);
+        questionTextPanel.setBackground(MainPanel.BACKGROUND_COLOR);
         questionTextPanel.setBounds(0, 0, MainPanel.BOTTOM_BAR_WIDTH, MainPanel.BOTTOM_BAR_HEIGHT);
         JLabel questionText = new JLabel(question.getText(), SwingConstants.CENTER);
         questionText.setFont(new Font("Verdana", Font.PLAIN, 20));
