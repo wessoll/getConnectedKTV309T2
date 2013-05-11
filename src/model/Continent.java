@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.awt.event.MouseEvent;
@@ -21,42 +17,37 @@ import we.getconnected.gui.QuestionSelection;
  */
 public class Continent extends JPanel{
     
-    private int id;
-    private String name;
+    private int continent_id;
+    private String continentName;
     private JLabel lblWorldMap, lblCompleted;
-    private ArrayList<Land> landen;
+    private ArrayList<Country> landen;
     private static boolean questionsShuffled = false;
     
     private static final int LVL_COMPLETE_WIDTH = 818;
     private static final int LVL_COMPLETE_HEIGHT = 582;
+    
     /**
      * Constructor voor het opzetten van het continent
+     * @param continent_id      id van het continent
+     * @param continentName    naam van het continent
+     * @param user_id           de id van de user waaraan het continent gekoppeld is
      */
-    public Continent(int id, String name, int userID){
-        this.id=id;
-        this.name=name;
-        //this.landen = landenList;
-         //initalize content
-        //List<Question> questionList = new ArrayList<Question>();
-        //questionList.add(TempQuestions.getQuestion1());
-        //questionList.add(TempQuestions.getQuestion2());
-        //questionList.add(TempQuestions.getQuestion3());
+    public Continent(int continent_id, String continentName, int user_id){
+        this.continent_id=continent_id;
+        this.continentName=continentName;
         
-        landen = Main.queryManager.getLandenByContinentID(id, userID);
-        //shuffle de vragen eenmalig zodat ze niet telkens in dezelfde volgorde komen
+        landen = Main.getQueryManager().getUserCountries(user_id);
+        //shuffle de vragen eenmaal per land zodat ze niet bij iedereen in dezelfde volgorde komen
         if (!questionsShuffled){
-            Collections.shuffle(landen);
+            for (Country land : landen){
+                Collections.shuffle(land.getQuestions());
+            }
             questionsShuffled = true;
         }
-        //landen.add(new Land(Landen.NEDERLAND,questionList));
-        //landen.add(new Land(Landen.ITALIE,null));
-        //landen.add(new Land(Landen.VERENIGD_KONINKRIJK,null));
-        //landen.add(new Land(Landen.SPANJE,null));
-        //landen.add(new Land(Landen.NOORWEGEN,null));
         
         //initialize form
         setBackground(MainPanel.BACKGROUND_COLOR);
-        setBounds(0, 0, MainPanel.MAP_AREA_WIDTH, MainPanel.MAP_AREA_HEIGHT);
+        setBounds(0, 0, MainPanel.MAP_AREA.width, MainPanel.MAP_AREA.height);
         setLayout(null);
         
         //plaats de wereldmap op het scherm
@@ -69,29 +60,25 @@ public class Continent extends JPanel{
             @Override
             public void mouseClicked(MouseEvent e) {
                 //kijk welk land geklikt is a.d.v. landen bounds
-                for(Land land:landen){
+                for(Country land:landen){
                     if(land.getLand().getLandBounds().contains(e.getPoint())){
-                        Main.mainPanel.showPanelMapArea(new QuestionSelection(land));
+                        Main.getMainPanel().showPanelMapArea(new QuestionSelection(land));
                         break;
                     }
                 }
             }
-
             @Override
             public void mousePressed(MouseEvent e) {
                 //no supported
             }
-
             @Override
             public void mouseReleased(MouseEvent e) {
                 //no supported
             }
-
             @Override
             public void mouseEntered(MouseEvent e) {
                 //no supported
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
                 //no supported
@@ -101,14 +88,14 @@ public class Continent extends JPanel{
         add(lblWorldMap);
     }
     
-    public ArrayList<Land> getLanden(){
+    public ArrayList<Country> getLanden(){
         return landen;
     }
     /**
      * Update de wereldmap met de landen die uitgespeeld zijn
      */
     public void updateWorldMap(){
-        for (Land land : landen){
+        for (Country land : landen){
             if (land.isCompleted()){
                 lblCompleted = new JLabel();
                 lblCompleted.setBounds(0, 0, LVL_COMPLETE_WIDTH, LVL_COMPLETE_HEIGHT);
@@ -117,5 +104,19 @@ public class Continent extends JPanel{
                 add(lblWorldMap);
             }
         }
+    }
+
+    public int getContinent_id() {
+        return continent_id;
+    }
+
+    public void setContinent_id(int continent_id) {
+        this.continent_id = continent_id;
+    }
+    public String getContinentName(){
+        return continentName;
+    }
+    public void setContinentName(String continentName){
+        this.continentName = continentName;
     }
 }

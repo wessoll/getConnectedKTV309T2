@@ -1,6 +1,7 @@
 package model;
 
 import java.security.MessageDigest;
+import we.getconnected.Main;
 
 /**
  * Parentklasse voor het opzetten van een gebruiker
@@ -8,55 +9,33 @@ import java.security.MessageDigest;
  */
 public class User {
     
-    private int id;
+    private int user_id;
     private String firstName, lastName, userName, password;
     private Continent europe;
-    private boolean isTeacher;
+    private boolean teacher;
     
     
     /**
      * Constructor
+     * @param user_id           id van de gebruiker
      * @param firstName         voornaam gebruiker
      * @param lastName          achternaam gebruiker
      * @param userName          username gebruiker
      * @param password          wachtwoord gebruiker
+     * @param teacher           boolean of het een leraar is of niet
      */
-    public User(int id, String firstName, String lastName, String userName, String password, boolean isTeacher, Continent europe){
+    public User(int user_id, String firstName, String lastName, String userName, String password, boolean teacher){
+        this.user_id = user_id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
-        this.isTeacher=isTeacher;
-        this.europe=europe;
+        this.teacher=teacher;
+        europe = Main.getQueryManager().getContinent("Europa", user_id);
     }
-    
-    /**
-     * Maakt een MD5-hash van een char[]
-     * @param password      De password char[] die moet worden geconvert naar een MD5 hash
-     * @return              MD5-hash in String formaat
-     */
-    public static String md5(char[] password) throws Exception{
-        try {
-            String stringPassword = "";
-            for (char p : password){
-                stringPassword += String.valueOf(p);
-            }
-            
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] array = md.digest(stringPassword.getBytes());
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < array.length; ++i) {
-                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
-            }
-            return sb.toString();
-        } 
-        catch (java.security.NoSuchAlgorithmException e) {
-            throw new Exception("Converting password to md5hash: " + e.getMessage());
-        }
-    }
-
+ 
     //Getters and setters
-    
+
     public String getFirstName() {
         return firstName;
     }
@@ -89,20 +68,26 @@ public class User {
         this.password = password;
     }
 
-    public Continent getEurope() {
-        return europe;
+    public boolean isTeacher() {
+        return teacher;
     }
 
-    public void setEurope(Continent europe) {
-        this.europe = europe;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public boolean isIsTeacher() {
-        return isTeacher;
+    public void setTeacher(boolean teacher) {
+        this.teacher = teacher;
     }
     
+    public Continent getEurope(){
+        return europe;
+    }
+    
+    public void setEurope(Continent europe){
+        this.europe = europe;
+    }
+    
+    public int getUser_id(){
+        return user_id;
+    }
+    public void setUser_id(int user_id){
+        this.user_id = user_id;
+    }
 }

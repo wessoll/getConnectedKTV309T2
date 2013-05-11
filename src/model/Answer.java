@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.awt.Point;
@@ -12,34 +8,39 @@ import java.awt.Point;
  */
 public class Answer extends java.awt.Point{
     
-    private boolean correctAnswer;
-    private String text;
+    private boolean correct;
+    private String answer;
     
     /**
      * Constructor
-     * @param x                 x coordinaat
-     * @param y                 y coordinaat
-     * @param correctAnswer     boolean of dit het goede antwoord is
-     * @param text              antwoord tekst (bijv. A, B, C of D)
+     * @param x                 x coordinaat op de map
+     * @param y                 y coordinaat op de map
+     * @param correct           boolean of dit het goede antwoord is
+     * @param answer            antwoord tekst (bijv. A, B, C of D)
      */
-    public Answer(int x, int y, boolean correctAnswer, String text){
+    public Answer(int x, int y, byte correct, String answer){
         super(x,y);
-        this.correctAnswer = correctAnswer;
-        this.text = text;
+        if (correct == 0){
+            this.correct = false;
+        }
+        else{
+            this.correct = true;
+        }
+        this.answer = answer;
     }
     
     //Getters and setters
-    public boolean isCorrectAnswer(){
-        return correctAnswer;
+    public boolean isCorrect(){
+        return correct;
     }
-    public void setCorrectAnswer(boolean correctAnswer){
-        this.correctAnswer = correctAnswer;
+    public void setCorrect(boolean correct){
+        this.correct = correct;
     }
-    public String getText(){
-        return text;
+    public String getAnswer(){
+        return answer;
     }
-    public void setText(String text){
-        this.text = text;
+    public void setAnswer(String answer){
+        this.answer = answer;
     }
     @Override
     public Point getLocation(){

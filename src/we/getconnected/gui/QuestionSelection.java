@@ -1,13 +1,14 @@
 
 package we.getconnected.gui;
 
+import java.awt.Dimension;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import model.Land;
+import model.Country;
 import model.Question;
 import we.getconnected.Main;
 
@@ -21,22 +22,26 @@ import we.getconnected.Main;
  */
 public class QuestionSelection extends JPanel{
     
+    //lengtes en breedtes
+    private static final Dimension KIES_VRAAG = new Dimension(400,39);
+    private static final Dimension SELECT_BUTTON = new Dimension(28,40);
+    
     private JButton btnQuestionSelect;
-    private Land currentLand;
+    private Country currentLand;
     
     /**
      * Constructor
      * @param land      het land waarvoor de vragen als selectie moeten worden getoond 
      */
-    public QuestionSelection(Land land){
+    public QuestionSelection(Country land){
         currentLand = land;
-        setBounds(0, 0, MainPanel.MAP_AREA_WIDTH, MainPanel.MAP_AREA_HEIGHT);
+        setBounds(0, 0, MainPanel.MAP_AREA.width, MainPanel.MAP_AREA.height);
         setLayout(null);
         
         //set de selecteer de vraag plaatje op het scherm
         JLabel lblKiesEenVraag = new JLabel();
         lblKiesEenVraag.setIcon(new ImageIcon(getClass().getResource("/media/vraagbuttons/kiesEenVraag.png")));
-        lblKiesEenVraag.setBounds((MainPanel.MAP_AREA_WIDTH-400)/2, 10, 400, 39);
+        lblKiesEenVraag.setBounds((MainPanel.MAP_AREA.width-KIES_VRAAG.width)/2, 10, KIES_VRAAG.width, KIES_VRAAG.height);
         add(lblKiesEenVraag);
         
         //set every question on screen for selection
@@ -45,7 +50,7 @@ public class QuestionSelection extends JPanel{
             btnQuestionSelect.setBorderPainted(false);
             btnQuestionSelect.setIcon(new ImageIcon(getClass().getResource("/media/vraagbuttons/" + (1 + i)+((currentLand.getQuestions().get(i).isCorrect())?"G":"")+".png")));
             btnQuestionSelect.setName(String.valueOf(i));
-            btnQuestionSelect.setBounds(60+(i*60), 70, 29, 40);
+            btnQuestionSelect.setBounds(60+(i*60), 70, SELECT_BUTTON.width, SELECT_BUTTON.height);
             //add a mouselistener which patches you to the selected question
             btnQuestionSelect.addMouseListener(new MouseListener(){
 
@@ -53,7 +58,7 @@ public class QuestionSelection extends JPanel{
                 public void mouseClicked(MouseEvent e) {
                     //strip de naam van de button om het id te krijgen
                     int selectedQuestion = Integer.parseInt(e.getSource().toString().substring(20, 21));
-                    Main.mainPanel.showPanelMapArea(new QuestionPanel(currentLand.getQuestions().get(selectedQuestion), currentLand));
+                    Main.getMainPanel().showPanelMapArea(new QuestionPanel(currentLand.getQuestions().get(selectedQuestion), currentLand));
                 }
                 @Override
                 public void mousePressed(MouseEvent e) {

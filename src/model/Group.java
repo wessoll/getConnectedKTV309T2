@@ -3,7 +3,7 @@ package model;
 import java.util.ArrayList;
 
 /**
- * Klasse voor het opzetten van een groep met studenten die wordt geleidt door één of meerdere leraren
+ * Klasse voor het opzetten van een groep die bestaat uit users (studenten, leerlingen)
  * @author wesley
  */
 public class Group {
@@ -11,10 +11,9 @@ public class Group {
     private ArrayList<User> users;
     
     /**
-     * Constructor voor opzetten van groep met bestaande studenten/ leraren
+     * Constructor voor opzetten van groep studenten/ leraren
      * @param groupName         naam van de groep
-     * @param students          lijst met studenten
-     * @param teachers          lijst met leraren
+     * @param users             de lijst met users
      */
     public Group(String groupName, ArrayList<User> users){
         this.groupName = groupName;

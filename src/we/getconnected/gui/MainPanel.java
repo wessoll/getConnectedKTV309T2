@@ -1,11 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package we.getconnected.gui;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -22,17 +19,13 @@ import we.getconnected.Main;
 public class MainPanel extends JPanel{
     
     //Lengte en breedtes
-    public static final int MAIN_WIDTH = 1024;
-    public static final int MAIN_HEIGHT = 768;
-    public static final int SIDEBAR_WIDTH = 200;
-    public static final int BOTTOM_BAR_WIDTH = MAIN_WIDTH - SIDEBAR_WIDTH;
-    public static final int BOTTOM_BAR_HEIGHT = 200;
-    public static final int MAP_AREA_WIDTH = MAIN_WIDTH - SIDEBAR_WIDTH;
-    public static final int MAP_AREA_HEIGHT = MAIN_HEIGHT - BOTTOM_BAR_HEIGHT;
+    public static final Dimension SIDEBAR = new Dimension(200,Main.INTERFACE_SIZE.height); 
+    public static final Dimension BOTTOM_BAR = new Dimension(Main.INTERFACE_SIZE.width - SIDEBAR.width, 200);
+    public static final Dimension MAP_AREA = new Dimension(Main.INTERFACE_SIZE.width - SIDEBAR.width, Main.INTERFACE_SIZE.height - BOTTOM_BAR.height);
+    public static final Color BACKGROUND_COLOR = new Color(178, 181, 138);
    
     private JPanel sidebar, bottomBar, mapArea;
     private JButton btnMenu, btnMijnKaart, btnLeaderbord, btnOpties;
-    public static final Color BACKGROUND_COLOR = new Color(178, 181, 138);
     
     /**
      * Constructor voor het opzetten van de hoofdonderdelen
@@ -49,8 +42,7 @@ public class MainPanel extends JPanel{
             }
         };
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
-        sidebar.setBounds(0, 0, SIDEBAR_WIDTH, MAIN_HEIGHT);
-        //sidebar.setBackground(Color.blue);
+        sidebar.setBounds(0, 0, SIDEBAR.width, SIDEBAR.height);
         add(sidebar);
         
         //positioneer de knoppen op de sidebar en geef ze hun functie
@@ -85,7 +77,7 @@ public class MainPanel extends JPanel{
         //maak de andere bars aan
         mapArea = new JPanel();
         mapArea.setLayout(null);
-        mapArea.setBounds(SIDEBAR_WIDTH, 0, MAP_AREA_WIDTH, MAP_AREA_HEIGHT);
+        mapArea.setBounds(SIDEBAR.width, 0, MAP_AREA.width, MAP_AREA.height);
         mapArea.setBackground(BACKGROUND_COLOR);
         add(mapArea);
         
@@ -96,8 +88,7 @@ public class MainPanel extends JPanel{
             }
         };
         bottomBar.setLayout(null);
-        bottomBar.setBounds(SIDEBAR_WIDTH, MAIN_HEIGHT - BOTTOM_BAR_HEIGHT, BOTTOM_BAR_WIDTH, BOTTOM_BAR_HEIGHT);
-        //bottomBar.setBackground(Color.green);
+        bottomBar.setBounds(SIDEBAR.width, SIDEBAR.height - BOTTOM_BAR.height, BOTTOM_BAR.width, BOTTOM_BAR.height);
         add(bottomBar);
     }
     
@@ -133,8 +124,9 @@ public class MainPanel extends JPanel{
                 //do stuff for menu
             }
             else if (e.getSource().equals(btnMijnKaart)){
-                showPanelMapArea(Main.user.getEurope());
-                Main.user.getEurope().updateWorldMap();
+                showPanelMapArea(Main.getCurrentUser().getEurope());
+                //update de map zodat alle uitgespeelde landen worden getoond
+                Main.getCurrentUser().getEurope().updateWorldMap();
             }
             else if (e.getSource().equals(btnLeaderbord)){
                 //do stuff for leaderbord

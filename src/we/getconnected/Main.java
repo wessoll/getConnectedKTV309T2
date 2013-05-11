@@ -1,14 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package we.getconnected;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import javax.swing.JApplet;
 import javax.swing.JPanel;
+import model.Continent;
 import model.User;
-import we.getconnected.gui.InterfaceSize;
+import we.getconnected.gui.Login;
 import we.getconnected.gui.MainPanel;
 import we.getconnected.mysql.Dbmanager;
 import we.getconnected.mysql.QueryManager;
@@ -20,12 +18,12 @@ import we.getconnected.mysql.QueryManager;
 public class Main extends JApplet {
 
     public static final String NAME = "GetConnected Team KTV309";
+    public static final Dimension INTERFACE_SIZE = new Dimension(1024,768);
     public static String IMAGES_LOCATION;
-    public static final InterfaceSize FRAME_SIZE = InterfaceSize.NORMAL;
-    public static MainPanel mainPanel;
-    public static User user;
+    private static MainPanel mainPanel;
+    private static User currentUser;
     private Dbmanager dbManager;
-    public static QueryManager queryManager;
+    private static QueryManager queryManager;
     
     @Override
     public void init() {
@@ -33,13 +31,16 @@ public class Main extends JApplet {
         dbManager = new Dbmanager();
         dbManager.openConnection();
         Main.queryManager = new QueryManager(dbManager);
-        Main.user = queryManager.getUser(1);
-        this.setSize(FRAME_SIZE.getSize());
+        this.setSize(INTERFACE_SIZE.getSize());
         
-        //maak het MainPanel object aan dat de gehele interface bevat
+        //TIJDELIJK ZONDER INLOG:
+        //open login
+        //this.add(new Login());
+        
+        //EN CURRENTUSER HARD OP DE EERSTE ZETTEN
+        currentUser = queryManager.getUser("piet");
         mainPanel = new MainPanel();
         this.add(mainPanel);
-        //this.add(new UserInterfaceDesign());
         this.setJMenuBar(null);
         this.setVisible(true);
     }
@@ -54,5 +55,21 @@ public class Main extends JApplet {
     @Override
     public void stop(){
         dbManager.closeConnection();
+    }
+    
+    public static QueryManager getQueryManager(){
+        return queryManager;
+    }
+    public static void setCurrentUser(User user){
+        currentUser = user;
+    }
+    public static User getCurrentUser(){
+        return currentUser;
+    }
+    public static MainPanel getMainPanel(){
+        return mainPanel;
+    }
+    public static void setMainPanel(MainPanel mp){
+        mainPanel = mp;
     }
 }
