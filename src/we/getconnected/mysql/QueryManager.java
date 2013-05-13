@@ -19,6 +19,27 @@ public class QueryManager {
         this.dbmanager = dbmanager;
     }
 
+     public ArrayList<User> getUsers(){
+        ArrayList<User> users = new ArrayList<User>();
+        try {
+            String sql = "SELECT * FROM user";
+            ResultSet result = dbmanager.doQuery(sql);
+            while(result.next()) {
+                users.add(new User(
+                        result.getInt("user_id"),
+                        result.getString("firstname"),
+                        result.getString("lastname"),
+                        result.getString("username"),
+                        result.getString("password"),
+                        result.getBoolean("teacher")
+                        ));
+            }
+        } catch (SQLException e) {
+            System.out.println(Dbmanager.SQL_EXCEPTION + e.getMessage());
+        }
+        return users;
+    }
+    
     public User getUser(String username){
         User user=  null; 
         try {

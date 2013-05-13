@@ -22,6 +22,7 @@ public class Continent extends JPanel{
     private JLabel lblWorldMap, lblCompleted;
     private ArrayList<Country> landen;
     private static boolean questionsShuffled = false;
+    boolean playable;
     
     private static final int LVL_COMPLETE_WIDTH = 818;
     private static final int LVL_COMPLETE_HEIGHT = 582;
@@ -118,5 +119,13 @@ public class Continent extends JPanel{
     }
     public void setContinentName(String continentName){
         this.continentName = continentName;
+    }
+    
+    public boolean isPlayable(){
+        return playable;
+    }
+    
+    public void setPlayable(boolean playable){
+        this.playable=playable;
     }
 }

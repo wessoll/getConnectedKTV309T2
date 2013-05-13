@@ -139,7 +139,8 @@ public class MainPanel extends JPanel{
                 Main.getCurrentUser().getEurope().updateWorldMap();
             }
             else if (e.getSource().equals(btnLeaderbord)){
-                //do stuff for leaderbord
+                showPanelMapArea(Main.getLeaderboard());
+                showPanelBottomBar(Main.getLeaderboard().getBottomBar());
             }
             else if (e.getSource().equals(btnUitloggen)){
                 //set mainPanel weer op null en open het loginscherm voor een nieuwe gebruiker

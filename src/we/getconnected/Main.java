@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import javax.swing.JApplet;
 import javax.swing.JPanel;
 import model.Continent;
+import model.Leaderboard;
 import model.User;
 import we.getconnected.gui.Login;
 import we.getconnected.gui.MainPanel;
@@ -22,6 +23,7 @@ public class Main extends JApplet {
     public static String IMAGES_LOCATION;
     private static MainPanel mainPanel;
     private static User currentUser;
+    private static Leaderboard leaderboard;
     private Dbmanager dbManager;
     private static QueryManager queryManager;
     private static JPanel userInterface;
@@ -33,7 +35,7 @@ public class Main extends JApplet {
         dbManager.openConnection();
         Main.queryManager = new QueryManager(dbManager);
         this.setSize(INTERFACE_SIZE.getSize());
-        
+        leaderboard = new Leaderboard(queryManager.getUsers());
         userInterface = new JPanel();
         userInterface.setSize(INTERFACE_SIZE);
         userInterface.setLayout(new BorderLayout());
@@ -72,4 +74,9 @@ public class Main extends JApplet {
     public static void setMainPanel(MainPanel mp){
         mainPanel = mp;
     }
+    
+    public static Leaderboard getLeaderboard(){
+        return leaderboard;
+    }
+    
 }
