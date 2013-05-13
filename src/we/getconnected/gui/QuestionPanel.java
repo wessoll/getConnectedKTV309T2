@@ -3,6 +3,7 @@ package we.getconnected.gui;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -34,6 +35,12 @@ public class QuestionPanel extends JPanel {
     private static final Dimension FEEDBACK_LARGE = new Dimension(605,484);
     private static final Dimension FEEDBACK_SMALL = new Dimension(113, 91);
     private static final Dimension LEVEL_COMPLETE = new Dimension(757,568);
+    private static final Dimension VRAGEN = new Dimension(128,37);
+    private static final Dimension VOLGENDE = new Dimension(137,39);
+    private static final Dimension VORIGE = new Dimension(137,40);
+    private static final Point VRAGEN_C = new Point((MainPanel.BOTTOM_BAR.width-VOLGENDE.width)/2, 100);
+    private static final Point VOLGENDE_C = new Point((VRAGEN_C.x+VRAGEN.width), 100);
+    private static final Point VORIGE_C = new Point(VRAGEN_C.x-VORIGE.width, 100);
     
     private JLabel lblMap, lblCorrectLarge, lblIncorrectLarge, lblCorrectSmall, lblIncorrectSmall, lblLandComplete;
     private JButton btnNext, btnPrevious;
@@ -199,8 +206,10 @@ public class QuestionPanel extends JPanel {
         questionTextPanel.add(questionText);
         
         //maak 3 buttons aan voor het navigeren naar questionselect, vorige en volgende vraag
-        JButton btnQuestionSelect = new JButton("QuestionSelect");
-        btnQuestionSelect.setBounds(0, 50, 100, 20);
+        JButton btnQuestionSelect = new JButton();
+        btnQuestionSelect.setIcon(new ImageIcon(Main.IMAGES_LOCATION + "Vragen.png"));
+        btnQuestionSelect.setBorderPainted(false);
+        btnQuestionSelect.setBounds(VRAGEN_C.x, VRAGEN_C.y, VRAGEN.width, VRAGEN.height);
         btnQuestionSelect.addMouseListener(new MouseListener(){
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -223,8 +232,10 @@ public class QuestionPanel extends JPanel {
                 //not supported
             }
         });
-        btnNext = new JButton("Volgende");
-        btnNext.setBounds(0, 70, 100, 20);
+        btnNext = new JButton();
+        btnNext.setIcon(new ImageIcon(Main.IMAGES_LOCATION + "Volgende.png"));
+        btnNext.setBorderPainted(false);
+        btnNext.setBounds(VOLGENDE_C.x, VOLGENDE_C.y, VOLGENDE.width, VOLGENDE.height);
         btnNext.addMouseListener(new MouseListener(){
 
             @Override
@@ -253,8 +264,10 @@ public class QuestionPanel extends JPanel {
                 //not supported
             }
         });
-        btnPrevious = new JButton("Vorige");
-        btnPrevious.setBounds(0, 90, 100, 20);
+        btnPrevious = new JButton();
+        btnPrevious.setIcon(new ImageIcon(Main.IMAGES_LOCATION + "Vorige.png"));
+        btnPrevious.setBorderPainted(false);
+        btnPrevious.setBounds(VORIGE_C.x, VORIGE_C.y, VORIGE.width, VORIGE.height);
         btnPrevious.addMouseListener(new MouseListener(){
 
             @Override
