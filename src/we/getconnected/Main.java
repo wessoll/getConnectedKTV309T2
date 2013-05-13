@@ -24,6 +24,7 @@ public class Main extends JApplet {
     private static User currentUser;
     private Dbmanager dbManager;
     private static QueryManager queryManager;
+    private static JPanel userInterface;
     
     @Override
     public void init() {
@@ -33,24 +34,23 @@ public class Main extends JApplet {
         Main.queryManager = new QueryManager(dbManager);
         this.setSize(INTERFACE_SIZE.getSize());
         
-        //TIJDELIJK ZONDER INLOG:
-        //open login
-        //this.add(new Login());
+        userInterface = new JPanel();
+        userInterface.setSize(INTERFACE_SIZE);
+        userInterface.setLayout(new BorderLayout());
+        this.add(userInterface);
         
-        //EN CURRENTUSER HARD OP DE EERSTE ZETTEN
-        currentUser = queryManager.getUser("admin");
-        mainPanel = new MainPanel();
-        this.add(mainPanel);
+        userInterface.add(new Login());
+        
         this.setJMenuBar(null);
         this.setVisible(true);
     }
-    
-    public void showPanel(JPanel panel) {
-       this.getContentPane().removeAll();
-       this.getContentPane().add(panel, BorderLayout.CENTER);
-       this.getContentPane().validate();
-       this.getContentPane().repaint();
+    public static void showUserInterfacePanel(JPanel panel){
+        userInterface.removeAll();
+        userInterface.add(panel);
+        userInterface.repaint();
+        userInterface.revalidate();
     }
+    
     
     @Override
     public void stop(){

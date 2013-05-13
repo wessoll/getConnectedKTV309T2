@@ -25,7 +25,7 @@ public class MainPanel extends JPanel{
     public static final Color BACKGROUND_COLOR = new Color(178, 181, 138);
    
     private JPanel sidebar, bottomBar, mapArea;
-    private JButton btnMenu, btnMijnKaart, btnLeaderbord, btnOpties;
+    private JButton btnMenu, btnMijnKaart, btnLeaderbord, btnUitloggen;
     
     /**
      * Constructor voor het opzetten van de hoofdonderdelen
@@ -67,12 +67,12 @@ public class MainPanel extends JPanel{
         btnLeaderbord.addMouseListener(new ButtonHandler());
         sidebar.add(btnLeaderbord);
         
-        btnOpties = new JButton();
-        btnOpties.setIcon(new ImageIcon(getClass().getResource("/media/Logout.png")));
-        btnOpties.setBorderPainted(false);
-        btnOpties.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnOpties.addMouseListener(new ButtonHandler());
-        sidebar.add(btnOpties);
+        btnUitloggen = new JButton();
+        btnUitloggen.setIcon(new ImageIcon(getClass().getResource("/media/Logout.png")));
+        btnUitloggen.setBorderPainted(false);
+        btnUitloggen.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnUitloggen.addMouseListener(new ButtonHandler());
+        sidebar.add(btnUitloggen);
         
         //maak de andere bars aan
         mapArea = new JPanel();
@@ -141,8 +141,10 @@ public class MainPanel extends JPanel{
             else if (e.getSource().equals(btnLeaderbord)){
                 //do stuff for leaderbord
             }
-            else if (e.getSource().equals(btnOpties)){
-                //do stuff for opties
+            else if (e.getSource().equals(btnUitloggen)){
+                //set mainPanel weer op null en open het loginscherm voor een nieuwe gebruiker
+                Main.setMainPanel(null);
+                Main.showUserInterfacePanel(new Login());
             }
         }
 

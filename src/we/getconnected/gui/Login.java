@@ -1,5 +1,6 @@
 package we.getconnected.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -102,8 +103,11 @@ public class Login extends JPanel {
                 JOptionPane.showMessageDialog(null, "Uw gebruikersnaam of wachtwoord is onjuist.", "Foutieve inloggegevens", JOptionPane.ERROR_MESSAGE);
             } //set anders het currentUser object in main
             else {
+                //set currentuser als ingelogde gebruiker
                 Main.setCurrentUser(user);
+                //maak een nieuwe mainPanel aan voor de gebruiker en voeg deze toe aan de interface
                 Main.setMainPanel(new MainPanel());
+                Main.showUserInterfacePanel(Main.getMainPanel());
             }
         } catch (Exception ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
