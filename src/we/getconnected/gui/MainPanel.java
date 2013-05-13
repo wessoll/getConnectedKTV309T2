@@ -115,6 +115,15 @@ public class MainPanel extends JPanel{
     }
     
     /**
+     * Verwijdert alle componenten in de bottom bar.
+     */
+    public void clearPanelBottomBar (){
+        bottomBar.removeAll();
+        bottomBar.revalidate();
+        bottomBar.repaint();
+    }
+    
+    /**
      * Handelt alle button presses af
      */
     private class ButtonHandler implements MouseListener{
@@ -125,6 +134,7 @@ public class MainPanel extends JPanel{
             }
             else if (e.getSource().equals(btnMijnKaart)){
                 showPanelMapArea(Main.getCurrentUser().getEurope());
+                
                 //update de map zodat alle uitgespeelde landen worden getoond
                 Main.getCurrentUser().getEurope().updateWorldMap();
             }

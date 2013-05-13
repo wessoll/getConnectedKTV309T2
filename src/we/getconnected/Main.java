@@ -38,7 +38,7 @@ public class Main extends JApplet {
         //this.add(new Login());
         
         //EN CURRENTUSER HARD OP DE EERSTE ZETTEN
-        currentUser = queryManager.getUser("piet");
+        currentUser = queryManager.getUser("admin");
         mainPanel = new MainPanel();
         this.add(mainPanel);
         this.setJMenuBar(null);
