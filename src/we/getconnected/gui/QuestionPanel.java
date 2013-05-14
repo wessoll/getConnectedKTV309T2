@@ -213,6 +213,7 @@ public class QuestionPanel extends JPanel {
         btnQuestionSelect.addMouseListener(new MouseListener(){
             @Override
             public void mouseClicked(MouseEvent e) {
+                Main.getMainPanel().clearPanelBottomBar();
                 Main.getMainPanel().showPanelMapArea(new QuestionSelection(currentLand));
             }
             @Override

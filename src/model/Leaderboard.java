@@ -1,14 +1,20 @@
 package model;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import we.getconnected.Main;
 import we.getconnected.gui.MainPanel;
@@ -20,7 +26,8 @@ import we.getconnected.gui.MainPanel;
 
 public class Leaderboard extends JPanel{
     private ArrayList<User> leaderboard; 
-    private JLabel header, showMap, backToLeader, nameHeader;
+    private JLabel header, nameHeader;
+    private JButton showMap, backToLeader;
     private JTable table;
     private JPanel bottomBar;
     
@@ -33,10 +40,9 @@ public class Leaderboard extends JPanel{
         header.setIcon(new ImageIcon(getClass().getResource("/media/LeaderboardHeader.png")));
         header.setBounds((MainPanel.MAP_AREA.width-header.getWidth())/2, 10, header.getWidth(), header.getHeight());
         
-        nameHeader = new JLabel();
+        nameHeader = new JLabel("", SwingConstants.CENTER);
         nameHeader.setFont(new Font("Rockwell",Font.PLAIN,15));
-        nameHeader.setBounds((MainPanel.BOTTOM_BAR.width-134) /2,70,134,53);
-        
+        nameHeader.setBounds(0, 70, MainPanel.BOTTOM_BAR.width, 50);
         
         add(header);
         table = new JTable();
@@ -71,23 +77,70 @@ public class Leaderboard extends JPanel{
         table.getColumnModel().getColumn(2).setPreferredWidth(120);
         table.getColumnModel().getColumn(3).setPreferredWidth(100);
         table.getColumnModel().getColumn(4).setPreferredWidth(100);
+
+        
+        ListSelectionModel cellSelectionModel = table.getSelectionModel();
+        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        cellSelectionModel.addListSelectionListener(new ListSelectionListener(){
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (table.getSelectedRow() == 0){
+                    showMap.setEnabled(false);
+                }
+                else{
+                    showMap.setEnabled(true);
+                }
+            }
+        });
+        
         add(table);
-       
         
         bottomBar = new JPanel();
         bottomBar.setLayout(null);
         bottomBar.setBackground(MainPanel.BACKGROUND_COLOR);
         bottomBar.setBounds(0, 0, MainPanel.BOTTOM_BAR.width, MainPanel.BOTTOM_BAR.height);
         
-        showMap = new JLabel();
+        showMap = new JButton();
+        showMap.setEnabled(false);
         showMap.setIcon(new ImageIcon(getClass().getResource("/media/ZieKaart.png")));
         showMap.setBounds((MainPanel.BOTTOM_BAR.width-134) /2, 10,134,53);
-        showMap.addMouseListener(new ML());
+        showMap.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(table.getSelectedRow()!=-1 && table.getSelectedRow()!=0){
+                    User user = getUser(table.getModel().getValueAt(table.getSelectedRow(), 0).toString());
+                    Continent continent = user.getEurope();
+                    if(user.getUser_id()!=Main.getCurrentUser().getUser_id()){
+                       continent.setPlayable(false);
+                    } 
+                    nameHeader.setText("Je bekijkt " + user.getUserName() + " zijn kaart");
+                    nameHeader.setVisible(true);
+                    showMap.setVisible(false);
+                    backToLeader.setVisible(true);
+                    Main.getMainPanel().clearPanelMapArea();
+                    Main.getMainPanel().showPanelMapArea(continent);
+                    continent.updateWorldMap();
+                }
+            }
+            
+        });
         
-        backToLeader = new JLabel();
+        backToLeader = new JButton();
         backToLeader.setIcon(new ImageIcon(getClass().getResource("/media/Terug.png")));
         backToLeader.setBounds((MainPanel.BOTTOM_BAR.width-134) /2,10,134,53);
-        backToLeader.addMouseListener(new ML());
+        backToLeader.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+               Main.getMainPanel().showPanelMapArea(Main.getLeaderboard());
+               nameHeader.setVisible(false);
+               backToLeader.setVisible(false);
+               showMap.setVisible(true);
+            }
+            
+        });
         backToLeader.setVisible(false);
        
         bottomBar.add(nameHeader);
@@ -120,58 +173,5 @@ public class Leaderboard extends JPanel{
             }
         }
         return null;
-    }
-    
-    /**
-     * Registreer mouse events.
-     */
-    public class ML implements MouseListener{
-
-        @Override
-        public void mouseClicked(MouseEvent e) {
-           
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-           if(e.getSource()==backToLeader){
-               Main.getMainPanel().showPanelMapArea(Main.getLeaderboard());
-               nameHeader.setVisible(false);
-               backToLeader.setVisible(false);
-               showMap.setVisible(true);
-           }
-           if(e.getSource()==showMap){
-                if(table.getSelectedRow()!=-1 && table.getSelectedRow()!=0){
-                    User user = getUser(table.getModel().getValueAt(table.getSelectedRow(), 0).toString());
-                    Continent continent = user.getEurope();
-                    if(user.getUser_id()!=Main.getCurrentUser().getUser_id()){
-                       continent.setPlayable(false);
-                    } 
-                    nameHeader.setText(user.getUserName());
-                    nameHeader.setVisible(true);
-                    showMap.setVisible(false);
-                    backToLeader.setVisible(true);
-                    Main.getMainPanel().clearPanelMapArea();
-                    Main.getMainPanel().showPanelMapArea(continent);
-                    continent.updateWorldMap();
-                }
-           }
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-           
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            
-        }
-        
     }
 }

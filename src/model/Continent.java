@@ -36,6 +36,7 @@ public class Continent extends JPanel{
     public Continent(int continent_id, String continentName, int user_id){
         this.continent_id=continent_id;
         this.continentName=continentName;
+        this.playable = true;
         
         landen = Main.getQueryManager().getUserCountries(user_id);
         //shuffle de vragen eenmaal per land zodat ze niet bij iedereen in dezelfde volgorde komen

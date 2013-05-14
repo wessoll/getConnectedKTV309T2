@@ -74,7 +74,9 @@ public class Main extends JApplet {
     public static void setMainPanel(MainPanel mp){
         mainPanel = mp;
     }
-    
+    public static void setLeaderboard(Leaderboard lb){
+        leaderboard = lb;
+    }
     public static Leaderboard getLeaderboard(){
         return leaderboard;
     }

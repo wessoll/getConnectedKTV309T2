@@ -10,6 +10,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import model.Leaderboard;
 import we.getconnected.Main;
 
 /**
@@ -148,6 +149,7 @@ public class MainPanel extends JPanel{
                 Main.getCurrentUser().getEurope().updateWorldMap();
             }
             else if (e.getSource().equals(btnLeaderbord)){
+                Main.setLeaderboard(new Leaderboard(Main.getQueryManager().getUsers()));
                 showPanelMapArea(Main.getLeaderboard());
                 showPanelBottomBar(Main.getLeaderboard().getBottomBar());
             }
