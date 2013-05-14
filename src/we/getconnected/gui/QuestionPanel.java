@@ -201,7 +201,7 @@ public class QuestionPanel extends JPanel {
         questionTextPanel.setBackground(MainPanel.BACKGROUND_COLOR);
         questionTextPanel.setBounds(0, 0, MainPanel.BOTTOM_BAR.width, MainPanel.BOTTOM_BAR.height);
         JLabel questionText = new JLabel(question.getQuestion(), SwingConstants.CENTER);
-        questionText.setFont(new Font("Verdana", Font.PLAIN, 20));
+        questionText.setFont(new Font("Rockwell",Font.PLAIN,15));
         questionText.setBounds(0, 0, MainPanel.BOTTOM_BAR.width, 50);
         questionTextPanel.add(questionText);
         
