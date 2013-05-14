@@ -2,6 +2,7 @@ package we.getconnected;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import javax.swing.JApplet;
 import javax.swing.JPanel;
 import model.Continent;
@@ -27,6 +28,7 @@ public class Main extends JApplet {
     private Dbmanager dbManager;
     private static QueryManager queryManager;
     private static JPanel userInterface;
+    private static ArrayList<User> leaderbordUsers;
     
     @Override
     public void init() {
@@ -35,7 +37,8 @@ public class Main extends JApplet {
         dbManager.openConnection();
         Main.queryManager = new QueryManager(dbManager);
         this.setSize(INTERFACE_SIZE.getSize());
-        leaderboard = new Leaderboard(queryManager.getUsers());
+        leaderbordUsers = queryManager.getUsers();
+        leaderboard = new Leaderboard(leaderbordUsers);
         userInterface = new JPanel();
         userInterface.setSize(INTERFACE_SIZE);
         userInterface.setLayout(new BorderLayout());
@@ -79,6 +82,9 @@ public class Main extends JApplet {
     }
     public static Leaderboard getLeaderboard(){
         return leaderboard;
+    }
+    public static ArrayList<User> getLeaderbordUsers(){
+        return leaderbordUsers;
     }
     
 }

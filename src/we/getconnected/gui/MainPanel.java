@@ -152,7 +152,7 @@ public class MainPanel extends JPanel{
                 Main.getCurrentUser().getEurope().updateWorldMap();
             }
             else if (e.getSource().equals(btnLeaderbord)){
-                Main.setLeaderboard(new Leaderboard(Main.getQueryManager().getUsers()));
+                Main.setLeaderboard(new Leaderboard(Main.getLeaderbordUsers()));
                 showPanelMapArea(Main.getLeaderboard());
                 showPanelBottomBar(Main.getLeaderboard().getBottomBar());
             }
