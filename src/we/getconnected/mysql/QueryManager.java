@@ -31,7 +31,8 @@ public class QueryManager {
                         result.getString("lastname"),
                         result.getString("username"),
                         result.getString("password"),
-                        result.getBoolean("teacher")
+                        result.getBoolean("teacher"),
+                        getUsergroup(result.getInt("user_id"))
                         ));
             }
         } catch (SQLException e) {
@@ -52,7 +53,8 @@ public class QueryManager {
                         result.getString("lastname"),
                         result.getString("username"),
                         result.getString("password"),
-                        result.getBoolean("teacher")
+                        result.getBoolean("teacher"),
+                        getUsergroup(result.getInt("user_id"))
                         );
             }
         } catch (SQLException e) {
@@ -74,6 +76,20 @@ public class QueryManager {
             System.out.println(Dbmanager.SQL_EXCEPTION + e.getMessage());
         }
         return continent;
+    }
+    
+    public String getUsergroup(int userID){
+        String groupName = "";
+         try {
+            String sql = "SELECT groupName FROM groep INNER JOIN user_group ON groep.group_id=user_group.group_id WHERE user_group.user_id = "+userID;
+            ResultSet result = dbmanager.doQuery(sql);
+            if(result.next()) {
+                groupName = result.getString("groupName");
+            }
+        } catch (SQLException e) {
+            System.out.println(Dbmanager.SQL_EXCEPTION + e.getMessage());
+        }
+        return groupName;
     }
     
     public ArrayList<Country> getUserCountries(int user_id){

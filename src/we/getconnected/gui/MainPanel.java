@@ -103,6 +103,15 @@ public class MainPanel extends JPanel{
         mapArea.repaint();
     }
     
+     /**
+     * Verwijdert alle componenten in de map area.
+     */
+    public void clearPanelMapArea (){
+        mapArea.removeAll();
+        mapArea.revalidate();
+        mapArea.repaint();
+    }
+    
     /**
      * Verwijdert bestaande panels op de bottomBar en voegt een nieuwe toe
      * @param panel             de panel die zichtbaar moet worden in de bottomBar
@@ -134,7 +143,7 @@ public class MainPanel extends JPanel{
             }
             else if (e.getSource().equals(btnMijnKaart)){
                 showPanelMapArea(Main.getCurrentUser().getEurope());
-                
+                clearPanelBottomBar();
                 //update de map zodat alle uitgespeelde landen worden getoond
                 Main.getCurrentUser().getEurope().updateWorldMap();
             }

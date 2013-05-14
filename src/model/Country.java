@@ -15,6 +15,7 @@ public class Country {
     private int country_id;
     private boolean completed;//uitgespeeld (voltooid) land
     private List<Question> questions;//de vragen die het land heeft
+    private boolean playable = true;
     
     public enum Countries{
         BELGIE("België", new ImageIcon(Main.IMAGES_LOCATION + "belgie.jpg"), null,null),
@@ -118,5 +119,13 @@ public class Country {
 
     public void setCountry_id(int country_id) {
         this.country_id = country_id;
+    }
+    
+    public boolean isPlayable() {
+        return playable;
+    }
+
+    public void setPlayable(boolean playable) {
+        this.playable = playable;
     }
 }

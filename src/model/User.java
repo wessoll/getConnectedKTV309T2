@@ -10,7 +10,7 @@ import we.getconnected.Main;
 public class User {
     
     private int user_id;
-    private String firstName, lastName, userName, password;
+    private String firstName, lastName, userName, password, groupName;
     private Continent europe;
     private boolean teacher;
     
@@ -24,13 +24,14 @@ public class User {
      * @param password          wachtwoord gebruiker
      * @param teacher           boolean of het een leraar is of niet
      */
-    public User(int user_id, String firstName, String lastName, String userName, String password, boolean teacher){
+    public User(int user_id, String firstName, String lastName, String userName, String password, boolean teacher, String groupName){
         this.user_id = user_id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.password = password;
         this.teacher=teacher;
+        this.groupName=groupName;
         europe = Main.getQueryManager().getContinent("Europa", user_id);
     }
  
@@ -89,5 +90,13 @@ public class User {
     }
     public void setUser_id(int user_id){
         this.user_id = user_id;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 }

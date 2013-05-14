@@ -1,16 +1,14 @@
 package model;
 
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
-import javax.swing.SwingConstants;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import we.getconnected.Main;
 import we.getconnected.gui.MainPanel;
@@ -22,26 +20,28 @@ import we.getconnected.gui.MainPanel;
 
 public class Leaderboard extends JPanel{
     private ArrayList<User> leaderboard; 
-    private JLabel header;
+    private JLabel header, showMap, backToLeader, nameHeader;
     private JTable table;
     private JPanel bottomBar;
-    private JButton backToLeader;
     
     public Leaderboard(final ArrayList<User> users){
         leaderboard = users;
         setBounds(0, 0, MainPanel.MAP_AREA.width, MainPanel.MAP_AREA.height);
         setBackground(MainPanel.BACKGROUND_COLOR);
 
-        
         header = new JLabel();
         header.setIcon(new ImageIcon(getClass().getResource("/media/LeaderboardHeader.png")));
         header.setBounds((MainPanel.MAP_AREA.width-header.getWidth())/2, 10, header.getWidth(), header.getHeight());
-        add(header);
         
+        nameHeader = new JLabel();
+        nameHeader.setFont(new Font("Rockwell",Font.PLAIN,15));
+        nameHeader.setBounds((MainPanel.BOTTOM_BAR.width-134) /2,70,134,53);
+        
+        
+        add(header);
         table = new JTable();
         table.setModel(new DefaultTableModel(new Object[][] {}, new String[] {
-				"Speler ID", "Naam", "Achternaam", "Landen", "Klas"}) {
-			private static final long serialVersionUID = -3523375506919277039L;
+				"Username", "Naam", "Achternaam", "Landen", "Klas"}) {
 
 			@Override
 			public boolean isCellEditable(final int row, final int column) {
@@ -49,11 +49,13 @@ public class Leaderboard extends JPanel{
 			}
 		});
         table.setBounds((MainPanel.MAP_AREA.width-header.getWidth())/2, 10, header.getWidth(), MainPanel.MAP_AREA.height-header.getHeight());
-        ((DefaultTableModel)table.getModel()).addRow(new Object[] {"ID", "Voornaam","Achternaam","Landen", "Klas"});
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ((DefaultTableModel)table.getModel()).addRow(new Object[] {"Username","Voornaam","Achternaam","Landen", "Klas"});
         for(User user:users){
-            int id = user.getUser_id();
             String firstName = user.getFirstName();
             String lastName = user.getLastName();
+            String userName = user.getUserName();
+            String groupName = user.getGroupName();
             int completedCountries = 0;
             int availableCountries  = user.getEurope().getLanden().size();
             for(Country land:user.getEurope().getLanden()){
@@ -62,9 +64,9 @@ public class Leaderboard extends JPanel{
                 }
             }
             String progress = completedCountries +" / "+availableCountries;
-            ((DefaultTableModel)table.getModel()).addRow(new Object[] {id, firstName,lastName,progress, "Geen"});
+            ((DefaultTableModel)table.getModel()).addRow(new Object[] {userName,firstName,lastName,progress, groupName});
         }
-        table.getColumnModel().getColumn(0).setPreferredWidth(27);
+        table.getColumnModel().getColumn(0).setPreferredWidth(120);
         table.getColumnModel().getColumn(1).setPreferredWidth(120);
         table.getColumnModel().getColumn(2).setPreferredWidth(120);
         table.getColumnModel().getColumn(3).setPreferredWidth(100);
@@ -76,32 +78,21 @@ public class Leaderboard extends JPanel{
         bottomBar.setLayout(null);
         bottomBar.setBackground(MainPanel.BACKGROUND_COLOR);
         bottomBar.setBounds(0, 0, MainPanel.BOTTOM_BAR.width, MainPanel.BOTTOM_BAR.height);
-        JButton showMapButton = new JButton("Bekijk kaart");
-        showMapButton.setBounds(0, 0, MainPanel.BOTTOM_BAR.width, 50);
-        showMapButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                if(table.getSelectedColumn()!=-1){
-                    User user = users.get(table.getSelectedColumn()-1);
-                    Continent continent = user.getEurope();
-                    if(user.getUser_id()!=Main.getCurrentUser().getUser_id()){
-                       continent.setPlayable(false);
-                    }
-                    backToLeader.setEnabled(true);
-                    Main.getMainPanel().showPanelMapArea(continent);
-                }
-            }
-        });
-        backToLeader = new JButton("Leaderboard");
-        backToLeader.setBounds(0, 60, 100, 50);
-        backToLeader.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Main.getMainPanel().showPanelMapArea(Main.getLeaderboard());
-            }
-            
-        });
+        
+        showMap = new JLabel();
+        showMap.setIcon(new ImageIcon(getClass().getResource("/media/ZieKaart.png")));
+        showMap.setBounds((MainPanel.BOTTOM_BAR.width-134) /2, 10,134,53);
+        showMap.addMouseListener(new ML());
+        
+        backToLeader = new JLabel();
+        backToLeader.setIcon(new ImageIcon(getClass().getResource("/media/Terug.png")));
+        backToLeader.setBounds((MainPanel.BOTTOM_BAR.width-134) /2,10,134,53);
+        backToLeader.addMouseListener(new ML());
+        backToLeader.setVisible(false);
+       
+        bottomBar.add(nameHeader);
         bottomBar.add(backToLeader);
-        bottomBar.add(showMapButton);
+        bottomBar.add(showMap);
     }
     
     // Get en Set methode om de ArrayList leaderboard aan te roepen.
@@ -115,5 +106,72 @@ public class Leaderboard extends JPanel{
     
     public JPanel getBottomBar(){
         return bottomBar;
+    }
+    
+    /**
+     * Vraag een user op uit de Arraylist leaderboard.
+     * @param username
+     * @return User with the username <username>
+     */
+    public User getUser(String username){
+        for(User user:leaderboard){
+            if(user.getUserName().equals(username)){
+                return user;
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Registreer mouse events.
+     */
+    public class ML implements MouseListener{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+           
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+           if(e.getSource()==backToLeader){
+               Main.getMainPanel().showPanelMapArea(Main.getLeaderboard());
+               nameHeader.setVisible(false);
+               backToLeader.setVisible(false);
+               showMap.setVisible(true);
+           }
+           if(e.getSource()==showMap){
+                if(table.getSelectedRow()!=-1 && table.getSelectedRow()!=0){
+                    User user = getUser(table.getModel().getValueAt(table.getSelectedRow(), 0).toString());
+                    Continent continent = user.getEurope();
+                    if(user.getUser_id()!=Main.getCurrentUser().getUser_id()){
+                       continent.setPlayable(false);
+                    } 
+                    nameHeader.setText(user.getUserName());
+                    nameHeader.setVisible(true);
+                    showMap.setVisible(false);
+                    backToLeader.setVisible(true);
+                    Main.getMainPanel().clearPanelMapArea();
+                    Main.getMainPanel().showPanelMapArea(continent);
+                    continent.updateWorldMap();
+                }
+           }
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+           
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+            
+        }
+        
     }
 }

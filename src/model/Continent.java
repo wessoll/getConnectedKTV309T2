@@ -61,12 +61,15 @@ public class Continent extends JPanel{
             @Override
             public void mouseClicked(MouseEvent e) {
                 //kijk welk land geklikt is a.d.v. landen bounds
-                for(Country land:landen){
+                if(playable){
+                    for(Country land:landen){
                     if(land.getLand().getLandBounds().contains(e.getPoint())){
                         Main.getMainPanel().showPanelMapArea(new QuestionSelection(land));
                         break;
                     }
                 }
+                }
+                
             }
             @Override
             public void mousePressed(MouseEvent e) {
@@ -102,9 +105,9 @@ public class Continent extends JPanel{
                 lblCompleted.setBounds(0, 0, LVL_COMPLETE_WIDTH, LVL_COMPLETE_HEIGHT);
                 lblCompleted.setIcon(land.getLand().getLandComplete());
                 add(lblCompleted);
-                add(lblWorldMap);
             }
         }
+        add(lblWorldMap);
     }
 
     public int getContinent_id() {
