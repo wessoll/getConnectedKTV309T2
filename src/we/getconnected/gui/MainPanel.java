@@ -91,6 +91,9 @@ public class MainPanel extends JPanel{
         bottomBar.setLayout(null);
         bottomBar.setBounds(SIDEBAR.width, SIDEBAR.height - BOTTOM_BAR.height, BOTTOM_BAR.width, BOTTOM_BAR.height);
         add(bottomBar);
+        
+        //laat het beginscherm zien
+        showPanelMapArea(new WelcomePanel());
     }
     
     /**
@@ -140,7 +143,7 @@ public class MainPanel extends JPanel{
         @Override
         public void mouseClicked(MouseEvent e) {
             if (e.getSource().equals(btnMenu)){
-                //do stuff for menu
+                showPanelMapArea(new WelcomePanel());
             }
             else if (e.getSource().equals(btnMijnKaart)){
                 showPanelMapArea(Main.getCurrentUser().getEurope());
