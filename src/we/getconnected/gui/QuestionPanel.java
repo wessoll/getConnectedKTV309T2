@@ -200,9 +200,6 @@ public class QuestionPanel extends JPanel {
                 public void mouseExited(MouseEvent e) {
                     //not supported
                 }
-                public void mouseMoved(MouseEvent e) {
-                   System.out.println("hoi");
-                }
             });
 
             point.setBounds((int) answer.getLocation().getX(), (int) answer.getLocation().getY(), 20, 20);
