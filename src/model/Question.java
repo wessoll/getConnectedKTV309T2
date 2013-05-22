@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import we.getconnected.Main;
@@ -16,6 +17,7 @@ public class Question {
     private boolean correct;//goed beantwoorde vraag
     private int tries;//aantal geprobeerde antwoorden
     private ArrayList<Answer> answers;//lijst met de mogelijke antwoorden
+    private Timestamp available;
     
     /**
      * Constructor met map
@@ -25,8 +27,9 @@ public class Question {
      * @param answers       lijst met mogelijke antwoorden
      * @param correct       boolean of dit land is uitgespeeld of niet
      * @param tries         het aantal pogingen dat gedaan is op deze vraag
+     * @param available     datumtijd vanaf wanneer de vraag beantwoord mag worden
      */
-    public Question(int question_id, String question, String map, ArrayList<Answer> answers, byte correct, int tries){
+    public Question(int question_id, String question, String map, ArrayList<Answer> answers, byte correct, int tries, Timestamp available){
         this.question_id = question_id;
         this.question = question;
         this.map = new ImageIcon(Main.IMAGES_LOCATION + map);
@@ -38,6 +41,7 @@ public class Question {
             this.correct = true;
         }
         this.tries = tries;
+        this.available = available;
     }
     
     //Getters and setters
@@ -87,5 +91,13 @@ public class Question {
     
     public void setQuestion_Id(int question_id){
         this.question_id = question_id;
+    }
+
+    public Timestamp getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Timestamp date) {
+        this.available = date;
     }
 }

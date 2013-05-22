@@ -2,14 +2,13 @@ package we.getconnected.mysql;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
 import model.Answer;
 import model.Continent;
 import model.Country;
 import model.Question;
 import model.User;
-import we.getconnected.Main;
 
 public class QueryManager {
 
@@ -118,7 +117,7 @@ public class QueryManager {
         ArrayList<Question> questions = new ArrayList<Question>();
         try {
             ;
-            String sql = "SELECT question.question_id, question.question, question.map,user_question.complete,user_question.tries " +
+            String sql = "SELECT question.question_id, question.question, question.map,user_question.complete,user_question.tries,user_question.available " +
                     "FROM question " +
                     "INNER JOIN user_question ON question.question_id=user_question.question_id " +
                     "WHERE user_question.user_id = " + user_id + " " +
@@ -131,7 +130,8 @@ public class QueryManager {
                         result.getString("map"),
                         getAnswers(result.getInt("question_id")),
                         result.getByte("complete"),
-                        result.getInt("tries")));
+                        result.getInt("tries"),
+                        result.getTimestamp("available")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -157,8 +157,24 @@ public class QueryManager {
         return answers;
     }
     
+    public Timestamp getDate(){
+        Timestamp date = null;
+        try{
+            String query = "SELECT CURRENT_TIMESTAMP();";
+            ResultSet result = dbmanager.doQuery(query);
+            if (result.next()){
+                date = result.getTimestamp("CURRENT_TIMESTAMP()");
+            }
+        }
+        catch (SQLException e) {
+            System.out.println(Dbmanager.SQL_EXCEPTION + e.getMessage());
+        }
+        return date;
+    }
+    
     public void updateUserQuestion(Question question, int user_id){
         String query = "UPDATE user_question SET tries= " + question.getTries() + ", complete=" + (question.isCorrect()?1:0) + 
+                ", available = '" + question.getAvailable() + "'" +
                 " WHERE user_id = " + user_id + 
                 " AND question_id = " + question.getQuestion_Id();
         dbmanager.insertQuery(query);

@@ -29,6 +29,7 @@ public class Main extends JApplet {
     private static QueryManager queryManager;
     private static JPanel userInterface;
     private static ArrayList<User> leaderbordUsers;
+    public static final long EXTRA_TIMEZONE_HOURS = 25200000;//het verschil in uren tussen Houston-Amsterdam
     
     @Override
     public void init() {

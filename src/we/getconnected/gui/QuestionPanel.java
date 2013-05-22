@@ -2,13 +2,16 @@ package we.getconnected.gui;
 
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -48,6 +51,7 @@ public class QuestionPanel extends JPanel {
     private Timer feedbackTimer;
     private JPanel questionTextPanel;
     private Country currentLand;
+    private JLabel questionText;
 
     /**
      * Constructor
@@ -122,12 +126,20 @@ public class QuestionPanel extends JPanel {
             point.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    // Kijkt of de vraag al eerder goed beatnwoord is. Want dan blokeert hij je input.
-                    if (currentQuestion.isCorrect() == false) {
-
+                    //kijkt of de vraag al eerder goed beantwoord is of dat de vraag een lock heeft
+                    //om vervolgens de input te blokkeren
+                    if (currentQuestion.isCorrect() == false && currentQuestion.getAvailable().before(Main.getQueryManager().getDate())) {
+                        
                         //log het aantal pogingen en kijk of het juiste antwoord is geklikt
                         if (!answer.isCorrect()) {
                             currentQuestion.setTries(currentQuestion.getTries() + 1);
+                            //lock de vraag als er meer dan 2 foute pogingen gedaan zijn
+                            if (currentQuestion.getTries() >= 2){
+                                //lock de vraag voor 1 uur
+                                currentQuestion.setAvailable(new Timestamp(Main.getQueryManager().getDate().getTime() + 3600000));
+                                //toon dat de vraag gelocked is
+                                setQuestionTextLocked();
+                            }
                             //toon feedback op scherm
                             lblIncorrectLarge.setVisible(true);
                             feedbackTimer.start();
@@ -188,6 +200,9 @@ public class QuestionPanel extends JPanel {
                 public void mouseExited(MouseEvent e) {
                     //not supported
                 }
+                public void mouseMoved(MouseEvent e) {
+                   System.out.println("hoi");
+                }
             });
 
             point.setBounds((int) answer.getLocation().getX(), (int) answer.getLocation().getY(), 20, 20);
@@ -200,7 +215,14 @@ public class QuestionPanel extends JPanel {
         questionTextPanel.setLayout(null);
         questionTextPanel.setBackground(MainPanel.BACKGROUND_COLOR);
         questionTextPanel.setBounds(0, 0, MainPanel.BOTTOM_BAR.width, MainPanel.BOTTOM_BAR.height);
-        JLabel questionText = new JLabel(question.getQuestion(), SwingConstants.CENTER);
+        //zet de vraag op het scherm of een melding dat de vraag locked is
+        questionText = new JLabel("", SwingConstants.CENTER);
+        if (!currentQuestion.getAvailable().before(Main.getQueryManager().getDate())){
+            setQuestionTextLocked();
+        }
+        else{
+            questionText.setText(question.getQuestion());
+        }
         questionText.setFont(new Font("Rockwell",Font.PLAIN,15));
         questionText.setBounds(0, 0, MainPanel.BOTTOM_BAR.width, 50);
         questionTextPanel.add(questionText);
@@ -325,6 +347,16 @@ public class QuestionPanel extends JPanel {
             lblIncorrectSmall.setVisible(true);
         }
         updateButtonsEnabled();
+    }
+    
+    private void setQuestionTextLocked(){
+        //maak een formaat aan hoe de tijd gepresenteerd moet worden
+        DateFormat formatter = new SimpleDateFormat("HH:mm");
+        //converteer de tijd uit de database naar de nederlandse tijd (alleen voor visuele weergave)
+        String date = formatter.format(new Date(currentQuestion.getAvailable().getTime() + Main.EXTRA_TIMEZONE_HOURS));
+
+        //zet de melding op het scherm in de vraag text
+        questionText.setText("<html><center>Je hebt deze vraag 2 of meer keer fout beantwoord. <br>Je kunt het opnieuw proberen om: <b>" + date + "</b>.</center></html>");
     }
     
     public void updateButtonsEnabled(){
