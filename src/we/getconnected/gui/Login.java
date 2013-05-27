@@ -38,6 +38,8 @@ public class Login extends JPanel {
     private boolean cloud1Entered= false, cloud2Entered= false, cloud3Entered= false,
             cloud4Entered = false, cloud5Entered = false, cloud6Entered = false;
     private Timer cloudTimerFast, cloudTimerSlow;
+    private User user;
+    private Loader loader;
     
     private static final Dimension BUTTON = new Dimension(119,38);
 
@@ -196,28 +198,43 @@ public class Login extends JPanel {
     
     private void btnSubmitActionPerformed() {
         if (btnSubmit.isEnabled()){
-        try {
-            String password = md5(pwfPassword.getPassword());
-            //haal user uit database volgens txtUsername
-            User user = Main.getQueryManager().getUser(txtUsername.getText());
-            //als username niet bestaat of wachtwoord niet overeenkomt: toon error
-            if (user == null || !user.getPassword().equals(password)) {
-                JOptionPane.showMessageDialog(null, "Uw gebruikersnaam of wachtwoord is onjuist.", "Foutieve inloggegevens", JOptionPane.ERROR_MESSAGE);
-            } //set anders het currentUser object in main
-            else {
-                //set timers stop
-                cloudTimerFast.stop();
-                cloudTimerSlow.stop();
-                
-                //set currentuser als ingelogde gebruiker
-                Main.setCurrentUser(user);
-                //maak een nieuwe mainPanel aan voor de gebruiker en voeg deze toe aan de interface
-                Main.setMainPanel(new MainPanel());
-                Main.showUserInterfacePanel(Main.getMainPanel());
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            //voer de inlogprocedure uit
+            loader = new Loader("Gegevens ophalen...");
+            loader.setVisible(true);
+            //maak een thread aan die de gegevens uit de database ophaalt
+            Thread getDbData = new Thread(){
+                @Override
+                public void run() {
+                    //converteer password naar md5
+                    String password = null;
+                    try {
+                        password = md5(pwfPassword.getPassword());
+                    } catch (Exception ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    //haal user uit database volgens txtUsername
+                    user = Main.getQueryManager().getUser(txtUsername.getText());
+                    
+                    //als username niet bestaat of wachtwoord niet overeenkomt: toon error
+                    if (user == null || !user.getPassword().equals(password)) {
+                        loader.setVisible(false);
+                        JOptionPane.showMessageDialog(null, "Uw gebruikersnaam of wachtwoord is onjuist.", "Foutieve inloggegevens", JOptionPane.ERROR_MESSAGE);
+                    } 
+                    //set anders het currentUser object in main
+                    else {
+                        //set timers stop
+                        cloudTimerFast.stop();
+                        cloudTimerSlow.stop();
+                        //set currentuser als ingelogde gebruiker
+                        Main.setCurrentUser(user);
+                        //maak een nieuwe mainPanel aan voor de gebruiker en voeg deze toe aan de interface
+                        Main.setMainPanel(new MainPanel());
+                        Main.showUserInterfacePanel(Main.getMainPanel());
+                        loader.setVisible(false);
+                    }
+                }
+            };
+            getDbData.start();
         }
     }
 
