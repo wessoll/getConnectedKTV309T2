@@ -172,6 +172,32 @@ public class QueryManager {
         return date;
     }
     
+    public int getLastQuestionId(){
+        int question_id = 0;
+        try{
+            String query = "SELECT question_id FROM question ORDER BY question_id DESC LIMIT 1";
+            ResultSet result = dbmanager.doQuery(query);
+            if (result.next()){
+                question_id = result.getInt("question_id");
+            }
+        }
+        catch (SQLException e) {
+            System.out.println(Dbmanager.SQL_EXCEPTION + e.getMessage());
+        }
+        return question_id;
+    }
+    
+    public void insertQuestion(Question question){
+        String query = "INSERT INTO question (question_id, question, map, country_id) VALUES ("
+                + "" + question.getQuestion_Id() + ", "
+                + "'" + question.getQuestion() + "', "
+                + "'" + question.getMap().toString() + "', "
+                + "" + question.getCountry_id() + ")";
+        }
+        public void insertAnswers(ArrayList<Answer> answers){
+        
+        }
+    
     public void updateUserQuestion(Question question, int user_id){
         String query = "UPDATE user_question SET tries= " + question.getTries() + ", complete=" + (question.isCorrect()?1:0) + 
                 ", available = '" + question.getAvailable() + "'" +

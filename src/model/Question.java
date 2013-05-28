@@ -18,14 +18,16 @@ public class Question {
     private int tries;//aantal geprobeerde antwoorden
     private ArrayList<Answer> answers;//lijst met de mogelijke antwoorden
     private Timestamp available;
+    private int country_id;
     
     /**
-     * Constructor met map
+     * Constructor voor een bestaande vraag uit de database gekoppeld aan een
+     * user
      * @param question_id   id van de vraag
      * @param question      naam van de vraag
      * @param map           map plaatje (bijv. hoogtekaart)
      * @param answers       lijst met mogelijke antwoorden
-     * @param correct       boolean of dit land is uitgespeeld of niet
+     * @param correct       boolean of deze vraag beantwoord is of niet
      * @param tries         het aantal pogingen dat gedaan is op deze vraag
      * @param available     datumtijd vanaf wanneer de vraag beantwoord mag worden
      */
@@ -42,6 +44,22 @@ public class Question {
         }
         this.tries = tries;
         this.available = available;
+    }
+    
+        /**
+     * Constructor voor het aanmaken van een nieuwe vraag in de database
+     * @param question_id   id van de vraag
+     * @param question      naam van de vraag
+     * @param map           map plaatje (bijv. hoogtekaart)
+     * @param answers       lijst met mogelijke antwoorden
+     * @param country_id    id van het land waaraan de vraag gekoppeld is
+     */
+    public Question(int question_id, String question, String map, ArrayList<Answer> answers, int country_id){
+        this.question_id = question_id;
+        this.question = question;
+        this.map = new ImageIcon(Main.IMAGES_LOCATION + map);
+        this.answers = answers;
+        this.country_id = country_id;
     }
     
     //Getters and setters
@@ -99,5 +117,21 @@ public class Question {
 
     public void setAvailable(Timestamp date) {
         this.available = date;
+    }
+
+    public int getQuestion_id() {
+        return question_id;
+    }
+
+    public void setQuestion_id(int question_id) {
+        this.question_id = question_id;
+    }
+
+    public int getCountry_id() {
+        return country_id;
+    }
+
+    public void setCountry_id(int country_id) {
+        this.country_id = country_id;
     }
 }
