@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import model.Answer;
+import model.Question;
 import we.getconnected.Main;
 import static we.getconnected.gui.MainPanel.BOTTOM_BAR;
 
@@ -358,7 +359,7 @@ public class AddQuestion extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ArrayList<Answer> answers = new ArrayList<Answer>();
-                 byte a = 0, b = 0, c = 0, d = 0;
+                 byte a = 0, b = 0, c = 0, d = 0, x = 0;
                 if(answerBox.getSelectedItem().toString().equals("A")){
                     a = 1;
                 }
@@ -371,6 +372,9 @@ public class AddQuestion extends JPanel {
                 if(answerBox.getSelectedItem().toString().equals("D")){
                     d = 1;
                 }
+                
+                Question question = new Question(1, questionField.getText(), URLField.getText(), 
+                        answers, x, 0, null);
                      
                 answers.add(new Answer(aButton.getX(), aButton.getY(), a,"A"));
                 answers.add(new Answer(bButton.getX(), bButton.getY(), b,"B"));

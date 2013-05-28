@@ -2,7 +2,11 @@ package we.getconnected;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import javax.imageio.ImageIO;
 import javax.swing.JApplet;
 import javax.swing.JPanel;
 import model.Continent;
@@ -86,6 +90,16 @@ public class Main extends JApplet {
     }
     public static ArrayList<User> getLeaderbordUsers(){
         return leaderbordUsers;
+    }
+    
+    public static Image getImage(String imgUrl) {
+        Image img = null;
+        try {
+            URL url = new URL(imgUrl);
+            img = ImageIO.read(url);
+        } catch (IOException e) {
+        }
+        return img;
     }
     
 }
