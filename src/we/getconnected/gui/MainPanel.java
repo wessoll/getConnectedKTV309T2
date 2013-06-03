@@ -143,7 +143,8 @@ public class MainPanel extends JPanel{
         @Override
         public void mouseClicked(MouseEvent e) {
             if (e.getSource().equals(btnMenu)){
-                showPanelBottomBar(new AddQuestion());
+                showPanelMapArea(new MenuPanel());
+                clearPanelBottomBar();
             }
             else if (e.getSource().equals(btnMijnKaart)){
                 showPanelMapArea(Main.getCurrentUser().getEurope());

@@ -23,6 +23,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import model.User;
 import we.getconnected.Main;
+import we.getconnected.util.MD5Util;
 
 /**
  *
@@ -208,7 +209,7 @@ public class Login extends JPanel {
                     //converteer password naar md5
                     String password = null;
                     try {
-                        password = md5(pwfPassword.getPassword());
+                        password = MD5Util.md5(pwfPassword.getPassword());
                     } catch (Exception ex) {
                         Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -249,31 +250,6 @@ public class Login extends JPanel {
                 btnSubmit.setEnabled(true);
             }
         }
-    
-       /**
-     * Maakt een MD5-hash van een char[]
-     * @param password      De password char[] die moet worden geconvert naar een MD5 hash
-     * @return              MD5-hash in String formaat
-     */
-    public static String md5(char[] password) throws Exception{
-        try {
-            String stringPassword = "";
-            for (char p : password){
-                stringPassword += String.valueOf(p);
-            }
-            
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] array = md.digest(stringPassword.getBytes());
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < array.length; ++i) {
-                sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1,3));
-            }
-            return sb.toString();
-        } 
-        catch (java.security.NoSuchAlgorithmException e) {
-            throw new Exception("Converting password to md5hash: " + e.getMessage());
-        }
-    }
     
     /**
      * Documentlistener die luistert naar een wijziging in de input van een textfield

@@ -17,8 +17,10 @@ public class Dbmanager {
     public void openConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://174.120.9.186:3306/k00tj3_klassetv";
-            String user = "k00tj3_klassetv", pass = "ktv309";
+            //"jdbc:mysql://174.120.9.186:3306/k00tj3_klassetv"
+            //
+            String url = "jdbc:mysql://localhost:3307/k00tj3_klassetv";
+            String user = "root", pass = "1234";
             /** Open connection */
             connection = DriverManager.getConnection(url, user, pass);
         } catch (ClassNotFoundException e) {

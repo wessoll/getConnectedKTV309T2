@@ -9,6 +9,7 @@ import model.Continent;
 import model.Country;
 import model.Question;
 import model.User;
+import we.getconnected.util.MD5Util;
 
 public class QueryManager {
 
@@ -62,6 +63,34 @@ public class QueryManager {
         return user;
     }
     
+    public String getUsername(String username){
+        String name=  null; 
+        try {
+            String sql = "SELECT username FROM user WHERE username='" + username + "'";
+            ResultSet result = dbmanager.doQuery(sql);
+            if(result.next()) {
+                name = result.getString("username");
+            }
+        } catch (SQLException e) {
+            System.out.println(Dbmanager.SQL_EXCEPTION + e.getMessage());
+        }
+        return name;
+    }
+    
+       public String getGroup(String groupname){
+        String name=  null; 
+        try {
+            String sql = "SELECT groupName FROM groep WHERE groupName='" + groupname + "'";
+            ResultSet result = dbmanager.doQuery(sql);
+            if(result.next()) {
+                name = result.getString("groupName");
+            }
+        } catch (SQLException e) {
+            System.out.println(Dbmanager.SQL_EXCEPTION + e.getMessage());
+        }
+        return name;
+    }
+    
     public Continent getContinent(String name, int user_id){
         Continent continent =  null; 
         try {
@@ -75,6 +104,115 @@ public class QueryManager {
             System.out.println(Dbmanager.SQL_EXCEPTION + e.getMessage());
         }
         return continent;
+    }
+    
+    public void addUser(String username, char[] password, String firstName, String lastName, boolean isTeacher, int groupID){
+        int userID = getMaxUserID()+1;
+        int maxQuestionID = getMaxQuestionID();
+        int maxCountryID = getMaxCountryID();
+        String query = null;
+        query="INSERT INTO user(user_id,username, password,firstName,Lastname,teacher) VALUES("+userID+",'"+username+"','"+MD5Util.md5(password)+"', '"+firstName+"', '"+lastName+"',"+((isTeacher)?1:0)+");";
+        dbmanager.insertQuery(query);
+        fillUserQuestions(maxQuestionID,userID);
+        fillUserCountry(maxCountryID,userID);
+        setUserGroup(userID,groupID);
+    }
+    
+    public void setUserGroup(int userID, int groupID){
+       String query ="INSERT INTO `user_group` (`user_id`, `group_id`) VALUES ('"+userID+"', '"+groupID+"');";
+       dbmanager.insertQuery(query);
+    }
+        
+    public void fillUserCountry(int maxCountryID,int userID){
+        String query =null;
+        for(int i =1;i<=maxCountryID;i++){
+            query="INSERT INTO user_country (user_id,country_id,completed) VALUES ("+userID+","+i+",0);";
+            dbmanager.insertQuery(query);
+        }
+    }
+    
+    public void fillUserQuestions(int maxQuestionID, int userID){
+        String query = "";
+        for(int i=1;i<=maxQuestionID;i++){
+           query="INSERT INTO `user_question` (`user_id`, `question_id`, `tries`, `complete`)";
+           query+= " VALUES ('"+userID+"', '"+i+"', '0', 0);";
+           dbmanager.insertQuery(query);
+        }
+    }
+    
+    public void addGroup(String groupName){
+        String query = "INSERT INTO groep(group_id, groupName) VALUES ("+getMaxGroupID()+","+groupName+"');";
+        dbmanager.insertQuery(query);
+    }
+    
+    public ArrayList<String> getGroupNames(){
+        ArrayList<String> groupNames = new ArrayList<String>();
+        try {
+            String sql = "SELECT groupName FROM k00tj3_klassetv.groep;";
+            ResultSet result = dbmanager.doQuery(sql);
+            while(result.next()) {
+                groupNames.add(result.getString("groupName"));
+            }
+        } catch (SQLException e) {
+            System.out.println(Dbmanager.SQL_EXCEPTION + e.getMessage());
+        }
+        return groupNames;
+    }
+    
+        public int getMaxGroupID(){
+        int id =0;
+        try {
+            String sql = "SELECT MAX(group_id) FROM k00tj3_klassetv.groep;";
+            ResultSet result = dbmanager.doQuery(sql);
+            if(result.next()) {
+                id = result.getInt("MAX(group_id)");
+            }
+        } catch (SQLException e) {
+            System.out.println(Dbmanager.SQL_EXCEPTION + e.getMessage());
+        }
+        return id;
+    }
+    
+    public int getMaxUserID(){
+        int id = 0;
+        try {
+            String sql = "SELECT MAX(user_id) FROM user;";
+            ResultSet result = dbmanager.doQuery(sql);
+            if(result.next()) {
+              id = result.getInt("MAX(user_id)");
+            }
+        } catch (SQLException e) {
+            System.out.println(Dbmanager.SQL_EXCEPTION + e.getMessage());
+        }
+        return id;
+    }
+    
+    public int getMaxQuestionID(){
+        int id = 0;
+        try {
+            String sql = "SELECT MAX(question_id) from question;";
+            ResultSet result = dbmanager.doQuery(sql);
+            if(result.next()) {
+              id = result.getInt("MAX(question_id)");
+            }
+        } catch (SQLException e) {
+            System.out.println(Dbmanager.SQL_EXCEPTION + e.getMessage());
+        }
+        return id;
+    }
+    
+    public int getMaxCountryID(){
+        int id = 0;
+        try {
+            String sql = "SELECT MAX(country_id) from country;";
+            ResultSet result = dbmanager.doQuery(sql);
+            if(result.next()) {
+              id = result.getInt("MAX(country_id)");
+            }
+        } catch (SQLException e) {
+            System.out.println(Dbmanager.SQL_EXCEPTION + e.getMessage());
+        }
+        return id;
     }
     
     public String getUsergroup(int userID){
