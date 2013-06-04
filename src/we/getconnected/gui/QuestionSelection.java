@@ -2,6 +2,8 @@
 package we.getconnected.gui;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
@@ -52,29 +54,12 @@ public class QuestionSelection extends JPanel{
             btnQuestionSelect.setName(String.valueOf(i));
             btnQuestionSelect.setBounds(60+(i*60), 70, SELECT_BUTTON.width, SELECT_BUTTON.height);
             //add a mouselistener which patches you to the selected question
-            btnQuestionSelect.addMouseListener(new MouseListener(){
-
+            btnQuestionSelect.addActionListener(new ActionListener(){
                 @Override
-                public void mouseClicked(MouseEvent e) {
+                public void actionPerformed(ActionEvent e) {
                     //strip de naam van de button om het id te krijgen
                     int selectedQuestion = Integer.parseInt(e.getSource().toString().substring(20, 21));
                     Main.getMainPanel().showPanelMapArea(new QuestionPanel(currentLand.getQuestions().get(selectedQuestion), currentLand));
-                }
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    //not supported
-                }
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    //not supported
-                }
-                @Override
-                public void mouseEntered(MouseEvent e) {
-                    //not supported
-                }
-                @Override
-                public void mouseExited(MouseEvent e) {
-                    //not supported
                 }
             });
             add(btnQuestionSelect);

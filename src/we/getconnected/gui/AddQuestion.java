@@ -15,15 +15,21 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import model.Answer;
+import model.Country;
+import model.Country.Countries;
 import model.Question;
+import model.User;
 import we.getconnected.Main;
 import static we.getconnected.gui.MainPanel.BOTTOM_BAR;
 
@@ -76,37 +82,16 @@ public class AddQuestion extends JPanel {
     private JButton testURLBT, upload;
     private JComboBox answerBox, countryBox;
     private String[] correctAnswer = {"A", "B", "C", "D"}; // Keuzes voor answerBox 
-    private String[] countries = {"België",
-        "Denemarken",
-        "Duitsland",
-        "Finland",
-        "Frankrijk",
-        "Hongarijë",
-        "Ierland",
-        "Italië",
-        "Luxumburg",
-        "Nederland",
-        "Noorwegen",
-        "Oostenrijk",
-        "Polen",
-        "Portugal",
-        "Roemenië",
-        "Slowakijë",
-        "Spanje",
-        "Tsjechië",
-        "Verenigd koninkrijk",
-        "Zweden",
-        "Zwitserland"};
     private int selectedLetter = 0; // 0 = niks geslecteerd, 1 = A, 2 = B, 3 = C, 4 = D 
     private double xDouble;
     private double yDouble;
     private int xInt;
     private int yInt;
     private double axPos, ayPos, bxPos, byPos, cxPos, cyPos, dxPos, dyPos;
-    
+    private Loader loader;
     
     private Font fontType_20 = new Font("Rockwell", Font.PLAIN, 20);    
-    private Font fontType_30 = new Font("Rockwell", Font.BOLD, 30);
+    public static final Font FONT_TYPE30 = new Font("Rockwell", Font.BOLD, 30);
     
     
     public static final int MARGIN = 10;
@@ -234,7 +219,7 @@ public class AddQuestion extends JPanel {
         add(answerBox);
 
         //Combobox voor het land
-        countryBox = new JComboBox(countries);
+        countryBox = new JComboBox(Country.Countries.values());
         countryBox.setBounds(CB_PT.x, CB_PT.y, CB_DIME.width, CB_DIME.height);
         countryBox.setSelectedIndex(0);
         add(countryBox);
@@ -250,25 +235,25 @@ public class AddQuestion extends JPanel {
         aButton = new JLabel();
         aButton.setBounds(ABUTTON_PT.x, ABUTTON_PT.y, DEFAULT_BUTTON.width, DEFAULT_BUTTON.height);
         aButton.setText("A");
-        aButton.setFont(fontType_30);
+        aButton.setFont(FONT_TYPE30);
         add(aButton);
 
         bButton = new JLabel();
         bButton.setBounds(BBUTTON_PT.x, BBUTTON_PT.y, DEFAULT_BUTTON.width, DEFAULT_BUTTON.height);
         bButton.setText("B");
-        bButton.setFont(fontType_30);
+        bButton.setFont(FONT_TYPE30);
         add(bButton);
 
         cButton = new JLabel();
         cButton.setBounds(CBUTTON_PT.x, CBUTTON_PT.y, DEFAULT_BUTTON.width, DEFAULT_BUTTON.height);
         cButton.setText("C");
-        cButton.setFont(fontType_30);
+        cButton.setFont(FONT_TYPE30);
         add(cButton);
 
         dButton = new JLabel();
         dButton.setBounds(DBUTTON_PT.x, DBUTTON_PT.y, DEFAULT_BUTTON.width, DEFAULT_BUTTON.height);
         dButton.setText("D");
-        dButton.setFont(fontType_30);
+        dButton.setFont(FONT_TYPE30);
         add(dButton);
 
         txtSelectQuestion = new JLabel();
@@ -286,30 +271,30 @@ public class AddQuestion extends JPanel {
 
         // maakt als vast de knoppen voor op het scherm klaar
         aFeedback = new JLabel();
-        aFeedback.setBounds(FEEDBACK.x, FEEDBACK.y, DEFAULT_BUTTON.width, DEFAULT_BUTTON.height);
+        aFeedback.setSize(DEFAULT_BUTTON);
         aFeedback.setText("A");
-        aFeedback.setFont(fontType_30);
+        aFeedback.setFont(FONT_TYPE30);
         aFeedback.setVisible(false);
         canvas.add(aFeedback);
 
         bFeedback = new JLabel();
-        bFeedback.setBounds(FEEDBACK.x, FEEDBACK.y, DEFAULT_BUTTON.width, DEFAULT_BUTTON.height);
+        bFeedback.setSize(DEFAULT_BUTTON);
         bFeedback.setText("B");
-        bFeedback.setFont(fontType_30);
+        bFeedback.setFont(FONT_TYPE30);
         bFeedback.setVisible(false);
         canvas.add(bFeedback);
 
         cFeedback = new JLabel();
-        cFeedback.setBounds(FEEDBACK.x, FEEDBACK.y, DEFAULT_BUTTON.width, DEFAULT_BUTTON.height);
+        cFeedback.setSize(DEFAULT_BUTTON);
         cFeedback.setText("C");
-        cFeedback.setFont(fontType_30);
+        cFeedback.setFont(FONT_TYPE30);
         cFeedback.setVisible(false);
         canvas.add(cFeedback);
 
         dFeedback = new JLabel();
-        dFeedback.setBounds(FEEDBACK.x, FEEDBACK.y, DEFAULT_BUTTON.width, DEFAULT_BUTTON.height);
+        dFeedback.setSize(DEFAULT_BUTTON);
         dFeedback.setText("D");
-        dFeedback.setFont(fontType_30);
+        dFeedback.setFont(FONT_TYPE30);
         dFeedback.setVisible(false);
         canvas.add(dFeedback);
         
@@ -318,6 +303,13 @@ public class AddQuestion extends JPanel {
         testURLBT.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            //handel het ophalen van de url af
+            loader = new Loader("Afbeelding inladen...");
+            loader.setVisible(true);
+            //maak een thread aan die de afbeelding ophaalt en resized
+            Thread loadUrl = new Thread(){
+                @Override
+                public void run() {
                 imgPreview.setText(""); // Haalt de text uit de label
 
                 ImageIcon rawImg = new ImageIcon(Main.getImage(URLField.getText())); // Hier word de Img opgehaald en in een icon gezet
@@ -351,15 +343,21 @@ public class AddQuestion extends JPanel {
                             (MainPanel.MAP_AREA.height - importImg.getIconHeight()) / 2,
                             importImg.getIconWidth(), importImg.getIconHeight());
                 }
-            }});
+                        loader.setVisible(false);
+                }
+            };
+            loadUrl.start();
+                    }
+        });
+    
+                
 
             
         upload.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                ArrayList<Answer> answers = new ArrayList<Answer>();
-                 byte a = 0, b = 0, c = 0, d = 0, x = 0;
+                //bepaal welk antwoord als correct is gezet in de combobox
+                byte a = 0, b = 0, c = 0, d = 0;
                 if(answerBox.getSelectedItem().toString().equals("A")){
                     a = 1;
                 }
@@ -372,16 +370,42 @@ public class AddQuestion extends JPanel {
                 if(answerBox.getSelectedItem().toString().equals("D")){
                     d = 1;
                 }
+                   
+                //bepaal alvast wat de nieuwe id van de vraag wordt
+                int question_id = Main.getQueryManager().getLastQuestionId()+1;
+                //maak de answers aan
+                ArrayList<Answer> answers = new ArrayList<Answer>();
+                answers.add(new Answer((int)axPos, (int)ayPos, a ,"A", question_id));
+                answers.add(new Answer((int)bxPos, (int)byPos, b ,"B", question_id));
+                answers.add(new Answer((int)cxPos, (int)cyPos, c ,"C", question_id));
+                answers.add(new Answer((int)dxPos, (int)dyPos, d ,"D", question_id));
                 
-                Question question = new Question(1, questionField.getText(), URLField.getText(), 
-                        answers, x, 0, null);
-                     
-                answers.add(new Answer(aButton.getX(), aButton.getY(), a,"A"));
-                answers.add(new Answer(bButton.getX(), bButton.getY(), b,"B"));
-                answers.add(new Answer(cButton.getX(), cButton.getY(), c,"C"));
-                answers.add(new Answer(dButton.getX(), dButton.getY(), d,"D"));
+                //maak de daadwerkelijke vraag met de answers aan
+                //bepaal eerst a.d.h.v. de combobox aan welk land de vraag gekoppeld moet worden
+                int country_id=-1;
+                for (int i=0; i<Country.Countries.values().length;i++){
+                    if (Country.Countries.values()[i] == countryBox.getSelectedItem()){
+                        country_id = Main.getQueryManager().getCountry_id(
+                                Country.Countries.values()[i].getLandNaam());
+                    }
+                }
+                //maak nu de vraag aan
+                Question question = new Question(question_id
+                        , questionField.getText(), URLField.getText(), answers, country_id);
+                
+                //update de database
+                //voeg de gegevens voor een nieuwe vraag toe
+                Main.getQueryManager().insertQuestion(question);
+                //voeg de antwoorden toe aan de database
+                for (Answer answer : answers){
+                    Main.getQueryManager().insertAnswer(answer);
+                }
+                //update de user_question tabel zodat elke user over de nieuwe vraag bezit
+                ArrayList<User> users = Main.getQueryManager().getUsers();
+                for (User user : users){
+                    Main.getQueryManager().insertUserQuestion(question, user.getUser_id());
+                }
             }
-            
         });
         
         aButton.addMouseListener(new MouseListener() {
@@ -540,8 +564,11 @@ public class AddQuestion extends JPanel {
                 // Dit zet de xDouble en yDouble om naar int zodat ze mee gegeven kunnen worden aan .setBorder()l
                 xInt = (int) xDouble;
                 yInt = (int) yDouble;
-
-
+                
+                //trek bij de x en y position de helft van de DEFAULT_BUTTON er af op
+                //zodat bij een klik op de canvas het punt midden van de muisklik komt te staan
+                xInt -= (DEFAULT_BUTTON.width/2);
+                yInt -= (DEFAULT_BUTTON.height/2);
                 switch (selectedLetter) {
                     case 0:
                         System.out.println("Selecteer eerst een letter");

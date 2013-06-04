@@ -69,27 +69,33 @@ public class QuestionPanel extends JPanel {
         setBounds(0, 0, MainPanel.MAP_AREA.width, MainPanel.MAP_AREA.height);
 
         //plaats de map in de mapArea
+        ImageIcon tempMap = new ImageIcon(Main.getImage(currentQuestion.getMapPath()));
         lblMap = new JLabel();
-        lblMap.setBounds((MainPanel.MAP_AREA.width-currentQuestion.getMap().getIconWidth())/2, (MainPanel.MAP_AREA.height-currentQuestion.getMap().getIconHeight())/2, currentQuestion.getMap().getIconWidth(), currentQuestion.getMap().getIconHeight());
-        lblMap.setIcon(currentQuestion.getMap());
+        lblMap.setBounds((MainPanel.MAP_AREA.width-tempMap.getIconWidth())/2, 
+                (MainPanel.MAP_AREA.height-tempMap.getIconHeight())/2, 
+                tempMap.getIconWidth(), tempMap.getIconHeight());
+        lblMap.setIcon(tempMap);
         
         //maak alvast de plaatjes voor de feedback in de mapArea aan
         lblCorrectLarge = new JLabel();
         lblCorrectLarge.setIcon(new ImageIcon(getClass().getResource("/media/correctLarge.png")));
-        lblCorrectLarge.setBounds((MainPanel.MAP_AREA.width - FEEDBACK_LARGE.width) / 2, (MainPanel.MAP_AREA.height - FEEDBACK_LARGE.height) / 2, FEEDBACK_LARGE.width, FEEDBACK_LARGE.height);
+        lblCorrectLarge.setBounds((MainPanel.MAP_AREA.width - FEEDBACK_LARGE.width) / 2, 
+                (MainPanel.MAP_AREA.height - FEEDBACK_LARGE.height) / 2, FEEDBACK_LARGE.width, FEEDBACK_LARGE.height);
         lblCorrectLarge.setVisible(false);
         add(lblCorrectLarge);
 
         lblIncorrectLarge = new JLabel();
         lblIncorrectLarge.setIcon(new ImageIcon(getClass().getResource("/media/incorrectLarge.png")));
-        lblIncorrectLarge.setBounds((MainPanel.MAP_AREA.width - FEEDBACK_LARGE.width) / 2, (MainPanel.MAP_AREA.height - FEEDBACK_LARGE.height) / 2, FEEDBACK_LARGE.width, FEEDBACK_LARGE.height);
+        lblIncorrectLarge.setBounds((MainPanel.MAP_AREA.width - FEEDBACK_LARGE.width) / 2, 
+                (MainPanel.MAP_AREA.height - FEEDBACK_LARGE.height) / 2, FEEDBACK_LARGE.width, FEEDBACK_LARGE.height);
         lblIncorrectLarge.setVisible(false);
         add(lblIncorrectLarge);
         
         //maak de label voor het uitspelen van land aan
         lblLandComplete = new JLabel();
         lblLandComplete.setIcon(currentLand.getLand().getLandEnded());
-        lblLandComplete.setBounds((MainPanel.MAP_AREA.width-LEVEL_COMPLETE.width)/2, (MainPanel.MAP_AREA.height-LEVEL_COMPLETE.height)/2, LEVEL_COMPLETE.width, LEVEL_COMPLETE.height);
+        lblLandComplete.setBounds((MainPanel.MAP_AREA.width-LEVEL_COMPLETE.width)/2, 
+                (MainPanel.MAP_AREA.height-LEVEL_COMPLETE.height)/2, LEVEL_COMPLETE.width, LEVEL_COMPLETE.height);
         lblLandComplete.setVisible(false);
         add(lblLandComplete);
 
@@ -121,7 +127,8 @@ public class QuestionPanel extends JPanel {
         ArrayList<Answer> answers = currentQuestion.getAnswers();
         for (final Answer answer : answers) {
             JLabel point = new JLabel(answer.getAnswer());
-            point.setFont(new Font("Verdana", Font.BOLD, 20));
+            point.setSize(AddQuestion.DEFAULT_BUTTON);
+            point.setFont(AddQuestion.FONT_TYPE30);
             //voeg aan elk antwoord een mouselistener toe die het juiste of niet juiste antwoord afhandeld
             point.addMouseListener(new MouseListener() {
                 @Override
@@ -202,8 +209,8 @@ public class QuestionPanel extends JPanel {
                 }
             });
 
-            point.setBounds((int) answer.getLocation().getX(), (int) answer.getLocation().getY(), 20, 20);
-            lblMap.add(point);
+            point.setLocation((int) answer.getLocation().getX(), (int) answer.getLocation().getY());
+            add(point);
         }
         add(lblMap);
 
@@ -220,7 +227,7 @@ public class QuestionPanel extends JPanel {
         else{
             questionText.setText(question.getQuestion());
         }
-        questionText.setFont(new Font("Rockwell",Font.PLAIN,15));
+        questionText.setFont(new Font("Rockwell",Font.PLAIN,20));
         questionText.setBounds(0, 0, MainPanel.BOTTOM_BAR.width, 50);
         questionTextPanel.add(questionText);
         
@@ -229,37 +236,20 @@ public class QuestionPanel extends JPanel {
         btnQuestionSelect.setIcon(new ImageIcon(Main.IMAGES_LOCATION + "Vragen.png"));
         btnQuestionSelect.setBorderPainted(false);
         btnQuestionSelect.setBounds(VRAGEN_C.x, VRAGEN_C.y, VRAGEN.width, VRAGEN.height);
-        btnQuestionSelect.addMouseListener(new MouseListener(){
+        btnQuestionSelect.addActionListener(new ActionListener(){
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 Main.getMainPanel().clearPanelBottomBar();
                 Main.getMainPanel().showPanelMapArea(new QuestionSelection(currentLand));
-            }
-            @Override
-            public void mousePressed(MouseEvent e) {
-                //not supported
-            }
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                //not supported
-            }
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                //not supported
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-                //not supported
             }
         });
         btnNext = new JButton();
         btnNext.setIcon(new ImageIcon(Main.IMAGES_LOCATION + "Volgende.png"));
         btnNext.setBorderPainted(false);
         btnNext.setBounds(VOLGENDE_C.x, VOLGENDE_C.y, VOLGENDE.width, VOLGENDE.height);
-        btnNext.addMouseListener(new MouseListener(){
-
+        btnNext.addActionListener(new ActionListener(){
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 updateButtonsEnabled();
                 for (int i=0;i<currentLand.getQuestions().size();i++){
                     if (currentLand.getQuestions().get(i) == currentQuestion && i+1<currentLand.getQuestions().size()){
@@ -267,53 +257,20 @@ public class QuestionPanel extends JPanel {
                     }
                 }
             }
-            @Override
-            public void mousePressed(MouseEvent e) {
-                //not supported
-            }
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                //not supported
-            }
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                //not supported
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-                //not supported
-            }
         });
         btnPrevious = new JButton();
         btnPrevious.setIcon(new ImageIcon(Main.IMAGES_LOCATION + "Vorige.png"));
         btnPrevious.setBorderPainted(false);
         btnPrevious.setBounds(VORIGE_C.x, VORIGE_C.y, VORIGE.width, VORIGE.height);
-        btnPrevious.addMouseListener(new MouseListener(){
-
+        btnPrevious.addActionListener(new ActionListener(){
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 updateButtonsEnabled();
                 for (int i=0;i<currentLand.getQuestions().size();i++){
                     if (currentLand.getQuestions().get(i) == currentQuestion && i>0){
                         Main.getMainPanel().showPanelMapArea(new QuestionPanel(currentLand.getQuestions().get(i-1), currentLand));
                     }
                 }
-            }
-            @Override
-            public void mousePressed(MouseEvent e) {
-                //not supported
-            }
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                //not supported
-            }
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                //not supported
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-                //not supported
             }
         });
         

@@ -251,6 +251,20 @@ public class QueryManager {
         return landen;
     }
     
+    public int getCountry_id(String name){
+        int country_id=0;
+        try {
+            String sql = "SELECT country_id FROM country WHERE name ='" + name + "'";
+            ResultSet result = dbmanager.doQuery(sql);
+            if(result.next()) {
+                country_id = result.getInt("country_id");
+            }
+        } catch (SQLException e) {
+            System.out.println(Dbmanager.SQL_EXCEPTION + e.getMessage());
+        }
+        return country_id;
+    }
+    
     public ArrayList<Question> getUserQuestions(int user_id, int country_id){
         ArrayList<Question> questions = new ArrayList<Question>();
         try {
@@ -287,7 +301,8 @@ public class QueryManager {
                 answers.add(new Answer(result.getInt("x"),
                         result.getInt("y"),
                         result.getByte("correct"),
-                        result.getString("answer")));
+                        result.getString("answer"),
+                        result.getInt("question_id")));
             }
         } catch (SQLException e) {
             System.out.println(Dbmanager.SQL_EXCEPTION + e.getMessage());
@@ -326,15 +341,31 @@ public class QueryManager {
     }
     
     public void insertQuestion(Question question){
-        String query = "INSERT INTO question (question_id, question, map, country_id) VALUES ("
+        String query = "INSERT INTO question (question_id, question, map, level, country_id) VALUES ("
                 + "" + question.getQuestion_Id() + ", "
                 + "'" + question.getQuestion() + "', "
-                + "'" + question.getMap().toString() + "', "
+                + "'" + question.getMapPath() + "', "
+                + "0, "
                 + "" + question.getCountry_id() + ")";
+        dbmanager.insertQuery(query);
         }
-        public void insertAnswers(ArrayList<Answer> answers){
+    public void insertAnswer(Answer answer){
+        String query = "INSERT INTO answer (x, y, correct, answer, question_id) VALUES ("+
+                answer.getX() + "," +
+                answer.getY() + "," +
+                (answer.isCorrect()?1:0) + ",'" +
+                answer.getAnswer() + "',"
+                + answer.getQuestion_id() + ")";
+        System.out.println(query);
+        dbmanager.insertQuery(query);
+    }
         
-        }
+    public void insertUserQuestion(Question question, int user_id){
+        String query = "INSERT user_question (user_id, question_id) VALUES(" + 
+                user_id + ", " + 
+                question.getQuestion_Id() + ");";
+        dbmanager.insertQuery(query);
+    }
     
     public void updateUserQuestion(Question question, int user_id){
         String query = "UPDATE user_question SET tries= " + question.getTries() + ", complete=" + (question.isCorrect()?1:0) + 

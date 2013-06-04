@@ -11,9 +11,8 @@ import we.getconnected.Main;
  */
 public class Question {
     
-    private String question;
+    private String question, mapPath;
     private int question_id;
-    private ImageIcon map;
     private boolean correct;//goed beantwoorde vraag
     private int tries;//aantal geprobeerde antwoorden
     private ArrayList<Answer> answers;//lijst met de mogelijke antwoorden
@@ -21,20 +20,20 @@ public class Question {
     private int country_id;
     
     /**
-     * Constructor voor een bestaande vraag uit de database gekoppeld aan een
+     * Constructor voor een bestaande vraag uit de database gekoppeld aan een user
      * user
      * @param question_id   id van de vraag
      * @param question      naam van de vraag
-     * @param map           map plaatje (bijv. hoogtekaart)
+     * @param mapPath       map plaatje (bijv. hoogtekaart)
      * @param answers       lijst met mogelijke antwoorden
      * @param correct       boolean of deze vraag beantwoord is of niet
      * @param tries         het aantal pogingen dat gedaan is op deze vraag
      * @param available     datumtijd vanaf wanneer de vraag beantwoord mag worden
      */
-    public Question(int question_id, String question, String map, ArrayList<Answer> answers, byte correct, int tries, Timestamp available){
+    public Question(int question_id, String question, String mapPath, ArrayList<Answer> answers, byte correct, int tries, Timestamp available){
         this.question_id = question_id;
         this.question = question;
-        this.map = new ImageIcon(Main.IMAGES_LOCATION + map);
+        this.mapPath = mapPath;
         this.answers = answers;
         if (correct == 0){
             this.correct = false;
@@ -50,14 +49,14 @@ public class Question {
      * Constructor voor het aanmaken van een nieuwe vraag in de database
      * @param question_id   id van de vraag
      * @param question      naam van de vraag
-     * @param map           map plaatje (bijv. hoogtekaart)
+     * @param mapPath       map plaatje (bijv. hoogtekaart)
      * @param answers       lijst met mogelijke antwoorden
      * @param country_id    id van het land waaraan de vraag gekoppeld is
      */
-    public Question(int question_id, String question, String map, ArrayList<Answer> answers, int country_id){
+    public Question(int question_id, String question, String mapPath, ArrayList<Answer> answers, int country_id){
         this.question_id = question_id;
         this.question = question;
-        this.map = new ImageIcon(Main.IMAGES_LOCATION + map);
+        this.mapPath = mapPath;
         this.answers = answers;
         this.country_id = country_id;
     }
@@ -71,12 +70,12 @@ public class Question {
         this.question = text;
     }
 
-    public ImageIcon getMap() {
-        return map;
+    public String getMapPath() {
+        return mapPath;
     }
 
-    public void setMap(ImageIcon map) {
-        this.map = map;
+    public void setMapPath(String mapPath) {
+        this.mapPath = mapPath;
     }
     
     public boolean isCorrect(){
@@ -117,14 +116,6 @@ public class Question {
 
     public void setAvailable(Timestamp date) {
         this.available = date;
-    }
-
-    public int getQuestion_id() {
-        return question_id;
-    }
-
-    public void setQuestion_id(int question_id) {
-        this.question_id = question_id;
     }
 
     public int getCountry_id() {

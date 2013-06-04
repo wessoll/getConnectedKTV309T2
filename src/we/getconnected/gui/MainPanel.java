@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.BoxLayout;
@@ -51,28 +53,28 @@ public class MainPanel extends JPanel{
         btnMenu.setIcon(new ImageIcon(getClass().getResource("/media/Menu1024x768.png")));
         btnMenu.setBorderPainted(false);
         btnMenu.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnMenu.addMouseListener(new ButtonHandler());
+        btnMenu.addActionListener(new ButtonHandler());
         sidebar.add(btnMenu);
         
         btnMijnKaart = new JButton();
         btnMijnKaart.setIcon(new ImageIcon(getClass().getResource("/media/MijnKaart1024x768.png")));
         btnMijnKaart.setBorderPainted(false);
         btnMijnKaart.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnMijnKaart.addMouseListener(new ButtonHandler());
+        btnMijnKaart.addActionListener(new ButtonHandler());
         sidebar.add(btnMijnKaart);
         
         btnLeaderbord = new JButton();
         btnLeaderbord.setIcon(new ImageIcon(getClass().getResource("/media/Leaderboard.png")));
         btnLeaderbord.setBorderPainted(false);
         btnLeaderbord.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnLeaderbord.addMouseListener(new ButtonHandler());
+        btnLeaderbord.addActionListener(new ButtonHandler());
         sidebar.add(btnLeaderbord);
         
         btnUitloggen = new JButton();
         btnUitloggen.setIcon(new ImageIcon(getClass().getResource("/media/Logout.png")));
         btnUitloggen.setBorderPainted(false);
         btnUitloggen.setAlignmentX(Component.CENTER_ALIGNMENT);
-        btnUitloggen.addMouseListener(new ButtonHandler());
+        btnUitloggen.addActionListener(new ButtonHandler());
         sidebar.add(btnUitloggen);
         
         //maak de andere bars aan
@@ -139,9 +141,9 @@ public class MainPanel extends JPanel{
     /**
      * Handelt alle button presses af
      */
-    private class ButtonHandler implements MouseListener{
+    private class ButtonHandler implements ActionListener{
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(btnMenu)){
                 showPanelMapArea(new MenuPanel());
                 clearPanelBottomBar();
@@ -163,25 +165,5 @@ public class MainPanel extends JPanel{
                 Main.showUserInterfacePanel(new Login());
             }
         }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-            //not supported
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            //not supported
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            //not supported
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-            //not supported
-        }   
     }
 }

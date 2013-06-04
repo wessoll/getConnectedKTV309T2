@@ -21,18 +21,24 @@ public class Country {
         BELGIE("België", new ImageIcon(Main.IMAGES_LOCATION + "belgie.jpg"), null,null),
         DENEMARKEN("Denemarken", new ImageIcon(Main.IMAGES_LOCATION + "denemarken.jpg"), null,null),
         DUITSLAND("Duitsland", new ImageIcon(Main.IMAGES_LOCATION + "duitsland.jpg"), null,null),
+        FINLAND("Finland", null, null,null),
         FRANKRIJK("Frankrijk", new ImageIcon(Main.IMAGES_LOCATION + "frankrijk.jpg"), null,null),
+        HONGARIJE("Hongarijë", null, null,null),
+        IERLAND("Ierland", null, null,null),
         ITALIE("Italië", new ImageIcon(Main.IMAGES_LOCATION + "IT-Complete.png"), new ImageIcon(Main.IMAGES_LOCATION + "IT-lvl-Complete.png"),new Polygon(new int[]{268,283,293,301,269,265,279,307,334,370,348,314,330,326,303,269,268}, new int[]{440,435,450,468,483,512,508,536,552,506,479,433,420,408,400,406,439},17)),
         LUXEMBURG("Luxemburg", new ImageIcon(Main.IMAGES_LOCATION + "luxemburg.jpg"), null,null),
         NEDERLAND("Nederland", new ImageIcon(Main.IMAGES_LOCATION + "NL-Complete.png"), new ImageIcon(Main.IMAGES_LOCATION + "NL-lvl-Complete.png"),new Polygon(new int[]{271,274,280,286,290,277,264,265,259,257,264},new int[]{336,324,317,305,296,296,302,308,315,319,326},11)),
         NOORWEGEN("Noorwegen", new ImageIcon(Main.IMAGES_LOCATION + "NR-Complete.png"), null, new Polygon(new int[]{302,330,340,347,381,398,403,417,422,431,441,419,353,357,328,296,291}, new int[]{234,224,205,152,91,80,84,82,68,66,61,47,98,113,154,183,22},17)),
         OOSTENRIJK("Oostenrijk", new ImageIcon(Main.IMAGES_LOCATION + "oostenrijk.jpg"), null,null),
-        PORTUGAL_DKR("Portugal dkr", new ImageIcon(Main.IMAGES_LOCATION + "portugal_dkr.jpg"), null,null),
-        PORTUGAL_DR("Portugal dr", new ImageIcon(Main.IMAGES_LOCATION + "portugal_dr.jpg"), null,null),
+        POLEN("Polen", null, null,null),
+        PORTUGAL("Portugal", null, null,null),
+        ROEMENIE("Roemenië", null, null,null),
+        SLOWAKIJKE("Slowakije", null, null,null),
         SPANJE("Spanje", new ImageIcon(Main.IMAGES_LOCATION + "SP-Complete.png"), new ImageIcon(Main.IMAGES_LOCATION + "SP-lvl-Complete.png"),new Polygon(new int[]{182,187,222,229,195,146,113,102,131,112,110,121}, new int[]{424,434,452,491,499,520,512,490,428,419,398,397},12)),
         TSJECHIE("Tsjechiē", new ImageIcon(Main.IMAGES_LOCATION + "tsjechie.jpg"), null,null),
+        VERENIGD_KONINKRIJK("Verenigd Koninkrijk", new ImageIcon(Main.IMAGES_LOCATION + "GB-Complete.png"), new ImageIcon(Main.IMAGES_LOCATION + "GB-lvl-Complete.png"),new Polygon(new int[]{233,176,190,177,188,207,258,235,220,242}, new int[]{323,315,261,251,241,201,182,230,243,308},10)),
         ZWEDEN("Zweden", new ImageIcon(Main.IMAGES_LOCATION + "zweden.jpg"), null,null),
-        VERENIGD_KONINKRIJK("Verenigd Koninkrijk", new ImageIcon(Main.IMAGES_LOCATION + "GB-Complete.png"), new ImageIcon(Main.IMAGES_LOCATION + "GB-lvl-Complete.png"),new Polygon(new int[]{233,176,190,177,188,207,258,235,220,242}, new int[]{323,315,261,251,241,201,182,230,243,308},10));
+        ZWITSERLAND("Zwitserland", null, null,null);
         
         private String landNaam;
         private ImageIcon landComplete;
@@ -78,8 +84,11 @@ public class Country {
     }
 
     /**
-     * Constructor
-     * @param land          het land dat dit object representeert
+     * Constructor voor een land uit de database gekoppeld aan een user
+     * @param country_id        id van de country
+     * @param land              het land
+     * @param questions         de questions gekoppeld aan het land
+     * @param completed         of het land al is uitgespeeld of niet
      */
     public Country(int country_id, Countries land,List<Question> questions, boolean completed){
         this.country_id = country_id;
