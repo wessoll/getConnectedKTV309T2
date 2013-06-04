@@ -5,9 +5,12 @@
 package we.getconnected.gui;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,7 +23,8 @@ import we.getconnected.Main;
  * @author Lou
  */
 public class GroupAddPanel extends JPanel {
-    private JLabel backButton, addButton,nameErrorLabel,succesLabel;
+    private JLabel nameErrorLabel,succesLabel;
+    private JButton backButton, addButton;
     private JTextField nameField;
     
     public GroupAddPanel(){
@@ -53,27 +57,31 @@ public class GroupAddPanel extends JPanel {
         bottomBar.setBackground(MainPanel.BACKGROUND_COLOR);
         bottomBar.setBounds(0,0,MainPanel.BOTTOM_BAR.width,MainPanel.BOTTOM_BAR.height);
         
-        backButton = new JLabel();
+        backButton = new JButton();
         ImageIcon backIcon = new ImageIcon(Main.IMAGES_LOCATION+"/Terug.png");
         backButton.setIcon(backIcon);
         backButton.setBounds((MainPanel.BOTTOM_BAR.width-backIcon.getIconWidth())/2, 10, backIcon.getIconWidth(), backIcon.getIconHeight());
-        backButton.addMouseListener(new ML());
+        backButton.addActionListener(new AL());
         bottomBar.add(backButton);
         
-        addButton = new JLabel();
+        addButton = new JButton();
         ImageIcon addIcon = new ImageIcon(Main.IMAGES_LOCATION+"/ToevoegenBT.png");
         addButton.setIcon(addIcon);
         addButton.setBounds((MainPanel.BOTTOM_BAR.width-addIcon.getIconWidth())/2, 70, addIcon.getIconWidth(), addIcon.getIconHeight());
-        addButton.addMouseListener(new ML());
+        addButton.addActionListener(new AL());
         bottomBar.add(addButton);
         
         Main.getMainPanel().showPanelBottomBar(bottomBar);
     }
     
-    public class ML implements MouseListener{
+    
+    /**
+     * Action Listener voor het klikken op de knoppen van het Menu panel.
+     */
+    public class AL implements ActionListener{
 
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void actionPerformed(ActionEvent e) {
             if(e.getSource()==backButton){
                 Main.getMainPanel().clearPanelBottomBar();
                 Main.getMainPanel().showPanelMapArea(new MenuPanel());
@@ -92,26 +100,5 @@ public class GroupAddPanel extends JPanel {
                 
             }
         }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-           
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-           
-        }
-        
     }
 }

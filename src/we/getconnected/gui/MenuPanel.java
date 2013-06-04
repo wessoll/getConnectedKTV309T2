@@ -4,9 +4,12 @@
  */
 package we.getconnected.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import we.getconnected.Main;
@@ -17,7 +20,7 @@ import we.getconnected.Main;
  */
 public class MenuPanel extends JPanel{
     
-    private JLabel vraagButton,klasButton,leerlingButton;
+    private JButton vraagButton,klasButton,leerlingButton;
     
     /**
      * Menu Panel is het paneel voor de "Admin" (leraar) om het spel te bewerken.
@@ -28,36 +31,36 @@ public class MenuPanel extends JPanel{
         setBackground(MainPanel.BACKGROUND_COLOR);
         setBounds(0, 0, MainPanel.MAP_AREA.width, MainPanel.MAP_AREA.height);
         
-        vraagButton  = new JLabel();
+        vraagButton  = new JButton();
         ImageIcon vraagIcon = new ImageIcon(Main.IMAGES_LOCATION+"/VraagToevoegenBT.png");
         vraagButton.setIcon(vraagIcon);
         vraagButton.setBounds((MainPanel.MAP_AREA.width-vraagIcon.getIconWidth())/2, 20, vraagIcon.getIconWidth(), vraagIcon.getIconHeight());
-        vraagButton.addMouseListener(new ML());
+        vraagButton.addActionListener(new AL());
         add(vraagButton);
         
-        klasButton  = new JLabel();
+        klasButton  = new JButton();
         ImageIcon klasIcon = new ImageIcon(Main.IMAGES_LOCATION+"/KlasToevoegenBT.png");
         klasButton.setIcon(klasIcon);
         klasButton.setBounds((MainPanel.MAP_AREA.width-klasIcon.getIconWidth())/2, 120, klasIcon.getIconWidth(), klasIcon.getIconHeight());
-        klasButton.addMouseListener(new ML());
+        klasButton.addActionListener(new AL());
         add(klasButton);
         
-        leerlingButton  = new JLabel();
+        leerlingButton  = new JButton();
         ImageIcon leerlingIcon = new ImageIcon(Main.IMAGES_LOCATION+"/LeerlingToevoegenBT.png");
         leerlingButton.setIcon(leerlingIcon);
         leerlingButton.setBounds((MainPanel.MAP_AREA.width-leerlingIcon.getIconWidth())/2, 220, leerlingIcon.getIconWidth(), leerlingIcon.getIconHeight());
-        leerlingButton.addMouseListener(new ML());
+        leerlingButton.addActionListener(new AL());
         add(leerlingButton);
     }
     
     /**
-     * Mouse Listener voor het klikken op het Menu Paneel.
+     * Action Listener voor het klikken op de knoppen van het Menu panel.
      */
-    public class ML  implements MouseListener{
+    public class AL  implements ActionListener{
 
         @Override
-        public void mouseClicked(MouseEvent e) {
-           if(e.getSource()==vraagButton){
+        public void actionPerformed(ActionEvent e){
+             if(e.getSource()==vraagButton){
                Main.getMainPanel().showPanelBottomBar(new AddQuestion());
                Main.getMainPanel().clearPanelMapArea(); 
                return;
@@ -73,26 +76,6 @@ public class MenuPanel extends JPanel{
                Main.getMainPanel().clearPanelBottomBar();
                Main.getMainPanel().showPanelMapArea(new LeerlingAddPanel());
            }
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-          
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-          
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-          
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-           
         }
     }
 }

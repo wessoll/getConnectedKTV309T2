@@ -6,10 +6,13 @@ package we.getconnected.gui;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,8 +26,9 @@ import we.getconnected.Main;
  */
 public class LeerlingAddPanel extends JPanel{
     
-     private JLabel backButton, addButton,usernameErrorLabel,succesLabel;
+     private JLabel usernameErrorLabel,succesLabel;
      private JTextField usernameField,naamField,achternaamField;
+     private JButton backButton, addButton;
      private JPasswordField passwordField;
      private JComboBox teacherBox,klasBox;
     
@@ -104,26 +108,30 @@ public class LeerlingAddPanel extends JPanel{
         bottomBar.setBackground(MainPanel.BACKGROUND_COLOR);
         bottomBar.setBounds(0,0,MainPanel.BOTTOM_BAR.width,MainPanel.BOTTOM_BAR.height);
         
-        backButton = new JLabel();
+        backButton = new JButton();
         ImageIcon backIcon = new ImageIcon(Main.IMAGES_LOCATION+"/Terug.png");
         backButton.setIcon(backIcon);
         backButton.setBounds((MainPanel.BOTTOM_BAR.width-backIcon.getIconWidth())/2, 10, backIcon.getIconWidth(), backIcon.getIconHeight());
-        backButton.addMouseListener(new ML());
+        backButton.addActionListener(new AL());
         bottomBar.add(backButton);
         
-        addButton = new JLabel();
+        addButton = new JButton();
         ImageIcon addIcon = new ImageIcon(Main.IMAGES_LOCATION+"/ToevoegenBT.png");
         addButton.setIcon(addIcon);
         addButton.setBounds((MainPanel.BOTTOM_BAR.width-addIcon.getIconWidth())/2, 70, addIcon.getIconWidth(), addIcon.getIconHeight());
-        addButton.addMouseListener(new ML());
+        addButton.addActionListener(new AL());
         bottomBar.add(addButton);
         
         Main.getMainPanel().showPanelBottomBar(bottomBar);
     }
     
-    public class ML implements MouseListener{
+    
+    /**
+     * Action Listener voor het klikken op de knoppen van het Menu panel.
+     */
+    public class AL implements ActionListener{
         @Override
-        public void mouseClicked(MouseEvent e) {
+        public void actionPerformed(ActionEvent e) {
             if(e.getSource()==backButton){
                 Main.getMainPanel().clearPanelBottomBar();
                 Main.getMainPanel().showPanelMapArea(new MenuPanel());
@@ -134,32 +142,12 @@ public class LeerlingAddPanel extends JPanel{
                     usernameErrorLabel.setVisible(false);
                     succesLabel.setText("De gebruiker '"+usernameField.getText()+"'is toegevoegd!");
                     succesLabel.setVisible(true);
-                    //Main.getQueryManager().addUser(usernameField.getText(),passwordField.getPassword(), naamField.getText(), achternaamField.getText(), ((teacherBox.getSelectedIndex()==0)?false:true), klasBox.getSelectedIndex()+1);
+                    Main.getQueryManager().addUser(usernameField.getText(),passwordField.getPassword(), naamField.getText(), achternaamField.getText(), ((teacherBox.getSelectedIndex()==0)?false:true), klasBox.getSelectedIndex()+1);
                 }else{
                     usernameErrorLabel.setVisible(true);
                     succesLabel.setVisible(false);
                 }
             }
-        }
-
-        @Override
-        public void mousePressed(MouseEvent e) {
-           
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-            
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-            
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
-           
         }
     }
 }
