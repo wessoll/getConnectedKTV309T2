@@ -1,6 +1,5 @@
 package model;
 
-import java.security.MessageDigest;
 import we.getconnected.Main;
 
 /**

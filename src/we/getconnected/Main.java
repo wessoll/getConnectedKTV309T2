@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JApplet;
 import javax.swing.JPanel;
-import model.Continent;
 import model.Leaderboard;
 import model.User;
 import we.getconnected.gui.Login;

@@ -2,8 +2,6 @@ package model;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
-import we.getconnected.Main;
 
 /**
  * Een vraag met eventueel bijbehorende map(=kaart)
