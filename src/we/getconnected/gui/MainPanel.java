@@ -143,8 +143,13 @@ public class MainPanel extends JPanel{
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(btnMenu)){
-                showPanelMapArea(new MenuPanel());
-                clearPanelBottomBar();
+                if(Main.getCurrentUser().isTeacher()){
+                   showPanelMapArea(new MenuPanel());
+                   clearPanelBottomBar(); 
+                }else{
+                    showPanelMapArea(new WelcomePanel());
+                    clearPanelBottomBar(); 
+                }
             }
             else if (e.getSource().equals(btnMijnKaart)){
                 showPanelMapArea(Main.getCurrentUser().getEurope());

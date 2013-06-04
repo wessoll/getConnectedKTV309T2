@@ -25,14 +25,19 @@ public class Main extends JApplet {
     public static final String NAME = "GetConnected Team KTV309";
     public static final Dimension INTERFACE_SIZE = new Dimension(1024,768);
     public static String IMAGES_LOCATION;
+    public static final long EXTRA_TIMEZONE_HOURS = 25200000;//het verschil in uren tussen Houston-Amsterdam
+    
     private static MainPanel mainPanel;
+    private static JPanel userInterface;
     private static User currentUser;
     private static Leaderboard leaderboard;
+    private static ArrayList<User> leaderbordUsers;
+    
     private Dbmanager dbManager;
     private static QueryManager queryManager;
-    private static JPanel userInterface;
-    private static ArrayList<User> leaderbordUsers;
-    public static final long EXTRA_TIMEZONE_HOURS = 25200000;//het verschil in uren tussen Houston-Amsterdam
+    
+    
+    
     
     @Override
     public void init() {

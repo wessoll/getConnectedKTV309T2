@@ -33,7 +33,7 @@ public class Leaderboard extends JPanel{
         leaderboard = users;
         setBounds(0, 0, MainPanel.MAP_AREA.width, MainPanel.MAP_AREA.height);
         setBackground(MainPanel.BACKGROUND_COLOR);
-
+        
         header = new JLabel();
         header.setIcon(new ImageIcon(getClass().getResource("/media/LeaderboardHeader.png")));
         header.setBounds((MainPanel.MAP_AREA.width-header.getWidth())/2, 10, header.getWidth(), header.getHeight());
