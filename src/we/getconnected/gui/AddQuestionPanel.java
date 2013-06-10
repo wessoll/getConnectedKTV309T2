@@ -49,7 +49,7 @@ public class AddQuestionPanel extends JPanel {
     //constanten voor dimensies
     private static final Dimension LABEL_DIM = new Dimension(600,30);
     private static final Dimension LABEL_ANSWER_SELECTION_DIM = new Dimension(600,60);
-    private static final Dimension LABEL_ANSWER_DIM = new Dimension(30,35);
+    public static final Dimension LABEL_ANSWER_DIM = new Dimension(30,35);
     private static final Dimension TEXTFIELD_DIM = new Dimension(400,25);
     private static final Dimension COMBOBOX_DIM = new Dimension(100,35);
     private static final Dimension BUTTON_DIM = new Dimension(160,25);
