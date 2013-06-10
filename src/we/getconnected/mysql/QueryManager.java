@@ -119,7 +119,7 @@ public class QueryManager {
     }
     
     public void setUserGroup(int userID, int groupID){
-       String query ="INSERT INTO `user_group` (`user_id`, `group_id`) VALUES ('"+userID+"', '"+groupID+"');";
+       String query ="INSERT INTO user_group (`user_id`, `group_id`) VALUES ('"+userID+"', '"+groupID+"');";
        dbmanager.insertQuery(query);
     }
         
@@ -134,21 +134,21 @@ public class QueryManager {
     public void fillUserQuestions(int maxQuestionID, int userID){
         String query = "";
         for(int i=1;i<=maxQuestionID;i++){
-           query="INSERT INTO `user_question` (`user_id`, `question_id`, `tries`, `complete`)";
+           query="INSERT INTO user_question (`user_id`, `question_id`, `tries`, `complete`)";
            query+= " VALUES ('"+userID+"', '"+i+"', '0', 0);";
            dbmanager.insertQuery(query);
         }
     }
     
     public void addGroup(String groupName){
-        String query = "INSERT INTO groep(group_id, groupName) VALUES ("+getMaxGroupID()+","+groupName+"');";
+        String query = "INSERT INTO groep(group_id, groupName) VALUES ("+(getMaxGroupID()+1)+",'"+groupName+"');";
         dbmanager.insertQuery(query);
     }
     
     public ArrayList<String> getGroupNames(){
         ArrayList<String> groupNames = new ArrayList<String>();
         try {
-            String sql = "SELECT groupName FROM k00tj3_klassetv.groep;";
+            String sql = "SELECT groupName FROM groep;";
             ResultSet result = dbmanager.doQuery(sql);
             while(result.next()) {
                 groupNames.add(result.getString("groupName"));
@@ -162,7 +162,7 @@ public class QueryManager {
         public int getMaxGroupID(){
         int id =0;
         try {
-            String sql = "SELECT MAX(group_id) FROM k00tj3_klassetv.groep;";
+            String sql = "SELECT MAX(group_id) FROM groep;";
             ResultSet result = dbmanager.doQuery(sql);
             if(result.next()) {
                 id = result.getInt("MAX(group_id)");
