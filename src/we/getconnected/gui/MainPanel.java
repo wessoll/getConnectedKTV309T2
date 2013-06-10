@@ -3,6 +3,7 @@ package we.getconnected.gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +28,10 @@ public class MainPanel extends JPanel{
    
     private JPanel sidebar, bottomBar, mapArea;
     private JButton btnMenu, btnMijnKaart, btnLeaderbord, btnUitloggen;
+    
+    //font types
+    public static final Font ROCKWELL_20 = new Font("Rockwell", Font.PLAIN, 20);    
+    public static final Font ROCKWELL_30_BOLD = new Font("Rockwell", Font.BOLD, 30);
     
     /**
      * Constructor voor het opzetten van de hoofdonderdelen

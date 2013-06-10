@@ -127,8 +127,8 @@ public class QuestionPanel extends JPanel {
         ArrayList<Answer> answers = currentQuestion.getAnswers();
         for (final Answer answer : answers) {
             JLabel point = new JLabel(answer.getAnswer());
-            point.setSize(AddQuestion.DEFAULT_BUTTON);
-            point.setFont(AddQuestion.FONT_TYPE30);
+            //point.setSize(AddQuestionPanel.DEFAULT_BUTTON);
+            point.setFont(MainPanel.ROCKWELL_30_BOLD);
             //voeg aan elk antwoord een mouselistener toe die het juiste of niet juiste antwoord afhandeld
             point.addMouseListener(new MouseListener() {
                 @Override

@@ -58,8 +58,7 @@ public class MenuPanel extends JPanel{
         @Override
         public void actionPerformed(ActionEvent e){
              if(e.getSource()==vraagButton){
-               Main.getMainPanel().showPanelBottomBar(new AddQuestion());
-               Main.getMainPanel().clearPanelMapArea(); 
+               Main.getMainPanel().showPanelBottomBar(new AddQuestionPanel());
                return;
            }
            
