@@ -69,7 +69,7 @@ public class QuestionPanel extends JPanel {
         setBounds(0, 0, MainPanel.MAP_AREA.width, MainPanel.MAP_AREA.height);
 
         //plaats de map in de mapArea
-        ImageIcon tempMap = new ImageIcon(Main.getImage(currentQuestion.getMapPath()));
+        ImageIcon tempMap = AddQuestionPanel.getResizedImage(currentQuestion.getMapPath());
         lblMap = new JLabel();
         lblMap.setBounds((MainPanel.MAP_AREA.width-tempMap.getIconWidth())/2, 
                 (MainPanel.MAP_AREA.height-tempMap.getIconHeight())/2, 
