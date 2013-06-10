@@ -323,6 +323,8 @@ public class AddQuestionPanel extends JPanel {
                     for (User user : users){
                         Main.getQueryManager().insertUserQuestion(question, user.getUser_id());
                     }
+                    //update de landen voor de ingeladen user
+                    Main.setCurrentUser(Main.getQueryManager().getUser(Main.getCurrentUser().getUserName()));
                 }
             }}   
         });
