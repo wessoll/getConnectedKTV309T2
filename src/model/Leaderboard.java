@@ -33,6 +33,7 @@ public class Leaderboard extends JPanel{
     private JTable table;
     private JPanel bottomBar;
     
+    //Constanten voor dimensies van labels/fields/panels
     private Rectangle LABEL_NAME_BOUNDS = new Rectangle(0, 70, MainPanel.BOTTOM_BAR.width, 50);
     
     private Rectangle BUTTON_SHOWMAP_BOUNDS = new Rectangle((MainPanel.BOTTOM_BAR.width-134) /2, 10,134,53);

@@ -31,43 +31,51 @@ public class MenuPanel extends JPanel{
         vraagButton  = new JButton();
         ImageIcon vraagIcon = new ImageIcon(Main.IMAGES_LOCATION+"/VraagToevoegenBT.png");
         vraagButton.setIcon(vraagIcon);
-        vraagButton.setBounds((MainPanel.MAP_AREA.width-vraagIcon.getIconWidth())/2, 20, vraagIcon.getIconWidth(), vraagIcon.getIconHeight());
-        vraagButton.addActionListener(new AL());
+        //X co-ordinaat voor de vraag button.
+        int vraagButtonX = (MainPanel.MAP_AREA.width-vraagIcon.getIconWidth())/2;
+        vraagButton.setBounds(vraagButtonX, 20, vraagIcon.getIconWidth(), vraagIcon.getIconHeight());
+        vraagButton.addActionListener(new ButtonListener());
         add(vraagButton);
         
         klasButton  = new JButton();
         ImageIcon klasIcon = new ImageIcon(Main.IMAGES_LOCATION+"/KlasToevoegenBT.png");
         klasButton.setIcon(klasIcon);
-        klasButton.setBounds((MainPanel.MAP_AREA.width-klasIcon.getIconWidth())/2, 120, klasIcon.getIconWidth(), klasIcon.getIconHeight());
-        klasButton.addActionListener(new AL());
+        //X co-ordinaat voor de klas button.
+        int klasButtonX = (MainPanel.MAP_AREA.width-klasIcon.getIconWidth())/2;
+        klasButton.setBounds(klasButtonX, 120, klasIcon.getIconWidth(), klasIcon.getIconHeight());
+        klasButton.addActionListener(new ButtonListener());
         add(klasButton);
         
         leerlingButton  = new JButton();
         ImageIcon leerlingIcon = new ImageIcon(Main.IMAGES_LOCATION+"/LeerlingToevoegenBT.png");
         leerlingButton.setIcon(leerlingIcon);
-        leerlingButton.setBounds((MainPanel.MAP_AREA.width-leerlingIcon.getIconWidth())/2, 220, leerlingIcon.getIconWidth(), leerlingIcon.getIconHeight());
-        leerlingButton.addActionListener(new AL());
+        //X co-ordinaat voor de leerling button.
+        int leerlingButtonX = (MainPanel.MAP_AREA.width-leerlingIcon.getIconWidth())/2;
+        leerlingButton.setBounds(leerlingButtonX, 220, leerlingIcon.getIconWidth(), leerlingIcon.getIconHeight());
+        leerlingButton.addActionListener(new ButtonListener());
         add(leerlingButton);
     }
     
     /**
      * Action Listener voor het klikken op de knoppen van het Menu panel.
      */
-    public class AL  implements ActionListener{
+    public class ButtonListener  implements ActionListener{
 
         @Override
         public void actionPerformed(ActionEvent e){
+            //Ga naar vragen toevoeg scherm
              if(e.getSource()==vraagButton){
                Main.getMainPanel().showPanelBottomBar(new AddQuestionPanel());
                return;
            }
-           
+           //Ga naar Klas toevoeg scherm
            if(e.getSource()==klasButton){
                Main.getMainPanel().clearPanelBottomBar();
                Main.getMainPanel().showPanelMapArea(new GroupAddPanel());
                return;
            }
            
+           //Ga naar leerling toevoeg scherm
            if(e.getSource()==leerlingButton){
                Main.getMainPanel().clearPanelBottomBar();
                Main.getMainPanel().showPanelMapArea(new LeerlingAddPanel());
