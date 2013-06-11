@@ -452,44 +452,29 @@ public class AddQuestionPanel extends JPanel {
     // groote. Als deze te groot is word hij aangepast tot het juiste formaat.
 
     public static ImageIcon getResizedImage(String URL) {
-
         // rawImg, hier word de image ingelade URL in geplaatst
         ImageIcon rawImg = new ImageIcon(Main.getImage(URL));
         // Deze ImgaIcon dient alleen voor de return
-        ImageIcon returnImg = new ImageIcon();
+        ImageIcon importImg = null;
 
         //Kijkt of de image portret of landscape is en kijkt dan naar de groote van de image en resized hem dan.
         // Landscape resize:
-        if (rawImg.getIconHeight() > rawImg.getIconWidth()) {
-            if (rawImg.getIconHeight() >= MainPanel.MAP_AREA.height) {
-                ImageIcon importImg = new ImageIcon(
+        if (rawImg.getIconHeight() >= MainPanel.MAP_AREA.height) {
+                importImg = new ImageIcon(
                         Main.getImage(URL).getScaledInstance(-1,
                         MainPanel.MAP_AREA.height,
                         Image.SCALE_FAST));
-                returnImg = importImg;
-
-            }
+            
         } // Portret resize:
-        else if (rawImg.getIconWidth() > rawImg.getIconHeight()) {
-            if (rawImg.getIconWidth() >= MainPanel.MAP_AREA.width) {
-                ImageIcon importImg = new ImageIcon(
+        else if (rawImg.getIconWidth() >= MainPanel.MAP_AREA.width) {
+                importImg = new ImageIcon(
                         Main.getImage(URL).getScaledInstance(MainPanel.MAP_AREA.width,
                         -1, Image.SCALE_FAST));
-
-                returnImg = importImg;
             }
-        }
-
         // geen resize nodig
-        if (rawImg.getIconHeight() <= MainPanel.MAP_AREA.height && rawImg.getIconWidth() <= MainPanel.MAP_AREA.width) {
-            System.out.println("prefect");
-            ImageIcon importImg = new ImageIcon(Main.getImage(URL));
-
-            returnImg = importImg;
+        else{
+            importImg = new ImageIcon(Main.getImage(URL));
         }
-        System.out.println("getResizedImage:" + returnImg);
-        System.out.println("Path methode: " + URL);
-        return returnImg;
-
+        return importImg;
     }
 }
